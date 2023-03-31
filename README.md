@@ -40,8 +40,8 @@ Stores
 - Customers can access any store that has been created. 
 
 Note: The term "user" is used to refer to any user of the application, including both customers and sellers. 
-
----------------------------------------------------------------------------------------------------------------------------------------------------------Core
+_________________________________________________________________________________________________________________________________________________________
+Core
 • Market
 o The marketplace will be a centralized page listing available
 products for purchase.
