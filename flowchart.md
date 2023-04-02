@@ -25,14 +25,14 @@ flowchart TD
         C--quit-->F[End]
         end
     
-    subgraph buyer_and_seller_menu
+    subgraph customer_and_seller_menu
         direction TB
         O{user type}
-        O--buyer-->P[buyer menu]
+        O--customer-->P[customer menu]
         O--seller-->Q[seller menu]
         
     end
     
-    welcome_menu --> buyer_and_seller_menu
+    welcome_menu --> customer_and_seller_menu
 
 ```
