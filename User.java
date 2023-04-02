@@ -4,18 +4,60 @@ import java.util.ArrayList;
 public class User {
     private String password; // password entered when a user creates their login information
     private String email; // email entered when a user creates their login information
+    private boolean buyer;
+    private boolean seller;
     private final static String FILENAME = "userData.txt"; // name of file where userData is stored
 
-    public User(String email, String password) throws InvalidUserInput { // creates a new User object with email and password
+    public User(String email, String password, int userType) throws InvalidUserInput { // creates a new User object with email, password and userType; Buyer = 0, Seller = 1
         if (!isValidPassword(password) || !isValidEmail(email)) {
             throw new InvalidUserInput("Please enter the correct input types for email and password!");
         }
+
+        this.buyer = (userType == 0);
+        this.seller = !this.buyer;
 
         this.password = password;
         this.email = email;
     }
 
-    public boolean userExists(String emailEntered, String passwordEntered) { // checks if a user's information is saved to userData.txt
+    public String getEmail() { // gets the current user email
+        return email;
+    }
+
+    public String getPassword() { // gets the current user password
+        return password;
+    }
+
+    public boolean isBuyer() { // is the user a buyer
+        return this.buyer;
+    }
+
+    public boolean isSeller() { // is the user a seller
+        return this.seller;
+    }
+
+    public void setUserType(int userType) { // sets whether the user is a buyer or seller; 0 = buyer, 1 = seller
+        this.buyer = (userType == 0);
+        this.seller = !this.buyer;
+    }
+
+    public void setEmail(String email) throws InvalidUserInput { // sets a new email for the user
+        if (!isValidEmail(email)) {
+            throw new InvalidUserInput("Please enter the correct input for email!");
+        }
+
+        this.email = email;
+    }
+
+    public void setPassword(String password) throws InvalidUserInput { // sets a new password for the user
+        if (!isValidPassword(password)) {
+            throw new InvalidUserInput("Please enter the correct input for password!");
+        }
+
+        this.password = password;
+    }
+
+    public boolean accountExists(String emailEntered, String passwordEntered) { // checks if a user's information is saved to userData.txt
         try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
             String line;
 
