@@ -40,10 +40,10 @@ public class User {
         try {
             FileWriter fw = new FileWriter(FILENAME, true);
 
-            System.out.printf("Email:%s, Password:%s, UserType:%s", email, password, userType);
-            System.out.println();
-
+            fw.write(String.format("Email:%s, Password:%s, UserType:%s\n", email, password, userType));
             fw.close();
+
+            // writes a new user to the userdata folder
         } catch (IOException e) {
             System.out.println("An error has occurred!");
         }
