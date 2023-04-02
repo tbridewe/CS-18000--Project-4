@@ -3,6 +3,7 @@ import java.io.*;
 public class User {
     private String password;
     private String email;
+    private final static String FILENAME = "userData.txt";
 
     public User(String email, String password) throws InvalidUserInput {
         if (!isValidPassword(password) || !isValidEmail(email)) {
@@ -14,11 +15,11 @@ public class User {
     }
 
     public boolean userExists(String emailEntered) {
-        try (BufferedReader br = new BufferedReader(new FileReader("userData.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
             String line;
 
             while ((line = br.readLine()) != null) {
-                if (line.equals("Username:" + emailEntered)) {
+                if (line.indexOf(emailEntered) != -1) {
                     return true;
                 }
             }
@@ -33,6 +34,19 @@ public class User {
         }
 
         return false;
+    }
+
+    public void saveNewUser(String email, String password, String userType) {
+        try {
+            FileWriter fw = new FileWriter(FILENAME, true);
+
+            System.out.printf("Email:%s, Password:%s, UserType:%s", email, password, userType);
+            System.out.println();
+
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("An error has occurred!");
+        }
     }
 
     public boolean isCorrectLogin(String emailEntered, String passwordEntered) {
