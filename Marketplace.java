@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.*;
 public class Marketplace {
 
     public static String WELCOME = "Welcome to the Marketplace!";
@@ -11,6 +13,11 @@ public class Marketplace {
     public static String USEREXISTS = "Username is taken, please try again";
     public static String ACCOUNTCREATED = "Account successfully created!";
     public static String BUYERMENU = "Please select an option:\n(1) Choose Item\n(2) Search\n(3) Sort\n(4) View cart\n";
+
+    // Marketplace properties
+    // TODO: consider moving these to a seprate marketplace class and make this the Menu (main) class
+    private ArrayList<Item> items = new ArrayList<>();
+    private String itemsFileName = "ItemInformation.txt";
 
     public static void main(String[] args) {
         int welcomeOption;
@@ -79,6 +86,7 @@ public class Marketplace {
             }
         }
         if(user.isBuyer) {
+            loadMarketplace(itemsFileName);
             displayMarketplace();//print the marketplace
             System.out.println(BUYERMENU);
             int buyerselection = Integer.parseInt(sc.nextLine());
@@ -118,8 +126,31 @@ public class Marketplace {
                         sortItems(sortType, sortOrder);
                 }
             } while(booleanBuyer);
-        if(user.isSeller) {
-            //seller options
+            if(user.isSeller) {
+                //seller options
+            }
+        }
+    }
+
+    private void loadMarketplace(String fileName) {
+        // reads each line then sends it to the Item constructor to create a new item
+        // sets the items of this class to the arraylist of the new items
+        File file = new File(fileName);
+        ArrayList<Item> items = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line = br.readLine();
+            do {
+                try {  
+                    items.add(new Item(line));
+                    line = br.readLine();
+                } catch (InvalidLineException e) { // invalid line format exception
+                }
+            } while (line != null);
+            br.close();
+            this.items = items;
+        } catch (Exception e) { // File io exception
+            e.printStackTrace();
         }
     }
 }
