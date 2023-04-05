@@ -18,9 +18,10 @@ public class Menu {
     public static String INVALIDOPTION = "Invalid Option!";
     private static String itemsFileName = "ItemInformation.txt";
 
-    public Menu(String email, String password, int userType) throws InvalidUserInput {
-        super(email, password, userType);
-    }
+    
+    //creating a user public Menu(String email, String password, int userType) throws InvalidUserInput {
+        //super(email, password, userType);
+    //}
 
 
     public static void main(String[] args) throws InvalidUserInput {
