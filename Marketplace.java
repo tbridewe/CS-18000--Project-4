@@ -17,9 +17,10 @@ public class Marketplace {
             do {
                 try {  
                     items.add(new Item(line));
-                    line = br.readLine();
                 } catch (InvalidLineException e) { // invalid line format exception
+                    e.printStackTrace();
                 }
+                line = br.readLine();
             } while (line != null);
             br.close();
             this.items = items;
@@ -29,6 +30,18 @@ public class Marketplace {
     }
 
     public void printListings() {
-        // TODO: hannah
+        String itemFormat = "[%3d]: %-30s | %-24s | $ %-6.2f\n";
+        System.out.printf("[num]: %-30s | %-24s | %-7s\n\n", "NAME", "STORE", "PRICE");
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            System.out.printf(itemFormat, i+1, item.getName(), item.getStore(), item.getPrice());
+        }
     }
+
+    public Item getItem(int index) {
+        // index from the printed listing
+        return items.get(index - 1);
+    }
+
+    // TODO: make more methods
 }

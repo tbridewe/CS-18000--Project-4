@@ -28,7 +28,7 @@ public class Item {
     }
     // FILE FORMAT: name,store,description,quantity,price
     public String toLine() {
-        String line = String.format("%s,%s,%s,%d,%f", 
+        String line = String.format("%s,%s,%s,%d,%.2f", 
             this.name, this.store, this.description, this.quantity, this.price);
         return line;
     }
