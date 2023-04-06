@@ -7,6 +7,11 @@ public class Customer extends User {
         super(email, password, userType);
     }
 
+    /**
+     * readFile(String filename)
+     * @param filename: name of the file that needs to be read
+     * @return String[] with all the lines of the file
+     */
     public static String[] readFile(String filename) {
         String[] fileContents;
         ArrayList<String> contents = new ArrayList<>();
@@ -30,7 +35,7 @@ public class Customer extends User {
      * displayMarketplace
      * reads file containing listings on the marketplace by newest to oldest,
      * prints view to the console
-     * 
+     *
      */
     public static void displayMarketplace() {
         String[] contents = readFile("/Users/tristan.brideweser/Desktop/SP 2023/CS 18000/Projects/PJ04/PJ04/src/Listings.txt");
@@ -40,24 +45,60 @@ public class Customer extends User {
         }
     }
 
-    public static void chooseItem() {
-
-    }
-
-    public static void keywordSearch(String keyword) {
-
+    /**
+     * viewCart()
+     * user has the option to view their cart and is displayed with a menu
+     */
+    public static void viewCart(String cartOption) {
+        // print out all listings in the cart
+        if (cartOption.equals("Add")) {
+            addToCart();
+        }
+        removeFromCart();
     }
 
     /**
-     * sortMarketplace
-     * sorts the marketplace listings based on user input
+     * addToCart()
      * 
+     */
+    public static void addToCart() {
+        displayMarketplace(); // display options for user to select
+        // prompt user for listing
+        // append the new listing to the shopping cart
+    }
+
+    /**
+     * removeFromCart(Item listing)
+     * removes specified listing from the cart
+     * @param listing: the specified listing that the user wants to remove from cart
+     */
+    public static void removeFromCart(Item listing) {
+        // loop through cart indices 
+        // find specified listing
+        // remove from listings
+        // move index up
+    }
+
+    /**
+     * keywordSearch(String keyword)
+     * @param keyword: specified word that the user is looking for
+     * @return String[] containing all lines containing the keyword 
+     */
+    public static String[] keywordSearch(String keyword) {
+        // loop through listings
+            // find listings that contain element
+            // display elements
+        return // String[]
+    }
+
+    /**
+     * sortMarketplace(int sortType, int sortOrder)
+     * sorts the marketplace listings based on user input
+     *
      * @param sortType: either sort by price or by quantity
      * @param sortOrder: either sort in ascending or descending order
      *
      */
-    
-    
     // TODO: how do we want to view this?
     public static void sortMarketplace(int sortType, int sortOrder) {
         String[] contents = readFile("/Users/tristan.brideweser/Desktop/SP 2023/CS 18000/Projects/PJ04/PJ04/src/Listings.txt");
@@ -74,7 +115,7 @@ public class Customer extends User {
             quantity = Integer.parseInt(line[3]); // set quantity of item
             quantitiesList.add(quantity); // add quantity to the quantitiesList
         }
-        
+
         switch (sortType) { // either price or quantity
             case 1: // price
                 switch (sortOrder) {
@@ -91,9 +132,5 @@ public class Customer extends User {
                         quantitiesList.sort(Comparator.reverseOrder());
                 }
         }
-    }
-
-    public static void viewCart() {
-
     }
 }
