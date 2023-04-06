@@ -2,7 +2,7 @@
 To Do
 ---
 ___
-- try to nest less
+- try to nest less (extraction/inversion)
 - 1 readFile() method (in User class)?
 - add documentation
 - review Classes
