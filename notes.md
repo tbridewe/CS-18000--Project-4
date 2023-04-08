@@ -15,5 +15,24 @@ ___
 - reports, planning and review, README
 - meetings going forwards/plan of action
 - write pseudocode for the time being
-- Seller class methods?
+___
+- Seller
+  - store methods
+    - display
+    - stats
+- Customer
+  - make sort output sorted list
+  - remove from cart
+  - sort contents
+
+- User
+  - check email
+  - user type?
+
+- customerLog.txt
+   - each line is a new transaction
+   - after a customer buys something
+    - check if customer is already in customerLog.txt
+      - if yes, add to their history
+      - if no, add them to a new line
 ___
