@@ -15,4 +15,5 @@ ___
 - reports, planning and review, README
 - meetings going forwards/plan of action
 - write pseudocode for the time being
+- Seller class methods?
 ___
