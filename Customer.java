@@ -268,7 +268,7 @@ public class Customer extends User {
      * @param keyword: specified word that the user is looking for
      * @return String[] containing all lines containing the keyword 
      */
-    public Item[] keywordSearch(String keyword) {
+    public ArrayList<Item> keywordSearch(String keyword) {
         int j = 0;
         ArrayList<Item> listingsWKeyword = new ArrayList<Item>();
         for (int i = 0; i < listings.size(); i++) {
@@ -281,11 +281,11 @@ public class Customer extends User {
         // loop through listings
         // find listings that contain element
         // display elements
-        Item[] listingsWithKeyword = new Item[j];
-        for (int i = 0; i < listingsWKeyword.size(); i++) {
-            listingsWithKeyword[i] = listingsWKeyword.get(i);
-        }
-        return listingsWithKeyword;
+        // Item[] listingsWithKeyword = new Item[j];
+        // for (int i = 0; i < listingsWKeyword.size(); i++) {
+        //     listingsWithKeyword[i] = listingsWKeyword.get(i);
+        // }
+        return listingsWKeyword;
     }
 
     /**
