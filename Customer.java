@@ -75,19 +75,6 @@ public class Customer extends User {
     }
 
     /**
-     * viewCart()
-     * user has the option to view their cart and is displayed with a menu
-     */
-    public void viewCart(String cartOption) {
-        // print out all listings in the cart
-        printCart();
-        if (cartOption.equals("Add")) {
-            addToCart();
-        }
-        removeFromCart();
-    }
-
-    /**
      * PrintCart()
      * just prints the items in the cart with nice formatting. 
      */
@@ -163,7 +150,7 @@ public class Customer extends User {
     public void saveCart(String fileName) {
         String[] fileLines = readFile(fileName);
         for (int l = 0; l < fileLines.length; l++) { // find the correct user line
-            String user = this.getEmail(); // TODO: Update email to username, but there is not getUsername method rn
+            String user = this.getEmail(); 
             String line = fileLines[l];
             if (line.split(";")[0].equals(user)) { // found correct line
                 line = user + ";";
@@ -207,7 +194,7 @@ public class Customer extends User {
      */
     public void loadCart(String fileName) {
         String[] fileLines = readFile(fileName);
-        String user = this.getEmail(); // TODO: Update email to username, but there is not getUsername method rn
+        String user = this.getEmail(); 
         for (int l = 0; l < fileLines.length; l++) {
             String line = fileLines[l];
             if (line.split(";")[0].equals(user)) { // load these items
@@ -251,21 +238,28 @@ public class Customer extends User {
      * @param quantity: the amount of the item to be reomved
      */
     public void removeFromCart(Item item, int quanitity) {
-        // loop through cart indices 
-        // find specified listing
-        // remove from listings
-        // move index up
-        // TODO: this (hannah)
-        int i = item.findItem(this.cart);
+        int i = item.findItem(this.cart); // find item
         if (i < 0) {
             System.out.println("Cannot remove: Item not found in cart");
         } else if (quanitity >= cart.get(i).getQuantity()) {
+            if (quanitity > cart.get(i).getQuantity()) {
+                // if quantity is greater than amount in cart just set it to amount in cart
+                quanitity = cart.get(i).getQuantity(); 
+            }
             this.cart.remove(this.cart.get(i));
         } else {
             Item updatedItem = cart.get(i);
             updatedItem.changeQuanityBy(-1 * quanitity);
             this.cart.set(i, updatedItem);
         }
+
+        // update listinfs
+        i = item.findItem(this.listings);
+        Item updatedItem = this.listings.get(i); // get item from listings
+        updatedItem.changeQuanityBy(quanitity); // add quantity back to item
+        this.cart.set(i, updatedItem);
+
+        // save cart and listings
         saveCart(this.cartFileName);
     }
 

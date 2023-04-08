@@ -129,7 +129,7 @@ public class User {
     }
 
     public boolean isValidEmail(String email) { // verifies that the email exists and is greater than 0 characters
-        if ((email.length() == 0) {
+        if (email.length() == 0) {
             return false;
         } else {
             if (email.contains("@")) {
