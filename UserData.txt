@@ -1,2 +1,3 @@
-Email:sambodkin2@outlook.com, Password:red1234, UserType:Buyer
-Email:sambodkin3@outlook.com, Password:blue5678, UserType:Seller
+email, password, userType
+sambodkin2@outlook.com, red1234, Buyer
+tbridewe@purdue.edu, password, Seller

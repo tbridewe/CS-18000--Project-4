@@ -1,9 +1,10 @@
-public class Item {
+public class Item extends Object{
     private String name;
     private String store;
     private String description;
     private int quantity; // maybe move
     private double price;
+    private String sellerName;
 
     public Item(String name, String store, String description, int quantity, double price) {
         this.name = name;
@@ -31,6 +32,21 @@ public class Item {
         String line = String.format("%s,%s,%s,%d,%.2f", 
             this.name, this.store, this.description, this.quantity, this.price);
         return line;
+    }
+
+     /**
+     * equals()
+     * checks if the items are equal. Does NOT check quantity
+     */
+    public boolean equals(Item item) {
+        if ( this.name.equals(item.getName())
+            && this.store.equals(item.getStore())
+            && this.description.equals(item.getDescription())
+            && this.price == item.getPrice()) {
+                return true;
+        } else{
+            return false;
+        }
     }
     
     // get and set
@@ -72,6 +88,10 @@ public class Item {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void changeQuanityBy(int number) {
+        this.quantity += number;
     }
     
 }
