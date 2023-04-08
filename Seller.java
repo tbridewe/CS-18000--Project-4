@@ -195,7 +195,7 @@ public class Seller extends User {
         public int compare(String o1, String o2) {
             int quantity1 = Integer.parseInt(o1.split(",")[3]);
             int quantity2 = Integer.parseInt(o2.split(",")[3]);
-            return Double.compare(quantity1, quantity2);
+            return Integer.compare(quantity1, quantity2);
         }
     }
 
@@ -205,7 +205,7 @@ public class Seller extends User {
         public int compare(String o1, String o2) {
             int quantity1 = Integer.parseInt(o1.split(",")[3]);
             int quantity2 = Integer.parseInt(o2.split(",")[3]);
-            return Double.compare(quantity2, quantity1);
+            return Integer.compare(quantity2, quantity1);
         }
     }
 }
