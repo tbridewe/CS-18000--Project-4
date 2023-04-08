@@ -58,9 +58,9 @@ public class Menu {
                     System.out.println(PASSWORD);
                     String password = sc.nextLine();
 
-                    if (isValidEmail(email) == false) {
+                    if (User.isValidEmail(email) == false) {
                         System.out.println(INCORRECTCREDENTIALS);
-                    } else if (isValidEmail(email)) {
+                    } else if (User.isValidEmail(email)) {
                         if (isCorrectLogin(email, password)) {
                             System.out.println(LOGINSUCCESS);
                             //Set the current user to the login credentials
@@ -96,14 +96,22 @@ public class Menu {
             if (user.isBuyer()) {
                 //Marketplace market = new Marketplace(itemsFileName); // initialize marketplace object
                 //market.printListings();//print the marketplace
+                // CREATE A BUYER
+                Customer buyer = new Customer("email@gmail.com", "1234", 1);
+                // TODO: make an actual customer object 
                 System.out.println(BUYERMENU);
                 int buyerselection = Integer.parseInt(sc.nextLine());
                 boolean booleanBuyer = true;
                 do {
                     switch (buyerselection) {
-                        case 1: //Choose Item
+                        case 1: //Choose Item  
+                            buyer.printListings();                          
                             System.out.println("Please select the item you wish to purchase:");
                             int purchase = Integer.parseInt(sc.nextLine());
+                            System.out.println("How many would you like to add to the cart?");
+                            int quantity = Integer.parseInt(sc.nextLine());
+                            Item item = buyer.getDisplayedItem(purchase); // get the item
+                            buyer.addToCart(item, quantity);            // put the item in cart
                             //Add to cart function
                             break;
                         case 2: //Search
