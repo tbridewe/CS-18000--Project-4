@@ -11,6 +11,8 @@ public class Customer extends User {
     public Customer(String email, String password, int userType) throws InvalidUserInput {
         super(email, password, userType);
         // TODO: why is usertype an input here? The type is known to be customer
+
+        loadCart(this.cartFileName); // loads items from the cart file into the cart
     }
 
     /**
@@ -74,12 +76,27 @@ public class Customer extends User {
      * viewCart()
      * user has the option to view their cart and is displayed with a menu
      */
-    public static void viewCart(String cartOption) {
+    public void viewCart(String cartOption) {
         // print out all listings in the cart
+        printCart();
         if (cartOption.equals("Add")) {
             addToCart();
         }
         removeFromCart();
+    }
+
+    /**
+     * PrintCart()
+     * just prints the items in the cart with nice formatting. 
+     * TODO: we should standardize the print formatting at some point
+     */
+    public void printCart() {
+        String itemFormat = "[%3d]: %-30s | %-4d | %-24s | $ %-6.2f\n";
+        System.out.printf("[num]: %-30s | %-4s| %-24s | %-7s\n\n", "NAME", "QNTY", "STORE", "PRICE");
+        for (int i = 0; i < cart.size(); i++) {
+            Item item = cart.get(i);
+            System.out.printf(itemFormat, i+1, item.getName(), item.getQuantity(), item.getStore(), item.getPrice());
+        }
     }
 
     /**
@@ -97,14 +114,18 @@ public class Customer extends User {
             throw new InvalidQuantityException(String.format("Invalid Quantity: Must be >= 0"));
         }
         // check if item is already in cart
-        if (this.cart != null && this.cart.contains(item)) {
+        if (this.cart != null && item.findItem(this.cart) > 0) {
             // add quantity to existing item in cart
-            int i = cart.indexOf(item);
-            item.changeQuanityBy(cart.get(i).getQuantity()); // update quantity in item
-            cart.set(i, item);  // put updated item back in cart
+            int i = item.findItem(this.cart);
+            item.changeQuanityBy(this.cart.get(i).getQuantity()); // update quantity in item
+            this.cart.set(i, item);  // put updated item back in cart
+            // TODO: Finish debeugging this, it wasn't adjusting quantity properly (hannah)
+            /** 
+            * testing notes: some items add but some don't adding is also wrong. I'll fix it later
+            */
         } else {
             item.setQuantity(quantity); // set quantity to quantity added
-            cart.add(item);
+            this.cart.add(item);
         }
 
         // Write cart to file
@@ -113,8 +134,9 @@ public class Customer extends User {
 
     /**
      * saveCart()
-     * writes all the items in this.cart to the cart file
-     * Potential problem: it is assumed that there is only 1 line per user in cart file. 
+     * writes all the items in this.cart to the cart file. Puts them on the line of the corresponding user. 
+     * Potential problem: it is assumed that there is only 1 line per user in cart file.
+     * @param fileName: name of the shopping cart file 
      */
     public void saveCart(String fileName) {
         String[] fileLines = readFile(fileName);
@@ -141,6 +163,31 @@ public class Customer extends User {
         }
         writeFile(fileName, fileLines);
     }
+
+    /**
+     * loadCart()
+     * reads the cart file and puts the items for this user into this.cart
+     * @param fileName: name of the shopping cart file 
+     */
+    public void loadCart(String fileName) {
+        String[] fileLines = readFile(fileName);
+        String user = this.getEmail(); // TODO: Update email to username, but there is not getUsername method rn
+        for (int l = 0; l < fileLines.length; l++) {
+            String line = fileLines[l];
+            if (line.split(";")[0].equals(user)) { // load these items
+                String[] itemStrings = line.split(";");
+                for (int i = 1; i < itemStrings.length; i++) {
+                    try{    // catch invalid lines
+                        this.cart.add(new Item(itemStrings[i]));
+                    } catch (InvalidLineException e) {
+                        System.out.printf("Invalid item format line while reading %s. \nLine: %s\n", 
+                            this.cartFileName, itemStrings[i]);
+                    }
+                }
+                break;
+            }
+        }
+    }
     // public static void addToCart() {
     //     displayMarketplace(); // display options for user to select
     //     // prompt user for listing
@@ -157,6 +204,7 @@ public class Customer extends User {
         // find specified listing
         // remove from listings
         // move index up
+        // TODO: this (hannah)
     }
 
     /**

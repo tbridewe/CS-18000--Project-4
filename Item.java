@@ -1,4 +1,6 @@
-public class Item extends Object{
+import java.util.ArrayList;
+
+public class Item {
     private String name;
     private String store;
     private String description;
@@ -47,6 +49,25 @@ public class Item extends Object{
         } else{
             return false;
         }
+    }
+
+     /**
+     * isContainedIn()
+     * @param itemList: an arraylist of items
+     * returns index of item in array of items. returns -1 of no item is found
+     * Does NOT require equal quantity
+     */
+    public int findItem(ArrayList<Item> itemList) {
+        for (int i = 0; i < itemList.size(); i++) {
+            Item item = itemList.get(i);
+            if ( this.name.equals(item.getName()) // same conditions as equals method but this doesn't require self-referencing
+            && this.store.equals(item.getStore())
+            && this.description.equals(item.getDescription())
+            && this.price == item.getPrice()) {
+                return i;
+            }
+        }
+        return -1;
     }
     
     // get and set
