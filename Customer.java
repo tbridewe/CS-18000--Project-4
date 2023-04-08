@@ -6,8 +6,10 @@ import java.util.Arrays;
 public class Customer extends User {
     private ArrayList<Item> cart = new ArrayList<>(); // stores the user's items. Everytime the cart is updtates the cart file will also be updated
     private ArrayList<Item> listings;
+    private ArrayList<Item> sortedListings;
     private String cartFileName = "shoppingCarts.txt";
     private String itemListingsFileName = "itemListings.txt";
+    private String customerLogFileName  = "customerLog.txt";
 
     public Customer(String email, String password, int userType) throws InvalidUserInput {
         super(email, password, userType);
@@ -60,19 +62,6 @@ public class Customer extends User {
         }
     }
 
-    /**
-     * displayMarketplace
-     * reads file containing listings on the marketplace by newest to oldest,
-     * prints view to the console
-     *
-     */
-    public static void displayMarketplace() {
-        String[] contents = readFile("/Users/tristan.brideweser/Desktop/SP 2023/CS 18000/Projects/PJ04/PJ04/src/Listings.txt");
-
-        for (int i = 0; i < contents.length; i++) {
-            System.out.println(contents[i]);
-        }
-    }
 
     /**
      * PrintCart()
@@ -88,6 +77,7 @@ public class Customer extends User {
     }
 
     public void printListings() {
+        this.sortedListings = listings;
         String itemFormat = "[%3d]: %-30s | %-24s | %-4s | $ %-6.2f\n";
         System.out.printf("[num]: %-30s | %-24s | %-4s | %-7s\n\n", "NAME", "STORE", "QNTY", "PRICE");
         for (int i = 0; i < this.listings.size(); i++) {
@@ -96,13 +86,14 @@ public class Customer extends User {
         }
     }
 
+
     /**
      * getDisplayedItem()
      * @param index: The DISPLAYED index of the item (from print)
      */
     public Item getDisplayedItem(int index) {
         // index from the printed listing
-        return this.listings.get(index - 1);
+        return this.sortedListings.get(index - 1);
     }
 
     /**
@@ -288,6 +279,53 @@ public class Customer extends User {
         return listingsWKeyword;
     }
 
+    /**
+     * checkout()
+     * @return double the total price of the cart 
+     */
+    public double checkout() {
+        double price = 0;
+        for (int i = 0; i < this.cart.size(); i++) {
+
+            price += this.cart.get(i).getPrice();
+        }
+
+        String[] fileLines = readFile(this.customerLogFileName);
+        // copied from saveCart()
+        for (int l = 0; l < fileLines.length; l++) { // find the correct user line
+            String user = this.getEmail(); 
+            String line = fileLines[l];
+            if (line.split(";")[0].equals(user)) { // found correct line
+                line = user + ";";
+                for (int i = 0; i < cart.size(); i++) {
+                    line += cart.get(i).toLine() + ";";
+                }
+                fileLines[l] = line; // replace updated line
+                break;
+            }
+            if (l == fileLines.length-1) { // user has no existing log file
+                ArrayList<String> newLines = new ArrayList<>(Arrays.asList(fileLines));
+                line = user + ";";
+                for (int i = 0; i < cart.size(); i++) {
+                    line += cart.get(i).toLine() + ";";
+                }
+                newLines.add(line);
+                fileLines = newLines.toArray(new String[0]);
+            }
+        }
+        writeFile(this.customerLogFileName, fileLines);
+        this.cart.clear(); // remove all items
+        saveCart(cartFileName);
+        return price;
+    }
+
+    public void viewPurchases() {
+        // TODO: 
+    }
+
+    public void exportPurchases() {
+        // TODO: 
+    }
     /**
      * sortMarketplace(int sortType, int sortOrder)
      * sorts the marketplace listings based on user input
