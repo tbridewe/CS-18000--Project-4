@@ -1,13 +1,34 @@
-# CS-18000---Project-4
+# CS-18000--Project-4--README
 
-The README must include:
+## Running the Project
+To run Project 4, navigate to the 
+___
+## Submissions
+- Brighspace
+- Vocareum
+___
+## User
+Provides implementation of a User in the Marketplace, either of a Seller or a Customer.
+## Customer
+Provides implementation of a Customer in the Marketplace
+## Seller
+Provides implementation of a Customer in the Marketplace
+## Item
+A listing in the Marketplace
+## Marketplace
+Are we keeping this?
+## Menu
+Displays prompts for the user
+## IncorrectLoginInformationException
+Thrown when login information is incorrect?
+## InvalidLineException
+Thrown when line is invalid?
+## InvalidQuantityException
+Thrown when quantity is invalid
+## InvalidUserInputException
+Thrown when user input is invalid?
 
-1. Instructions on how to compile and run your project. 
-2. A list of who submitted which parts of the assignment on Brightspace and Vocareum. 
-For example: Student 1 - Submitted Report on Brightspace. Student 2 - Submitted Vocareum workspace.
-3. A detailed description of each class. This should include the functionality included in the class, the testing done to verify it works properly, and its relationship to other classes in the project. 
-
-_________________________________________________________________________________________________________________________________________________________
+___
 
 Common Features
 While the specifics of each implementation will be related to the option you select, there are several common features for every project. 
@@ -41,7 +62,7 @@ Stores
 - Customers can access any store that has been created. 
 
 Note: The term "user" is used to refer to any user of the application, including both customers and sellers. 
-_________________________________________________________________________________________________________________________________________________________
+___
 Core
 - Market
   - The marketplace will be a centralized page listing available
@@ -64,7 +85,7 @@ products for purchase.
   - Customers can view the overall marketplace listing products for sale, search for specific products using terms that match the name, store, or
   description, and sort the marketplace on price or quantity available.
   - Customers can purchase items from the product page and review a history of their previously purchased items.
-_________________________________________________________________________________________________________________________________________________________
+___
 Selections
   - Files
     - All file imports must occur as a prompt to enter the file path.
@@ -82,7 +103,7 @@ Selections
   - Customers can add products from different stores to a shopping cart to purchase all at once, and can remove any product if they choose to do so. The
   shopping cart is preserved between sessions, so a customer may choose to sign out and return to make the purchase later.
   - Sellers can view the number of products currently in customer shopping carts, along with the store and details associated with the products.
-_________________________________________________________________________________________________________________________________________________________
+___
 Optional Features:
 - Sellers can elect to hold sales that reduce the price of a product until a specified number of units are sold. Customers will be informed of the
 original and sale price when browsing the marketplace.
