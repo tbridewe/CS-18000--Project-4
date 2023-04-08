@@ -37,3 +37,27 @@ ___
       - if yes, add to their history
       - if no, add them to a new line
 ___
+# Finish these things:
+
+## Seller (Tristan)
+- add from CSV
+- add individual
+- some other thing
+## Customer (Hannah)
+- customer log stuff
+- update sorting method (Tristan - from Seller)
+- exporting history
+## User (Sam)
+- be able to edit and delete accounts (manage acc menu)
+## Menu (Liam)
+- change functions to work with parameters
+- statistics fits with Tristan's
+- less nesting? (PJ05)
+## Test (Sam)
+- develop more (have to make sure everything else compiles)
+- check for exceptions, check for correct inputs/outputs, check for correct parameters
+- TBD
+## Exceptions
+- any more to add?
+## Item
+- DONE
