@@ -1,1 +1,2 @@
-username, shoppingCart
+username; shoppingCart
+hahah@gmail.com;Samsung Galaxy S21,Cellular Express,128GB Smartphone Phantom Gray,2,899.99;Apple Watch Series 7,Tech Hub,44mm GPS + Cellular Midnight Aluminum Case with Deep Navy Sport Band,2,499.99;

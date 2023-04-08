@@ -1,10 +1,16 @@
 import java.io.*;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Customer extends User {
+    private ArrayList<Item> cart = new ArrayList<>(); // stores the user's items. Everytime the cart is updtates the cart file will also be updated
+    private ArrayList<Item> listings;
+    private String cartFileName = "shoppingCarts.txt";
 
-    public Customer(String email, String password, int userType) {
+    public Customer(String email, String password, int userType) throws InvalidUserInput {
         super(email, password, userType);
+        // TODO: why is usertype an input here? The type is known to be customer
     }
 
     /**
@@ -29,6 +35,25 @@ public class Customer extends User {
         }
         fileContents = contents.toArray(new String[0]);
         return fileContents;
+    }
+
+    /**
+     * writeFile(String filename)
+     * @param filename: name of the file that needs to be read
+     * @param lines: array of lines to be written
+     * @return String[] with all the lines of the file
+     */
+    public static void writeFile(String filename, String[] lines) {
+        File file = new File(filename);
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+            for (int i = 0; i < lines.length; i++) {
+                bw.write(lines[i] + "\n");
+            }
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -59,13 +84,68 @@ public class Customer extends User {
 
     /**
      * addToCart()
-     * 
+     * @param item: the item to be added to the cart
+     * @param quantity: the quanitity to be added
+     * @exception InvalidQuantityException: if the quantity is more than is in stock or <= 0. The quanity in the item object should be the amount in stock
+     * This adds the item to the cart and adjusts the items remaining in the store accordingly
      */
-    public static void addToCart() {
-        displayMarketplace(); // display options for user to select
-        // prompt user for listing
-        // append the new listing to the shopping cart
+    public void addToCart(Item item, int quantity) throws InvalidQuantityException {
+        // check quantity
+        if (quantity > item.getQuantity()) {
+            throw new InvalidQuantityException(String.format("Invalid Quantity: There are only %d of this item in stock", item.getQuantity()));
+        } else if (quantity <= 0) {
+            throw new InvalidQuantityException(String.format("Invalid Quantity: Must be >= 0"));
+        }
+        // check if item is already in cart
+        if (this.cart != null && this.cart.contains(item)) {
+            // add quantity to existing item in cart
+            int i = cart.indexOf(item);
+            item.changeQuanityBy(cart.get(i).getQuantity()); // update quantity in item
+            cart.set(i, item);  // put updated item back in cart
+        } else {
+            item.setQuantity(quantity); // set quantity to quantity added
+            cart.add(item);
+        }
+
+        // Write cart to file
+        saveCart(this.cartFileName);
     }
+
+    /**
+     * saveCart()
+     * writes all the items in this.cart to the cart file
+     * Potential problem: it is assumed that there is only 1 line per user in cart file. 
+     */
+    public void saveCart(String fileName) {
+        String[] fileLines = readFile(fileName);
+        for (int l = 0; l < fileLines.length; l++) { // find the correct user line
+            String user = this.getEmail(); // TODO: Update email to username, but there is not getUsername method rn
+            String line = fileLines[l];
+            if (line.split(";")[0].equals(user)) { // found correct line
+                line = user + ";";
+                for (int i = 0; i < cart.size(); i++) {
+                    line += cart.get(i).toLine() + ";";
+                }
+                fileLines[l] = line; // replace updated line
+                break;
+            }
+            if (l == fileLines.length-1) { // user has no existing cart file
+                ArrayList<String> newLines = new ArrayList<>(Arrays.asList(fileLines));
+                line = user + ";";
+                for (int i = 0; i < cart.size(); i++) {
+                    line += cart.get(i).toLine() + ";";
+                }
+                newLines.add(line);
+                fileLines = newLines.toArray(new String[0]);
+            }
+        }
+        writeFile(fileName, fileLines);
+    }
+    // public static void addToCart() {
+    //     displayMarketplace(); // display options for user to select
+    //     // prompt user for listing
+    //     // append the new listing to the shopping cart
+    // }
 
     /**
      * removeFromCart(Item listing)
