@@ -20,6 +20,7 @@ ___
   - store methods
     - display
     - stats
+    - email, [[item1], [item2],...]
 - Customer
   - make sort output sorted list
   - remove from cart
