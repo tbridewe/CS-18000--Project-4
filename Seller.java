@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -20,7 +19,7 @@ public class Seller extends User {
         this.stores = stores;
     }
 
-    public static String[] readFile(String filename) {
+    public String[] readFile(String filename) {
         String[] fileContents;
         ArrayList<String> contents = new ArrayList<>();
 
@@ -39,18 +38,14 @@ public class Seller extends User {
         return fileContents;
     }
 
-    public static writeFile(String filename) {
-
-    }
-
-    public static ArrayList<String> displayItems() {
-        String[] contents = readFile("listings.txt");
+    public ArrayList<String> displayItems() {
+        String[] itemsList = readFile("listings.txt");
         ArrayList<String> sellerItems = new ArrayList<>();
 
-        for (int i = 0; i < contents.length; i++) {
-            if (stores.contains(contents[i].split(",")[1])) {
-                sellerItems.add(contents[i]);
-                System.out.println(contents[i]);
+        for (int i = 0; i < itemsList.length; i++) {
+            if (stores.contains(itemsList[i].split(",")[1])) {
+                sellerItems.add(itemsList[i]);
+                System.out.println(itemsList[i]);
             }
         }
         return sellerItems;
@@ -65,21 +60,22 @@ public class Seller extends User {
 
     }
 
-    public static void addNewItem(Item item) {
+    public void addNewItem(Item item) {
         ArrayList<String> sellerItems = displayItems();
 
         for (int i = 0; i < sellerItems.size(); i++) { // loop through all the seller items
-            if (sellerItems.get(i).contains()))
-        }
-        if (sellerItems.contains(String.valueOf(item))) { // if item already exists in item listings, just update quantity
-            item.setQuantity(item.getQuantity() + );
-        } else {
-            sellerItems.set(sellerItems.size() + 1, String.valueOf(item)); // add new entry into sellerItems
+            if (sellerItems.get(i).contains(item.getName()) &&
+                    sellerItems.get(i).contains(item.getDescription()) &&
+                    sellerItems.get(i).contains(item.getStore()) &&
+                    sellerItems.get(i).contains(String.valueOf(item.getPrice())) &&
+                    !sellerItems.get(i).contains(String.valueOf(item.getQuantity()))) {
+                
+            }
         }
     }
 
     // DONE
-    public static void removeItem(Item item) {
+    public  void removeItem(Item item) {
         ArrayList<String> sellerItems = displayItems(); // seller items
 
         for (int i = 0; i < sellerItems.size(); i++) { // loop through seller items
@@ -120,15 +116,16 @@ public class Seller extends User {
     public void viewSpecificStat(String statType) {
         switch (statType) {
             case "Price":
+
             case "Quantity":
         }
     }
 
-    public static void viewAllStats() {
+    public void viewAllStats() {
         String[] stats = readFile("cartHistory.txt");
 
         for (int i = 0; i < stats.length; i++) {
-
+            String[] statsDetails = stats[i].split(",");
         }
     }
 
@@ -136,7 +133,7 @@ public class Seller extends User {
         String[] stats = readFile("CustomerLog.txt");
         ArrayList<String> statsList = new ArrayList<>();
         ArrayList<String> sortedStatsList = new ArrayList<>();
-        
+
         Collections.addAll(statsList, stats);
 
         switch (sortType) {
