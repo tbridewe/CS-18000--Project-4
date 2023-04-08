@@ -1,0 +1,3 @@
+email, cartHistory
+tbridewe@purdue.edu, [[Chevy Camaro, Bob's Dealership, 2010 car, 1, 2500.00], [Basketball, Johnny, Spalding men's basketball, 3, 25.00]]
+bob_boberts@gmail.com, [[Beach Chair, Sherry's Chairs, Blue and white beach chair, 2, 19.95]]
