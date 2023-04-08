@@ -270,7 +270,7 @@ public class Customer extends User {
      */
     public ArrayList<Item> keywordSearch(String keyword) {
         int j = 0;
-        ArrayList<Item> listingsWKeyword = new ArrayList<Item>();
+        ArrayList<Item> listingsWKeyword = new ArrayList<>();
         for (int i = 0; i < listings.size(); i++) {
             if (listings.get(i).getName().contains(keyword) || listings.get(i).getStore().contains(keyword) || 
                     listings.get(i).getDescription().contains(keyword)) {
