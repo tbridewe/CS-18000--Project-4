@@ -7,12 +7,14 @@ public class Customer extends User {
     private ArrayList<Item> cart = new ArrayList<>(); // stores the user's items. Everytime the cart is updtates the cart file will also be updated
     private ArrayList<Item> listings;
     private String cartFileName = "shoppingCarts.txt";
+    private String itemListingsFileName = "itemListings.txt";
 
     public Customer(String email, String password, int userType) throws InvalidUserInput {
         super(email, password, userType);
         // TODO: why is usertype an input here? The type is known to be customer
 
         loadCart(this.cartFileName); // loads items from the cart file into the cart
+        loadListings(this.itemListingsFileName);
     }
 
     /**
@@ -88,15 +90,32 @@ public class Customer extends User {
     /**
      * PrintCart()
      * just prints the items in the cart with nice formatting. 
-     * TODO: we should standardize the print formatting at some point
      */
     public void printCart() {
         String itemFormat = "[%3d]: %-30s | %-4d | %-24s | $ %-6.2f\n";
-        System.out.printf("[num]: %-30s | %-4s| %-24s | %-7s\n\n", "NAME", "QNTY", "STORE", "PRICE");
+        System.out.printf("[num]: %-30s | %-4s | %-24s | %-7s\n\n", "NAME", "QNTY", "STORE", "PRICE");
         for (int i = 0; i < cart.size(); i++) {
             Item item = cart.get(i);
             System.out.printf(itemFormat, i+1, item.getName(), item.getQuantity(), item.getStore(), item.getPrice());
         }
+    }
+
+    public void printListings() {
+        String itemFormat = "[%3d]: %-30s | %-24s | %-4s | $ %-6.2f\n";
+        System.out.printf("[num]: %-30s | %-24s | %-4s | %-7s\n\n", "NAME", "STORE", "QNTY", "PRICE");
+        for (int i = 0; i < this.listings.size(); i++) {
+            Item item = this.listings.get(i);
+            System.out.printf(itemFormat, i+1, item.getName(), item.getStore(), item.getQuantity(), item.getPrice());
+        }
+    }
+
+    /**
+     * getDisplayedItem()
+     * @param index: The DISPLAYED index of the item (from print)
+     */
+    public Item getDisplayedItem(int index) {
+        // index from the printed listing
+        return this.listings.get(index - 1);
     }
 
     /**
@@ -117,19 +136,22 @@ public class Customer extends User {
         if (this.cart != null && item.findItem(this.cart) > 0) {
             // add quantity to existing item in cart
             int i = item.findItem(this.cart);
-            item.changeQuanityBy(this.cart.get(i).getQuantity()); // update quantity in item
+            item.setQuantity(this.cart.get(i).getQuantity() + quantity); // update quantity in item
             this.cart.set(i, item);  // put updated item back in cart
-            // TODO: Finish debeugging this, it wasn't adjusting quantity properly (hannah)
-            /** 
-            * testing notes: some items add but some don't adding is also wrong. I'll fix it later
-            */
         } else {
             item.setQuantity(quantity); // set quantity to quantity added
             this.cart.add(item);
         }
 
-        // Write cart to file
+        // Remove item from listings
+        int i = item.findItem(this.listings);
+        item = this.listings.get(i);            // get item from listings
+        item.changeQuanityBy(-1 * quantity); // update item quanitity
+        this.listings.set(i, item);             // put updated item back into listings
+        
+        // Write cart and listings file
         saveCart(this.cartFileName);
+        saveListings(this.itemListingsFileName);
     }
 
     /**
@@ -165,6 +187,20 @@ public class Customer extends User {
     }
 
     /**
+     * saveListings()
+     * writes all the items in this.cart to the cart file. Puts them on the line of the corresponding user. 
+     * Potential problem: it is assumed that there is only 1 line per user in cart file.
+     * @param fileName: name of the shopping cart file 
+     */
+    public void saveListings(String fileName) {
+        String[] fileLines = new String[this.listings.size()];
+        for (int l = 0; l < this.listings.size(); l++) {
+            fileLines[l] = this.listings.get(l).toLine();
+        }
+        writeFile(fileName, fileLines);
+    }
+
+    /**
      * loadCart()
      * reads the cart file and puts the items for this user into this.cart
      * @param fileName: name of the shopping cart file 
@@ -188,23 +224,49 @@ public class Customer extends User {
             }
         }
     }
-    // public static void addToCart() {
-    //     displayMarketplace(); // display options for user to select
-    //     // prompt user for listing
-    //     // append the new listing to the shopping cart
-    // }
+
+    /**
+     * loadListings()
+     * reads the item listings file file and puts loads items
+     * @param fileName: name of the shopping cart file 
+     */
+    public void loadListings(String fileName) {
+        String[] fileLines = readFile(fileName);
+        ArrayList<Item> items = new ArrayList<>();
+        for (int l = 0; l < fileLines.length; l++) {
+            String line = fileLines[l];
+            try {  
+                items.add(new Item(line));
+            } catch (InvalidLineException e) { // invalid line format exception
+                e.printStackTrace();
+            }
+        }
+        this.listings = items;
+    }
 
     /**
      * removeFromCart(Item listing)
      * removes specified listing from the cart
-     * @param listing: the specified listing that the user wants to remove from cart
+     * @param item: the specified listing that the user wants to remove from cart
+     * @param quantity: the amount of the item to be reomved
      */
-    public static void removeFromCart(Item listing) {
+    public void removeFromCart(Item item, int quanitity) {
         // loop through cart indices 
         // find specified listing
         // remove from listings
         // move index up
         // TODO: this (hannah)
+        int i = item.findItem(this.cart);
+        if (i < 0) {
+            System.out.println("Cannot remove: Item not found in cart");
+        } else if (quanitity >= cart.get(i).getQuantity()) {
+            this.cart.remove(this.cart.get(i));
+        } else {
+            Item updatedItem = cart.get(i);
+            updatedItem.changeQuanityBy(-1 * quanitity);
+            this.cart.set(i, updatedItem);
+        }
+        saveCart(this.cartFileName);
     }
 
     /**

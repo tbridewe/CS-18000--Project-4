@@ -4,17 +4,16 @@ Samsung Galaxy S21,Cellular Express,128GB Smartphone Phantom Gray,10,899.99
 Canon EOS Rebel T8i,Camera World,24.2MP DSLR Camera with 18-55mm Lens Kit,17,899.99
 Apple Watch Series 7,Tech Hub,44mm GPS + Cellular Midnight Aluminum Case with Deep Navy Sport Band,5,499.99
 Beats Studio3 Wireless,Electronics Emporium,Over-Ear Headphones Matte Black,3,349.99
-LG OLED TV,Best Buy,65-inch 4K Ultra HD Smart TV OLED65CXPUA,1,1,999.99
-Dyson V11 Torque Drive,Home Goods Outlet,Cordless Vacuum Cleaner Blue,100,699.99
+LG OLED TV,Best Buy,65-inch 4K Ultra HD Smart TV OLED65CXPUA,1,1.00
+Dyson V11 Torque Drive,Home Goods Outlet,Cordless Vacuum Cleaner Blue,98,699.99
 Oakley Holbrook Sunglasses,Fashion Optics,Matte Black Frame with Prizm Sapphire Lens,15,156.00
-Nintendo Switch Lite,Gamestop,Handheld Console Turquoise,8,199.99
-Bose SoundLink Revolve+,Audio World,Portable Bluetooth Speaker Triple Black,7,299.99
+Nintendo Switch Lite,Gamestop,Handheld Console Turquoise,7,199.99
+Bose SoundLink Revolve+,Audio World,Portable Bluetooth Speaker Triple Black,5,299.99
 Vitamix Explorian Blender,Kitchen Essentials,Professional-Grade Blender Red,34,349.99
 Fitbit Versa 3,Sporting Goods Inc.,GPS Smartwatch Black Aluminum Case with Black Sport Band,78,229.99
 Sony WH-1000XM4,Electronics Emporium,Wireless Noise-Canceling Headphones Silver,1,349.99
 Garmin Forerunner 945,Sporting Goods Inc.,GPS Running Watch Black,1,599.99
 Le Creuset Dutch Oven,Kitchen Essentials,5.5-Quart Round Dutch Oven Flame,1,359.99
-LG Gram Laptop,Best Buy,15.6-inch Ultralight Laptop Intel Core i7 16GB RAM,1TB SSD,1,1,399.99
 Sennheiser HD 660 S,Audio World,Open-Back Headphones Matte Black,18,499.99
 Amazon Kindle Paperwhite,Tech Hub,Waterproof eReader with 8GB Storage Black,65,129.99
 GoPro HERO9 Black,Camera World,5K Ultra HD Action Camera with Front Display and Touch Screen,3,449.99
