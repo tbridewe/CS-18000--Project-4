@@ -201,7 +201,6 @@ public class Menu {
                                         specificStats();
                                     }
                                 } else {
-                                    break;
                                     System.out.println("You have no Stores!");
                                     break;
                                 }
