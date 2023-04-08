@@ -128,11 +128,12 @@ public class User {
         return true;
     }
 
-    public boolean isValidEmail(String email) { // verifies that the email exists and is greater than 0 characters
-        if (email.length() == 0) {
+    public boolean isValidEmail(String email) { // verifies that the email is valid
+        int a = email.indexOf('@');
+        if ((email.length() == 0)) {
             return false;
         } else {
-            if (email.contains("@")) {
+            if ((email.contains("@")) && (a != 0) && (email.charAt(email.length()-3)=='.')) {
                 return true;
             } else {
                 return false;
