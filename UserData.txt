@@ -1,3 +1,0 @@
-email, password, userType
-sambodkin2@outlook.com, red1234, Buyer
-tbridewe@purdue.edu, password, Seller
