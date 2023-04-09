@@ -1,8 +1,8 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.*;
-public class Menu {
 
+public class Menu {
     public final static String WELCOME = "Welcome to the Marketplace!";
     public final static String WELCOME_MENU = "Please select an option:\n(1) Login\n(2) Create an Account\n(3) Quit";
     public final static String LINES = "-----------------";
@@ -19,15 +19,28 @@ public class Menu {
     public final static String EDIT_OPTIONS = "(1) Edit Account Email\n(2) Edit Account Password\n(3) Delete Account\n(4) Back";
     public final static String CONFIRM = "Are you sure you would like to change your %s?\n";
     public final static String CONFIRM_OPTIONS = "(1) Yes\n(2) No";
+    public final static String OPTION_ERROR = "Please enter a valid option!";
     public final static String NEW_EMAIL = "Please enter a new email address for your account";
     public final static String NEW_PASSWORD = "Please enter a new password for your account";
     public final static String CREATE_ACCOUNT = "No account found with that email! Would you like to make an account, or continue trying to log in?";
     public final static String CREATE_OPTIONS = "(1) Create New Account\n(2) Re-attempt Login\n(3) Back";
     private static String itemsFileName = "ItemInformation.txt";
 
-    //public Menu(String email, String password, int userType) throws InvalidUserInput {
-    //  super(email, password, userType);
-    //}//
+    private static int processInteger(Scanner sc) {
+        boolean cond = true;
+        int integer = 0;
+        while (cond) {
+            try {
+                String line = sc.nextLine();
+                integer = Integer.parseInt(line);
+                cond = false;
+            } catch (NumberFormatException e) {
+                System.out.println(OPTION_ERROR);
+            }
+        }
+
+        return integer;
+    }
 
     public static void main(String[] args) throws InvalidUserInput {
         int welcomeOption;
