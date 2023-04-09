@@ -9,16 +9,34 @@ ___
 ___
 ## User
 Provides implementation of a User in the Marketplace, either of a Seller or a Customer.
+| Method      | Parameters  | Returns     | Description |
+| ----------- | ----------- | ----------- | ----------- |
+| method1     |             |             |             |
+| method2     |             |             |             |
 ## Customer
 Provides implementation of a Customer in the Marketplace
+| Method      | Description |
+| ----------- | ----------- |
+| method1     |             |
+| method2     |             |
 ## Seller
 Provides implementation of a Customer in the Marketplace
+| Method      | Description |
+| ----------- | ----------- |
+| method1     |             |
+| method2     |             |
 ## Item
 A listing in the Marketplace
-## Marketplace
-Are we keeping this?
+| Method      | Description |
+| ----------- | ----------- |
+| method1     |             |
+| method2     |             |
 ## Menu
 Displays prompts for the user
+| Method      | Description |
+| ----------- | ----------- |
+| method1     |             |
+| method2     |             |
 ## IncorrectLoginInformationException
 Thrown when login information is incorrect?
 ## InvalidLineException
