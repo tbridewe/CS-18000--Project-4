@@ -66,12 +66,31 @@ public class RunLocalTest {
             System.setIn(testIn);
         }
 
+        // USER CLASS
+
+        @Test(timeout = 1000)
+        public void testUserExists() {
+            String check = "email3@email.com";
+
+            boolean expected = true;
+            boolean output = User.accountExists(check);
+
+            boolean expected2 = false;
+            boolean output2 = User.accountExists(check + "mail");
+
+            assertEquals("Make sure the accountExists method in User matches the expected value",
+                    expected, output);
+
+            assertEquals("Make sure the accountExists method in User matches the expected value",
+                    expected2, output2);
+        }
+
         @Test(timeout = 1000)
         public void testValidEmailOutput1() {
             boolean expected = false;
             boolean output = User.isValidEmail("Sambodkinlive");
 
-            assertEquals("Make sure the isValidEmail method in User matches the expected format",
+            assertEquals("Make sure the isValidEmail method in User matches the expected value",
                     expected, output);
         }
 
@@ -80,7 +99,7 @@ public class RunLocalTest {
             boolean expected = true;
             boolean output = User.isValidEmail("Sambodkin@live.com");
 
-            assertEquals("Make sure the isValidEmail method in User matches the expected format",
+            assertEquals("Make sure the isValidEmail method in User matches the expected value",
                     expected, output);
         }
 
@@ -89,7 +108,7 @@ public class RunLocalTest {
             boolean expected = false;
             boolean output = User.isValidEmail("Sambodkin@live.co");
 
-            assertEquals("Make sure the isValidEmail method in User matches the expected format",
+            assertEquals("Make sure the isValidEmail method in User matches the expected value",
                     expected, output);
         }
 
@@ -98,9 +117,11 @@ public class RunLocalTest {
             boolean expected = false;
             boolean output = User.isValidEmail("sambo@.com");
 
-            assertEquals("Make sure the isValidEmail method in User matches the expected format",
+            assertEquals("Make sure the isValidEmail method in User matches the expected value",
                     expected, output);
         }
+
+        // MENU CLASS
 
         @Test(timeout = 1000)
         public void testExpectedOutput() throws InvalidUserInput {
@@ -138,8 +159,79 @@ public class RunLocalTest {
                     expected.trim(), output.trim());
         }
 
+        @Test(timeout = 1000)
+        public void testExpectedOutput2() throws InvalidUserInput {
+            String expected =
+                    "Welcome to the Marketplace!" +
+                            System.lineSeparator() +
+                            "Please select an option:" +
+                            System.lineSeparator() +
+                            "(1) Login" +
+                            System.lineSeparator() +
+                            "(2) Create an Account" +
+                            System.lineSeparator() +
+                            "(3) Quit" +
+                            System.lineSeparator() +
+                            "Create New Account" +
+                            System.lineSeparator() +
+                            "-----------------" +
+                            System.lineSeparator() +
+                            "Create Account" +
+                            System.lineSeparator() +
+                            "Are you a Buyer or a Seller" +
+                            System.lineSeparator() +
+                            "Email:" +
+                            System.lineSeparator() +
+                            "Password:" +
+                            System.lineSeparator() +
+                            "Account successfully created!" +
+                            System.lineSeparator() +
+                            "Please select an option:" +
+                            System.lineSeparator() +
+                            "(1) Choose Item" +
+                            System.lineSeparator() +
+                            "(2) Search" +
+                            System.lineSeparator() +
+                            "(3) Sort" +
+                            System.lineSeparator() +
+                            "(4) View Cart" +
+                            System.lineSeparator() +
+                            "(5) Edit Account" +
+                            System.lineSeparator() +
+                            "(6) Log Out" +
+                            System.lineSeparator() +
+                            "Goodbye!" +
+                            System.lineSeparator() +
+                            "Please select an option:" +
+                            System.lineSeparator() +
+                            "(1) Login" +
+                            System.lineSeparator() +
+                            "(2) Create an Account" +
+                            System.lineSeparator() +
+                            "(3) Quit" +
+                            System.lineSeparator() +
+                            "Bye!";
 
+            String input = "2" + System.lineSeparator() +
+                    "Buyer" + System.lineSeparator() +
+                    "sambodkin3@live.com" + System.lineSeparator() +
+                    "abc123" + System.lineSeparator() +
+                    "6" + System.lineSeparator() +
+                    "3" + System.lineSeparator();
 
+            // Runs the program with the input values
+            receiveInput(input);
+            Menu.main(new String[0]);
+
+            // Retrieves the output from the program
+            String output = getOutput();
+
+            // Trims the output and verifies it is correct.
+            output = output.replace("\r\n", "\n");
+            expected = expected.replace("\r\n", "\n");
+
+            assertEquals("Make sure your output matches the expected format",
+                    expected.trim(), output.trim());
+        }
     }
-
 }
