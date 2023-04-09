@@ -3,25 +3,31 @@ import java.util.ArrayList;
 import java.io.*;
 public class Menu {
 
-    public static String WELCOME = "Welcome to the Marketplace!";
-    public static String WELCOME_MENU = "Please select an option:\n(1) Login\n(2) Create an Account\n(3) Quit";
-    public static String LINES = "-----------------";
-    public static String EMAIL = "Email:";
-    public static String PASSWORD = "Password:";
-    public static String INCORRECT_CREDENTIALS = "Incorrect login credentials or account does not exist, please try again.";
-    public static String LOGIN_SUCCESS = "Login Successful";
-    public static String USER_EXISTS = "Username is taken, please try again";
-    public static String ACCOUNT_CREATED = "Account successfully created!";
-    public static String BUYER_MENU = "Please select an option:\n(1) Choose Item\n(2) Search\n(3) Sort\n(4) View cart\n(5) Log out";
-    public static String SELLER_MENU = "(1) View Listings\n(2) View Statistics\n(3) Log out";
-    public static String LISTINGS = "(1) Add\n(2) Edit\n(3) Delete\n(4) Back";
-    public static String INVALID_OPTION = "Invalid Option!";
+    public final static String WELCOME = "Welcome to the Marketplace!";
+    public final static String WELCOME_MENU = "Please select an option:\n(1) Login\n(2) Create an Account\n(3) Quit";
+    public final static String LINES = "-----------------";
+    public final static String EMAIL = "Email:";
+    public final static String PASSWORD = "Password:";
+    public final static String INCORRECT_CREDENTIALS = "Incorrect login credentials or account does not exist, please try again.";
+    public final static String LOGIN_SUCCESS = "Login Successful";
+    public final static String USER_EXISTS = "Username is taken, please try again";
+    public final static String ACCOUNT_CREATED = "Account successfully created!";
+    public final static String BUYER_MENU = "Please select an option:\n(1) Choose Item\n(2) Search\n(3) Sort\n(4) View cart\n(5) Edit Account\n(6) Log out";
+    public final static String SELLER_MENU = "(1) View Listings\n(2) View Statistics\n(3) Edit Account\n(4) Log out";
+    public final static String LISTINGS = "(1) Add\n(2) Edit\n(3) Delete\n(4) Back";
+    public final static String INVALID_OPTION = "Invalid Option!";
+    public final static String EDIT_OPTIONS = "(1) Edit Account Email\n(2) Edit Account Password\n(3) Delete Account\n(4) Back";
+    public final static String CONFIRM = "Are you sure you would like to change your %s?\n";
+    public final static String CONFIRM_OPTIONS = "(1) Yes\n(2) No";
+    public final static String NEW_EMAIL = "Please enter a new email address for your account";
+    public final static String NEW_PASSWORD = "Please enter a new password for your account";
+    public final static String CREATE_ACCOUNT = "No account found with that email! Would you like to make an account, or continue trying to log in?";
+    public final static String CREATE_OPTIONS = "(1) Create New Account\n(2) Re-attempt Login\n(3) Back";
     private static String itemsFileName = "ItemInformation.txt";
 
     //public Menu(String email, String password, int userType) throws InvalidUserInput {
     //  super(email, password, userType);
     //}//
-
 
     public static void main(String[] args) throws InvalidUserInput {
         int welcomeOption;
@@ -31,6 +37,8 @@ public class Menu {
 
         Scanner sc = new Scanner(System.in);
         System.out.println(WELCOME);
+
+        boolean creatingAccount = false;
 
         while (true) {
             //User user = null;
@@ -62,28 +70,36 @@ public class Menu {
                         System.out.println(PASSWORD);
                         String password = sc.nextLine();
 
-                        if (!User.isValidEmail(email)) {
-                            System.out.println(INCORRECT_CREDENTIALS);
-                        } else if (User.isValidEmail(email)) {
-                            int userType = User.isCorrectLogin(email, password);
-
-                            if (userType == -1) {
+                        if (User.isCorrectLogin(email, password) == -1) {
+                            if (User.accountExists(email)) {
                                 System.out.println(INCORRECT_CREDENTIALS);
+                            } else {
+                                boolean login2 = true;
 
-                                loginBoolean = true;
-                            } else if (userType == 0) {
-                                buyer = new Customer(email, password, userType);
+                                while (login2) {
+                                    System.out.println(CREATE_ACCOUNT);
+                                    System.out.println(CREATE_OPTIONS);
+                                    int loginSelection = Integer.parseInt(sc.nextLine());
 
-                                loginBoolean = false;
-                            } else if (userType == 1) {
-                                seller = new Seller(email, password, userType);
-
-                                loginBoolean = false;
+                                    if (loginSelection == 1) {
+                                        creatingAccount = true;
+                                        login2 = false;
+                                        loginBoolean = false;
+                                    } else if (loginSelection == 2) {
+                                        login2 = false;
+                                    } else if (loginSelection == 3) {
+                                        login2 = false;
+                                        loginBoolean = false;
+                                    }
+                                }
                             }
                         }
                     }
-                } else if (welcomeOption == 2) {
+                }
+
+                if (welcomeOption == 2 || creatingAccount) {
                     boolean loginBoolean = true;
+                    creatingAccount = false;
 
                     while (loginBoolean) {
                         System.out.println(LINES);
@@ -108,20 +124,28 @@ public class Menu {
                         System.out.println(PASSWORD);
                         String password = sc.nextLine();
 
-                        if (User.isValidEmail(email)) {
+                        if (User.accountExists(email)) {
                             System.out.println(USER_EXISTS);
                         } else {
-                            System.out.println(ACCOUNT_CREATED);
+                            try {
+                                if (userType == 0) {
+                                    buyer = new Customer(email, password, userType);
+                                } else if (userType == 1) {
+                                    seller = new Seller(email, password, userType);
+                                }
 
-                            User.saveNewUser(email, password, role);
+                                User.saveNewUser(email, password, role);
 
-                            if (userType == 0) {
-                                buyer = new Customer(email, password, userType);
-                            } else if (userType == 1) {
-                                seller = new Seller(email, password, userType);
+                                System.out.println(ACCOUNT_CREATED);
+
+                                loginBoolean = false;
+                            } catch (InvalidUserInput e) {
+                                email = "";
+                                password = "";
+                                userType = -1;
+
+                                System.out.println(e.getMessage());
                             }
-
-                            loginBoolean = false;
                         }
                     }
                 }
@@ -139,7 +163,8 @@ public class Menu {
 
                         if (buyerselection == 1) { //Choose Item
                             // user selection
-                            buyer.printListings();;//print the marketplace
+                            buyer.printListings();
+                            ;//print the marketplace
                             System.out.println("Please select the item you wish to purchase:");
 
                             int purchase = Integer.parseInt(sc.nextLine());
@@ -163,7 +188,8 @@ public class Menu {
                             buyer.printListings();
 
                             //Add to cart function
-                            buyer.printListings();;//print the marketplace
+                            buyer.printListings();
+                            ;//print the marketplace
                             System.out.println("Please select the item you wish to purchase:");
                             int purchase = Integer.parseInt(sc.nextLine());
                             selectedItem = buyer.getDisplayedItem(purchase); // get the item
@@ -211,15 +237,71 @@ public class Menu {
                             buyer.printCart();
                             System.out.println("(1) Checkout?");
                             System.out.println("(2) Back");
-                            int cartOpperaion = Integer.parseInt(sc.nextLine());
-                            if (cartOpperaion == 1) {
+                            int cartOperation = Integer.parseInt(sc.nextLine());
+                            if (cartOperation == 1) {
                                 buyer.checkout();
                                 System.out.println("Checkout Complete!");
-                            } else if (cartOpperaion == 2) {
+                            } else if (cartOperation == 2) {
                             } else {
                                 System.out.println(INVALID_OPTION);
                             }
-                        } else if (buyerselection == 5) {//Logout
+                        } else if (buyerselection == 5) { // edit user information
+                            boolean editing = true;
+
+                            do {
+                                System.out.println(EDIT_OPTIONS);
+                                int editOption = Integer.parseInt(sc.nextLine());
+
+                                if (editOption == 1) { // edit account email
+                                    System.out.println(NEW_EMAIL);
+                                    String newEmail = sc.nextLine();
+
+                                    boolean confirmation = true;
+
+                                    while (confirmation) {
+                                        System.out.printf(CONFIRM, "email");
+                                        System.out.println(CONFIRM_OPTIONS);
+
+                                        int confirmOption = Integer.parseInt(sc.nextLine());
+
+                                        if (confirmOption == (1)) { // yes, change email/password
+                                            buyer.editUser(newEmail, null, false);
+
+                                            confirmation = false;
+                                        } else if (confirmOption == (2)) { // no, go back
+                                            confirmation = false;
+                                        }
+                                    }
+                                } else if (editOption == 2) { // edit account password
+                                    System.out.println(NEW_PASSWORD);
+                                    String newPassword = sc.nextLine();
+
+                                    boolean confirmation = true;
+
+                                    while (confirmation) {
+                                        System.out.printf(CONFIRM, "password");
+                                        System.out.println(CONFIRM_OPTIONS);
+
+                                        int confirmOption = Integer.parseInt(sc.nextLine());
+
+                                        if (confirmOption == (1)) { // yes, change email/password
+                                            buyer.editUser(null, newPassword, false);
+
+                                            confirmation = false;
+                                        } else if (confirmOption == (2)) { // no, go back
+                                            confirmation = false;
+                                        }
+                                    }
+                                } else if (editOption == 3) { // delete account: MUST LOG OUT THE USER
+                                    buyer.editUser(null, null, true);
+                                    booleanBuyer = false;
+                                    welcomeOption = 99;
+                                    editing = false;
+                                } else if (editOption == 4) { // go back
+                                    editing = false;
+                                }
+                            } while (editing);
+                        } else if (buyerselection == 6) {//Logout
                             //logout function
                             System.out.println("Goodbye!");
                             booleanBuyer = false;
@@ -272,7 +354,63 @@ public class Menu {
                                 System.out.println("You have no Stores!");
                                 break;
                             }
-                        } else if (sellerSelection == 3) {//Log out
+                        } else if (sellerSelection == 3) { // edit user information
+                            boolean editing = true;
+
+                            do {
+                                System.out.println(EDIT_OPTIONS);
+                                int editOption = Integer.parseInt(sc.nextLine());
+
+                                if (editOption == 1) { // edit account email
+                                    System.out.println(NEW_EMAIL);
+                                    String newEmail = sc.nextLine();
+
+                                    boolean confirmation = true;
+
+                                    while (confirmation) {
+                                        System.out.printf(CONFIRM, "email");
+                                        System.out.println(CONFIRM_OPTIONS);
+
+                                        int confirmOption = Integer.parseInt(sc.nextLine());
+
+                                        if (confirmOption == (1)) { // yes, change email/password
+                                            seller.editUser(newEmail, null, false);
+
+                                            confirmation = false;
+                                        } else if (confirmOption == (2)) { // no, go back
+                                            confirmation = false;
+                                        }
+                                    }
+                                } else if (editOption == 2) { // edit account password
+                                    System.out.println(NEW_PASSWORD);
+                                    String newPassword = sc.nextLine();
+
+                                    boolean confirmation = true;
+
+                                    while (confirmation) {
+                                        System.out.printf(CONFIRM, "password");
+                                        System.out.println(CONFIRM_OPTIONS);
+
+                                        int confirmOption = Integer.parseInt(sc.nextLine());
+
+                                        if (confirmOption == (1)) { // yes, change email/password
+                                            seller.editUser(null, newPassword, false);
+
+                                            confirmation = false;
+                                        } else if (confirmOption == (2)) { // no, go back
+                                            confirmation = false;
+                                        }
+                                    }
+                                } else if (editOption == 3) { // delete account: MUST LOG OUT THE USER
+                                    seller.editUser(null, null, true);
+                                    booleanSeller = false;
+                                    welcomeOption = 99;
+                                    editing = false;
+                                } else if (editOption == 4) { // go back
+                                    editing = false;
+                                }
+                            } while (editing);
+                        }else if (sellerSelection == 4) {//Log out
                             booleanSeller = false;
                             System.out.println("Logout Successful!");
                             System.out.println(LINES);
