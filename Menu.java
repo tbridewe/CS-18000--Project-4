@@ -213,7 +213,7 @@ public class Menu {
                             int quantity = processInteger(sc);
                             try { // add item with qantity error checking
                                 buyer.addToCart(selectedItem, quantity);
-                                System.out.printf("Added to Cart: %dx %s!", quantity, selectedItem.getName());
+                                System.out.printf("Added to Cart: %dx %s!\n", quantity, selectedItem.getName());
                             } catch (InvalidQuantityException e) {
                                 System.out.println(e.getMessage());
                             }
