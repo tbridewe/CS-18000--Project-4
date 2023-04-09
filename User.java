@@ -7,10 +7,13 @@ public class User {
     private boolean buyer;
     private boolean seller;
     private final static String FILENAME = "userData.txt"; // name of file where userData is stored
+    private final static String INVALID_EMAIL = "Please enter a valid email address!";
+    private final static String INVALID_PASSWORD = "Please enter a valid password!";
+    private final static String INVALID_BOTH = "Please enter a valid email address and password!";
 
     public User(String email, String password, int userType) throws InvalidUserInput { // creates a new User object with email, password and userType; Buyer = 0, Seller = 1
         if (!isValidPassword(password) || !isValidEmail(email)) {
-            throw new InvalidUserInput("Please enter the correct input types for email and password!");
+            throw new InvalidUserInput(INVALID_BOTH);
         }
 
         this.buyer = (userType == 0);
@@ -43,7 +46,7 @@ public class User {
 
     public void setEmail(String email) throws InvalidUserInput { // sets a new email for the user
         if (!isValidEmail(email)) {
-            throw new InvalidUserInput("Please enter the correct input for email!");
+            throw new InvalidUserInput(INVALID_EMAIL);
         }
 
         this.email = email;
@@ -51,7 +54,7 @@ public class User {
 
     public void setPassword(String password) throws InvalidUserInput { // sets a new password for the user
         if (!isValidPassword(password)) {
-            throw new InvalidUserInput("Please enter the correct input for password!");
+            throw new InvalidUserInput(INVALID_PASSWORD);
         }
 
         this.password = password;
@@ -149,15 +152,60 @@ public class User {
         return true;
     }
 
+    public void editUser(String newEmail, String newPassword) throws InvalidUserInput {
+        if (newEmail != null) {
+            if (!isValidEmail(password)) {
+                throw new InvalidUserInput(INVALID_EMAIL);
+            }
+        }
+
+        if (newPassword != null) {
+            if (!isValidPassword(password)) {
+                throw new InvalidUserInput(INVALID_PASSWORD);
+            }
+        }
+
+        ArrayList<String> list = readUserData();
+
+        try {
+            PrintWriter pw = new PrintWriter(FILENAME);
+
+            String lines = "";
+
+            for (int i = 0; i < list.size(); i++) {
+                String get = list.get(i);
+                String[] split = get.split(", ");
+
+                String fileEmail = split[0].substring(split[0].lastIndexOf("Email:"));
+                String filePassword = split[1].substring(split[1].lastIndexOf("Password:"));
+                String fileUserType = split[2].substring(split[2].lastIndexOf("UserType:"));
+
+                if (newEmail != (null)) {
+                    fileEmail = newPassword;
+                }
+
+                if (newPassword != (null)) {
+                    filePassword = newPassword;
+                }
+
+                pw.printf("Email:%s, Password:%s, UserType:%s\n", fileEmail, filePassword, fileUserType);
+            }
+
+            pw.close();
+        } catch(IOException e) {
+            System.out.println("An error has occurred!");
+        }
+    }
+
     public static boolean isValidEmail(String email) { // verifies that the email is valid
         int a = email.indexOf('@');
-        
+
         if (email.length() == 0) {
             return false;
         } else if ((email.contains("@")) && (a != 0) && (email.charAt(email.length()-3)=='.')) {
             return true;
         }
-        
+
         return false;
     }
     // TODO: Log Out method
