@@ -93,6 +93,8 @@ public class Menu {
                                     }
                                 }
                             }
+                        } else {
+                            System.out.println(LOGIN_SUCCESS);
                         }
                     }
                 }
