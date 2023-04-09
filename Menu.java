@@ -12,7 +12,7 @@ public class Menu {
     public final static String LOGIN_SUCCESS = "Login Successful";
     public final static String USER_EXISTS = "Username is taken, please try again";
     public final static String ACCOUNT_CREATED = "Account successfully created!";
-    public final static String BUYER_MENU = "Please select an option:\n(1) Choose Item\n(2) Search\n(3) Sort\n(4) View cart\n(5) Edit Account\n(6) Log out";
+    public final static String BUYER_MENU = "Please select an option:\n(1) Choose Item\n(2) Search\n(3) Sort\n(4) View Cart\n(5) Edit Account\n(6) Log Out";
     public final static String SELLER_MENU = "(1) View Listings\n(2) View Statistics\n(3) Edit Account\n(4) Log out";
     public final static String LISTINGS = "(1) Add\n(2) Edit\n(3) Delete\n(4) Back";
     public final static String INVALID_OPTION = "Invalid Option!";
