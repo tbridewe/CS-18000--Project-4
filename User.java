@@ -60,12 +60,12 @@ public class User {
         this.password = password;
     }
 
-    public static boolean accountExists(String emailEntered, String passwordEntered) { // checks if a user's information is saved to userData.txt
+    public static boolean accountExists(String emailEntered) { // checks if a user's information is saved to userData.txt
         try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
             String line;
 
             while ((line = br.readLine()) != null) {
-                if (line.indexOf(emailEntered) != -1 && line.indexOf(passwordEntered) != -1) {
+                if (line.indexOf(emailEntered) != -1) {
                     return true;
                 }
             }
@@ -122,15 +122,15 @@ public class User {
             String get = list.get(i);
             String[] split = get.split(", ");
 
-            String email = split[0].substring(split[0].lastIndexOf("Email:"));
-            String password = split[1].substring(split[1].lastIndexOf("Password:"));
-            String UserType = split[2].substring(split[2].lastIndexOf("UserType:"));
+            String email = split[0].replace("Email:", "");
+            String password = split[1].replace("Password:", "");
+            String userType = split[2].replace("UserType:", "");
 
             int toReturn;
 
-            if (UserType.equals("Buyer")) {
+            if (userType.equals("Buyer")) {
                 toReturn = 0;
-            } else if (UserType.equals("Seller")) {
+            } else if (userType.equals("Seller")) {
                 toReturn = 1;
             } else {
                 toReturn = -1;
@@ -152,9 +152,9 @@ public class User {
         return true;
     }
 
-    public void editUser(String newEmail, String newPassword) throws InvalidUserInput {
+    public void editUser(String newEmail, String newPassword, boolean deleted) throws InvalidUserInput {
         if (newEmail != null) {
-            if (!isValidEmail(password)) {
+            if (!isValidEmail(email)) {
                 throw new InvalidUserInput(INVALID_EMAIL);
             }
         }
@@ -170,25 +170,33 @@ public class User {
         try {
             PrintWriter pw = new PrintWriter(FILENAME);
 
-            String lines = "";
-
             for (int i = 0; i < list.size(); i++) {
                 String get = list.get(i);
                 String[] split = get.split(", ");
 
-                String fileEmail = split[0].substring(split[0].lastIndexOf("Email:"));
-                String filePassword = split[1].substring(split[1].lastIndexOf("Password:"));
-                String fileUserType = split[2].substring(split[2].lastIndexOf("UserType:"));
+                String fileEmail;
+                String filePassword;
+                String fileUserType;
 
-                if (newEmail != (null)) {
-                    fileEmail = newPassword;
+                if (split.length > 2) {
+                     fileEmail = split[0].replace("Email:", "");
+                     filePassword = split[1].replace("Password:", "");
+                     fileUserType = split[2].replace("UserType:", "");
+                } else {
+                    continue;
                 }
 
-                if (newPassword != (null)) {
+                if (newEmail != (null) && email.equals(fileEmail)) {
+                    fileEmail = newEmail;
+                }
+
+                if (newPassword != (null) && password.equals(filePassword)) {
                     filePassword = newPassword;
                 }
 
-                pw.printf("Email:%s, Password:%s, UserType:%s\n", fileEmail, filePassword, fileUserType);
+                if ((fileEmail.equals(email) && !deleted) || !(fileEmail.equals(email))) {
+                    pw.printf("Email:%s, Password:%s, UserType:%s\n", fileEmail, filePassword, fileUserType);
+                }
             }
 
             pw.close();
@@ -198,15 +206,18 @@ public class User {
     }
 
     public static boolean isValidEmail(String email) { // verifies that the email is valid
-        int a = email.indexOf('@');
+       if (email == null || email.isEmpty()) {
+           return false;
+       }
 
-        if (email.length() == 0) {
-            return false;
-        } else if ((email.contains("@")) && (a != 0) && (email.charAt(email.length()-3)=='.')) {
-            return true;
-        }
+       int at = email.indexOf('@');
+       int dot = email.lastIndexOf('.');
 
-        return false;
+       if (at <= 0 || dot < at + 2 || email.length() - 4 != dot) {
+           return false;
+       }
+
+       return true;
     }
     // TODO: Log Out method
 }
