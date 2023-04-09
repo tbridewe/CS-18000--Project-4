@@ -70,6 +70,11 @@ public class Menu {
                         System.out.println(PASSWORD);
                         String password = sc.nextLine();
 
+                        if (!User.isValidEmail(email)) {
+                            System.out.println("Please enter a valid email address!");
+                            continue;
+                        }
+
                         if (User.isCorrectLogin(email, password) == -1) {
                             if (User.accountExists(email)) {
                                 System.out.println(INCORRECT_CREDENTIALS);
