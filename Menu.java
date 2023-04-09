@@ -25,6 +25,8 @@ public class Menu {
 
     public static void main(String[] args) throws InvalidUserInput {
         int welcomeOption;
+        // Customer buyer = null;
+        // Customer seller = null;
 
         Scanner sc = new Scanner(System.in);
         System.out.println(WELCOME);
@@ -55,11 +57,11 @@ public class Menu {
                         System.out.println(PASSWORD);
                         String password = sc.nextLine();
 
-                        if (isValidEmail(email) == false) { //IsValidEmail used to check if there is an email match
+                        if (user.isValidEmail(email) == false) { //IsValidEmail used to check if there is an email match
                             System.out.println(INCORRECTCREDENTIALS);
                             loginBoolean = false;
-                        } else if (isValidEmail(email) == true) { //isValidEmail used to check if there is NOT an email match
-                            if (isCorrectLogin(email, password)) { //isCorrectLogin function to check if the login is correct (May not need)
+                        } else if (user.isValidEmail(email) == true) { //isValidEmail used to check if there is NOT an email match
+                            if (user.isCorrectLogin(email, password)) { //isCorrectLogin function to check if the login is correct (May not need)
                                 System.out.println(LOGINSUCCESS);
                                 //Set the current user to the login credentials
                                 user = new User(email, password, 1); //create a user with the login credentials
@@ -82,9 +84,9 @@ public class Menu {
                         System.out.println(PASSWORD);
                         String password = sc.nextLine();
                         
-                        if (isValidEmail(email) == true) { //If there is an email match
+                        if (user.isValidEmail(email) == true) { //If there is an email match
                             System.out.println(USEREXISTS);
-                        } else if(isValidEmail(email) == false {//if there isn't an email match
+                        } else if(user.isValidEmail(email) == false) {//if there isn't an email match
                             System.out.println(ACCOUNTCREATED);
                             //Add the user to the list of accounts by writing to the file
                             user = new User(email, password, 2); //create a user object with the credentials
@@ -95,21 +97,35 @@ public class Menu {
                 if (user.isBuyer()) { //if the user is a buyer
                     //Marketplace market = new Marketplace(itemsFileName); // initialize marketplace object (OLD COMMENT - MAY NOT NEED
                     boolean booleanBuyer = true;
+                    Customer buyer = new Customer(user.getEmail(), user.getPassword(), 0);
+                    Item selectedItem = null;
                     do {
-                        printListings();//print the marketplace
                         System.out.println(BUYERMENU);
                         int buyerselection = Integer.parseInt(sc.nextLine());
                         if (buyerselection == 1) { //Choose Item
+                            // user selection
+                            buyer.printListings();;//print the marketplace
                             System.out.println("Please select the item you wish to purchase:");
                             int purchase = Integer.parseInt(sc.nextLine());
-                            //Add to cart function
-                            System.out.println("Added to Cart!");
+                            selectedItem = buyer.getDisplayedItem(purchase); // get the item
+                            System.out.println("Please enter how many you would like to buy:"); 
+                            int quantity = Integer.parseInt(sc.nextLine());
+
+                            try { // add item with qantity error checking
+                                buyer.addToCart(selectedItem, quantity); 
+                                System.out.printf("Added to Cart: %dx %s!", quantity, selectedItem.getName());
+                            } catch (InvalidQuantityException e) {
+                                System.out.println(e.getMessage());
+                            }
+
                         } else if (buyerselection == 2) { //Serch by Keyword
+                            // TODO
                             System.out.println("Search by Keyword: ");
                             String keyword = sc.nextLine();
                             //search function to be used
                             //Add to cart function
                         } else if (buyerselection == 3) { //Sorting items
+                            // TODO
                             int sortType = 0;
                             int sortOrder = 0;
                             do {
@@ -141,12 +157,12 @@ public class Menu {
                             } while ((sortOrder < 1) || (sortOrder > 2));
                             //sortItems(sortType, sortOrder);
                         } else if (buyerselection == 4) { //View Cart
-                            //display cart
+                            buyer.printCart();
                             System.out.println("(1) Checkout?");
                             System.out.println("(2) Back");
                             int cartOpperaion = Integer.parseInt(sc.nextLine());
                             if (cartOpperaion == 1) {
-                                //Checkout Operations
+                                buyer.checkout();
                                 System.out.println("Checkout Complete!");
                             } else if (cartOpperaion == 2) {
                             } else {
@@ -162,13 +178,13 @@ public class Menu {
                         }
                     } while (booleanBuyer == true);
                 }
-                if (user.isSeller) { //If the user is a seller
+                if (user.isSeller()) { //If the user is a seller
                     boolean booleanSeller = true;
                     do {
                         System.out.println(SELLERMENU);
                         int sellerSelection = Integer.parseInt(sc.nextLine());
                         if (sellerSelection == 1) { //View Listings
-                            if (userHasStore or user.getStore != null)) { //EDIT THIS LINE DEPENDING ON YOUR FUNCTION (MAY NOT NEED)
+                            if (/*userHasStore || user.getStore != null*/true) { //EDIT THIS LINE DEPENDING ON YOUR FUNCTION (MAY NOT NEED)
                                 boolean booleanListings = true;
                                 do {
                                     //printListings();
@@ -191,7 +207,7 @@ public class Menu {
                                 break;
                             }
                         } else if (sellerSelection == 2) {//View Statistics -- This may need to be reviesed later as Tristan works on Seller.java
-                            if (user.getStore != null) { //May need revisions - Check may not be needed
+                            if (/*user.getStore != null*/) { //May need revisions - Check may not be needed
                                 System.out.println("(1) All Stats\n(2) Specific Stats\n(3) Back");
                                 int statSelection = Integer.parseInt(sc.nextLine());
                                 if (statSelection == 1) {

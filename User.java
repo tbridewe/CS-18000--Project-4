@@ -140,4 +140,5 @@ public class User {
             }
         }
     }
+    // TODO: Log Out method
 }
