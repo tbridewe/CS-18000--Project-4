@@ -60,7 +60,7 @@ public class Menu {
 
             do {
                 System.out.println(WELCOME_MENU);
-                welcomeOption = Integer.parseInt(sc.nextLine());
+                welcomeOption = processInteger(sc);
 
                 if (welcomeOption == 1) {
                     System.out.println("Login Menu");
@@ -97,7 +97,7 @@ public class Menu {
                                 while (login2) {
                                     System.out.println(CREATE_ACCOUNT);
                                     System.out.println(CREATE_OPTIONS);
-                                    int loginSelection = Integer.parseInt(sc.nextLine());
+                                    int loginSelection = processInteger(sc);
 
                                     if (loginSelection == 1) {
                                         creatingAccount = true;
@@ -179,7 +179,7 @@ public class Menu {
 
                     do {
                         System.out.println(BUYER_MENU);
-                        int buyerselection = Integer.parseInt(sc.nextLine());
+                        int buyerselection = processInteger(sc);
 
                         if (buyerselection == 1) { //Choose Item
                             // user selection
@@ -187,11 +187,11 @@ public class Menu {
                             ;//print the marketplace
                             System.out.println("Please select the item you wish to purchase:");
 
-                            int purchase = Integer.parseInt(sc.nextLine());
+                            int purchase = processInteger(sc);
                             selectedItem = buyer.getDisplayedItem(purchase); // get the item
 
                             System.out.println("Please enter how many you would like to buy:");
-                            int quantity = Integer.parseInt(sc.nextLine());
+                            int quantity = processInteger(sc);
 
                             try { // add item with qantity error checking
                                 buyer.addToCart(selectedItem, quantity);
@@ -211,10 +211,10 @@ public class Menu {
                             buyer.printListings();
                             ;//print the marketplace
                             System.out.println("Please select the item you wish to purchase:");
-                            int purchase = Integer.parseInt(sc.nextLine());
+                            int purchase = processInteger(sc);
                             selectedItem = buyer.getDisplayedItem(purchase); // get the item
                             System.out.println("Please enter how many you would like to buy:");
-                            int quantity = Integer.parseInt(sc.nextLine());
+                            int quantity = processInteger(sc);
                             try { // add item with qantity error checking
                                 buyer.addToCart(selectedItem, quantity);
                                 System.out.printf("Added to Cart: %dx %s!", quantity, selectedItem.getName());
@@ -229,7 +229,7 @@ public class Menu {
                                 System.out.println("How would you like to sort the items?");
                                 System.out.println("(1) Price");
                                 System.out.println("(2) Quantity");
-                                sortType = Integer.parseInt(sc.nextLine());
+                                sortType = processInteger(sc);
                                 if (sortType == 1) {
                                     //sortByPrice
                                 } else if (sortType == 2) {
@@ -243,7 +243,7 @@ public class Menu {
                                 System.out.println("Sort by Ascending order or Descending order?");
                                 System.out.println("(1) Ascending");
                                 System.out.println("(2) Descending");
-                                sortOrder = Integer.parseInt(sc.nextLine());
+                                sortOrder = processInteger(sc);
                                 if (sortOrder == 1) {
                                     //sortAscending
                                 } else if (sortOrder == 2) {
@@ -258,14 +258,14 @@ public class Menu {
                             System.out.println("(1) Checkout?");
                             System.out.println("(2) View Purchase History");
                             System.out.println("(3) Back");
-                            int cartOperation = Integer.parseInt(sc.nextLine());
+                            int cartOperation = processInteger(sc);
                             if (cartOperation == 1) {
                                 buyer.checkout();
                                 System.out.println("Checkout Complete!");
                             } else if (cartOperation == 2) {
                                 //printPurchaseHistory();
                                 System.out.println("Would you like to export purchase history?\n(1) Yes\n(2) No");
-                                int export = Integer.parseInt(sc.nextLine());
+                                int export = processInteger(sc);
                                 if(export == 1) {
                                     //export purchase history
                                     System.out.println("Purchase history successfully exported to file!"); //or use filename in place of "file"
@@ -284,7 +284,7 @@ public class Menu {
 
                             do {
                                 System.out.println(EDIT_OPTIONS);
-                                int editOption = Integer.parseInt(sc.nextLine());
+                                int editOption = processInteger(sc);
 
                                 if (editOption == 1) { // edit account email
                                     System.out.println(NEW_EMAIL);
@@ -296,7 +296,7 @@ public class Menu {
                                         System.out.printf(CONFIRM, "email");
                                         System.out.println(CONFIRM_OPTIONS);
 
-                                        int confirmOption = Integer.parseInt(sc.nextLine());
+                                        int confirmOption = processInteger(sc);
 
                                         if (confirmOption == (1)) { // yes, change email/password
                                             buyer.editUser(newEmail, null, false);
@@ -316,7 +316,7 @@ public class Menu {
                                         System.out.printf(CONFIRM, "password");
                                         System.out.println(CONFIRM_OPTIONS);
 
-                                        int confirmOption = Integer.parseInt(sc.nextLine());
+                                        int confirmOption = processInteger(sc);
 
                                         if (confirmOption == (1)) { // yes, change email/password
                                             buyer.editUser(null, newPassword, false);
@@ -349,14 +349,14 @@ public class Menu {
                     boolean booleanSeller = true;
                     do {
                         System.out.println(SELLER_MENU);
-                        int sellerSelection = Integer.parseInt(sc.nextLine());
+                        int sellerSelection = processInteger(sc);
                         if (sellerSelection == 1) { //View Listings
                             if (/*userHasStore || user.getStore != null*/true) { //EDIT THIS LINE DEPENDING ON YOUR FUNCTION (MAY NOT NEED)
                                 boolean booleanListings = true;
                                 do {
                                     //printListings();
                                     System.out.println(LISTINGS);
-                                    int listingOption = Integer.parseInt(sc.nextLine());
+                                    int listingOption = processInteger(sc);
                                     if (listingOption == 1) {
                                         //addStore
                                     } else if (listingOption == 2) {
@@ -376,7 +376,7 @@ public class Menu {
                         } else if (sellerSelection == 2) {//View Statistics -- This may need to be reviesed later as Tristan works on Seller.java
                             if (/*user.getStore != null*/true) { //May need revisions - Check may not be needed
                                 System.out.println("(1) All Stats\n(2) Specific Stats\n(3) Back");
-                                int statSelection = Integer.parseInt(sc.nextLine());
+                                int statSelection = processInteger(sc);
                                 if (statSelection == 1) {
                                     //printAllStats();
                                 } else if (statSelection == 2) {
@@ -393,7 +393,7 @@ public class Menu {
 
                             do {
                                 System.out.println(EDIT_OPTIONS);
-                                int editOption = Integer.parseInt(sc.nextLine());
+                                int editOption = processInteger(sc);
 
                                 if (editOption == 1) { // edit account email
                                     System.out.println(NEW_EMAIL);
@@ -405,7 +405,7 @@ public class Menu {
                                         System.out.printf(CONFIRM, "email");
                                         System.out.println(CONFIRM_OPTIONS);
 
-                                        int confirmOption = Integer.parseInt(sc.nextLine());
+                                        int confirmOption = processInteger(sc);
 
                                         if (confirmOption == (1)) { // yes, change email/password
                                             seller.editUser(newEmail, null, false);
@@ -425,7 +425,7 @@ public class Menu {
                                         System.out.printf(CONFIRM, "password");
                                         System.out.println(CONFIRM_OPTIONS);
 
-                                        int confirmOption = Integer.parseInt(sc.nextLine());
+                                        int confirmOption = processInteger(sc);
 
                                         if (confirmOption == (1)) { // yes, change email/password
                                             seller.editUser(null, newPassword, false);
