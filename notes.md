@@ -29,6 +29,7 @@ ___
 - User
   - check email
   - user type?
+  - logOut method
 
 - customerLog.txt
    - each line is a new transaction
@@ -36,6 +37,9 @@ ___
     - check if customer is already in customerLog.txt
       - if yes, add to their history
       - if no, add them to a new line
+
+- Menu
+  - make a view purchase log and export purchase log option
 ___
 # Finish these things:
 

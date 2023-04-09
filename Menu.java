@@ -122,8 +122,22 @@ public class Menu {
                             // TODO
                             System.out.println("Search by Keyword: ");
                             String keyword = sc.nextLine();
-                            //search function to be used
+                            buyer.keywordSearch(keyword);
+                            buyer.printListings();
+
                             //Add to cart function
+                            buyer.printListings();;//print the marketplace
+                            System.out.println("Please select the item you wish to purchase:");
+                            int purchase = Integer.parseInt(sc.nextLine());
+                            selectedItem = buyer.getDisplayedItem(purchase); // get the item
+                            System.out.println("Please enter how many you would like to buy:"); 
+                            int quantity = Integer.parseInt(sc.nextLine());
+                            try { // add item with qantity error checking
+                                buyer.addToCart(selectedItem, quantity); 
+                                System.out.printf("Added to Cart: %dx %s!", quantity, selectedItem.getName());
+                            } catch (InvalidQuantityException e) {
+                                System.out.println(e.getMessage());
+                            }
                         } else if (buyerselection == 3) { //Sorting items
                             // TODO
                             int sortType = 0;
@@ -207,7 +221,7 @@ public class Menu {
                                 break;
                             }
                         } else if (sellerSelection == 2) {//View Statistics -- This may need to be reviesed later as Tristan works on Seller.java
-                            if (/*user.getStore != null*/) { //May need revisions - Check may not be needed
+                            if (/*user.getStore != null*/true) { //May need revisions - Check may not be needed
                                 System.out.println("(1) All Stats\n(2) Specific Stats\n(3) Back");
                                 int statSelection = Integer.parseInt(sc.nextLine());
                                 if (statSelection == 1) {
