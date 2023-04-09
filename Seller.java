@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -53,29 +54,24 @@ public class Seller extends User {
 
     public void addFromCSV(String filename) {
         String[] csvData = readFile(filename);
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter("itemListings.txt", true));
 
-        for (int i = 0; i < csvData.length; i++) {
-            // write to itemListings.txt
+            for (int i = 0; i < csvData.length; i++) {
+                writer.println(csvData[i]);
+            }
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace(); // implement different exception catch?
         }
-
     }
 
     public void addNewItem(Item item) {
         ArrayList<String> sellerItems = displayItems();
-
-        for (int i = 0; i < sellerItems.size(); i++) { // loop through all the seller items
-            if (sellerItems.get(i).contains(item.getName()) &&
-                    sellerItems.get(i).contains(item.getDescription()) &&
-                    sellerItems.get(i).contains(item.getStore()) &&
-                    sellerItems.get(i).contains(String.valueOf(item.getPrice())) &&
-                    !sellerItems.get(i).contains(String.valueOf(item.getQuantity()))) {
-                
-            }
-        }
+        sellerItems.add(String.valueOf(item));
     }
 
-    // DONE
-    public  void removeItem(Item item) {
+    public void removeItem(Item item) {
         ArrayList<String> sellerItems = displayItems(); // seller items
 
         for (int i = 0; i < sellerItems.size(); i++) { // loop through seller items
@@ -86,8 +82,7 @@ public class Seller extends User {
             }
         }
     }
-
-    // DONE
+    // TODO: the values for changeType and changeValues will be integers, not Strings
     public void editItem(Item item, String changeType, String changeValue ) {
         ArrayList<String> sellerItems = displayItems();
 
@@ -113,52 +108,110 @@ public class Seller extends User {
         }
     }
 
-    public void viewSpecificStat(String statType) {
-        switch (statType) {
-            case "Price":
+    // TODO: implement sort
+    public void viewSpecificStat(int statType) {
+        String[] stats = readFile("customerLog.txt");
+        ArrayList<String> statsList = new ArrayList<>();
+        ArrayList<String> customerData = new ArrayList<>();
+        Collections.addAll(statsList, stats);
 
-            case "Quantity":
+        // filters item listings to see if the listing is from one of the seller's stores
+        for (int i = 0; i < statsList.size(); i++) {
+            String[] customerHistory = statsList.get(i).split(";");
+            ArrayList<String> sellerSales = new ArrayList<>();
+            for (int j = 1; j < customerHistory.length; j++) {
+                if (stores.contains(customerHistory[j])) {
+                    sellerSales.add(customerHistory[j]);
+                }
+            }
+            if (sellerSales.size() > 0) {
+                String format = customerHistory[0] + sellerSales;
+                customerData.add(format);
+            }
+        }
+
+        switch (statType) {
+            case 1: //price
+                for (int i = 0; i < customerData.size(); i++) {
+                    String[] individualData = customerData.get(i).split(",");
+                }
+            case 2: //quantity
+                for (int i = 0; i < customerData.size(); i++) {
+
+                }
         }
     }
 
     public void viewAllStats() {
-        String[] stats = readFile("cartHistory.txt");
+        String[] stats = readFile("customerLog.txt");
+        ArrayList<String> statsList = new ArrayList<>();
+        ArrayList<String> customerData = new ArrayList<>();
+        Collections.addAll(statsList, stats);
 
-        for (int i = 0; i < stats.length; i++) {
-            String[] statsDetails = stats[i].split(",");
+        // filters item listings to see if the listing is from one of the seller's stores
+        for (int i = 0; i < statsList.size(); i++) {
+            String[] customerHistory = statsList.get(i).split(";");
+            ArrayList<String> sellerSales = new ArrayList<>();
+            for (int j = 1; j < customerHistory.length; j++) {
+                if (stores.contains(customerHistory[j])) {
+                    sellerSales.add(customerHistory[j] + ";");
+                }
+            }
+            if (sellerSales.size() > 0) {
+                String format = customerHistory[0] + ";" + sellerSales;
+                customerData.add(format);
+            }
+        }
+
+        // displays all stats
+        for (int i = 0; i < customerData.size(); i++) {
+            System.out.println(customerData.get(i));
         }
     }
 
-    public void sortStats(String sortType, String sortOrder) {
-        String[] stats = readFile("CustomerLog.txt");
+    public void sortStats(int sortType, int sortOrder) {
+        String[] stats = readFile("customerLog.txt");
         ArrayList<String> statsList = new ArrayList<>();
-        ArrayList<String> sortedStatsList = new ArrayList<>();
-
+        ArrayList<String> customerData = new ArrayList<>();
         Collections.addAll(statsList, stats);
 
+        for (int i = 0; i < statsList.size(); i++) {
+            String[] customerHistory = statsList.get(i).split(";");
+            ArrayList<String> sellerSales = new ArrayList<>();
+            for (int j = 1; j < customerHistory.length; j++) {
+                if (stores.contains(customerHistory[j])) {
+                    sellerSales.add(customerHistory[j] + ";");
+                }
+            }
+            if (sellerSales.size() > 0) {
+                String format = customerHistory[0] + ";" + sellerSales;
+                customerData.add(format);
+            }
+        }
+
         switch (sortType) {
-            case "Price":
+            case 1:
                 switch (sortOrder) {
-                    case "Ascending":
-                        statsList.sort(new PriceComparatorAscending());
+                    case 1:
+                        customerData.sort(new PriceComparatorAscending());
                         for (int i = 0; i < statsList.size(); i++) {
                             System.out.println(statsList.get(i));
                         }
-                    case "Descending":
-                        statsList.sort(new PriceComparatorDescending());
+                    case 2:
+                        customerData.sort(new PriceComparatorDescending());
                         for (int i = 0; i < statsList.size(); i++) {
                             System.out.println(statsList.get(i));
                         }
                 }
-            case "Quantity":
+            case 2:
                 switch (sortOrder) {
-                    case "Ascending":
-                        statsList.sort(new QuantityComparatorAscending());
+                    case 1:
+                        customerData.sort(new QuantityComparatorAscending());
                         for (int i = 0; i < statsList.size(); i++) {
                             System.out.println(statsList.get(i));
                         }
-                    case "Descending":
-                        statsList.sort(new QuantityComparatorDescending());
+                    case 2:
+                        customerData.sort(new QuantityComparatorDescending());
                         for (int i = 0; i < statsList.size(); i++) {
                             System.out.println(statsList.get(i));
                         }
