@@ -27,16 +27,13 @@ public class Menu {
     private static String itemsFileName = "ItemInformation.txt";
 
     private static int processInteger(Scanner sc) {
-        boolean cond = true;
-        int integer = 0;
-        while (cond) {
-            try {
-                String line = sc.nextLine();
-                integer = Integer.parseInt(line);
-                cond = false;
-            } catch (NumberFormatException e) {
-                System.out.println(OPTION_ERROR);
-            }
+        int integer = -1;
+
+        try {
+            String line = sc.nextLine();
+            integer = Integer.parseInt(line);
+        } catch (NumberFormatException e) {
+            System.out.println(OPTION_ERROR);
         }
 
         return integer;
