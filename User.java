@@ -57,7 +57,7 @@ public class User {
         this.password = password;
     }
 
-    public boolean accountExists(String emailEntered, String passwordEntered) { // checks if a user's information is saved to userData.txt
+    public static boolean accountExists(String emailEntered, String passwordEntered) { // checks if a user's information is saved to userData.txt
         try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
             String line;
 
@@ -79,7 +79,7 @@ public class User {
         return false;
     }
 
-    public ArrayList<String> readUserData() { // reads the userData.txt file and returns an ArrayList of each line
+    public static ArrayList<String> readUserData() { // reads the userData.txt file and returns an ArrayList of each line
         try (BufferedReader br = new BufferedReader(new FileReader(FILENAME))) {
             String line;
 
@@ -99,7 +99,7 @@ public class User {
         return null;
     }
 
-    public void saveNewUser(String email, String password, String userType) { // writes the new user information to userData.txt
+    public static void saveNewUser(String email, String password, String userType) { // writes the new user information to userData.txt
         try {
             FileWriter fw = new FileWriter(FILENAME, true);
 
@@ -112,15 +112,36 @@ public class User {
         }
     }
 
-    public boolean isCorrectLogin(String emailEntered, String passwordEntered) { // verifies if the login entered matches the current User object fields
-        if (!(email.equals(emailEntered)) || (!(password.equals(passwordEntered)))) {
-            return false;
+    public static int isCorrectLogin(String emailEntered, String passwordEntered) { // verifies if the login entered matches the current User object fields
+        ArrayList<String> list = readUserData();
+
+        for (int i = 0; i < list.size(); i++) {
+            String get = list.get(i);
+            String[] split = get.split(", ");
+
+            String email = split[0].substring(split[0].lastIndexOf("Email:"));
+            String password = split[1].substring(split[1].lastIndexOf("Password:"));
+            String UserType = split[2].substring(split[2].lastIndexOf("UserType:"));
+
+            int toReturn;
+
+            if (UserType.equals("Buyer")) {
+                toReturn = 0;
+            } else if (UserType.equals("Seller")) {
+                toReturn = 1;
+            } else {
+                toReturn = -1;
+            }
+
+            if ((email.equals(emailEntered)) && (password.equals(passwordEntered))) {
+                return toReturn;
+            }
         }
 
-        return true;
+        return -1;
     }
 
-    public boolean isValidPassword(String password) { // verifies that the password exists and is greater than 0 characters
+    public static boolean isValidPassword(String password) { // verifies that the password exists and is greater than 0 characters
         if (password == null || password.length() == 0) {
             return false;
         }
@@ -128,17 +149,16 @@ public class User {
         return true;
     }
 
-    public boolean isValidEmail(String email) { // verifies that the email is valid
+    public static boolean isValidEmail(String email) { // verifies that the email is valid
         int a = email.indexOf('@');
-        if ((email.length() == 0)) {
+        
+        if (email.length() == 0) {
             return false;
-        } else {
-            if ((email.contains("@")) && (a != 0) && (email.charAt(email.length()-3)=='.')) {
-                return true;
-            } else {
-                return false;
-            }
+        } else if ((email.contains("@")) && (a != 0) && (email.charAt(email.length()-3)=='.')) {
+            return true;
         }
+        
+        return false;
     }
     // TODO: Log Out method
 }
