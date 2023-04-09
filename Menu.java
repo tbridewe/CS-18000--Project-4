@@ -4,18 +4,18 @@ import java.io.*;
 public class Menu {
 
     public static String WELCOME = "Welcome to the Marketplace!";
-    public static String WELCOMEMENU = "Please select an option:\n(1) Login\n(2) Create an Account\n(3) Quit";
+    public static String WELCOME_MENU = "Please select an option:\n(1) Login\n(2) Create an Account\n(3) Quit";
     public static String LINES = "-----------------";
     public static String EMAIL = "Email:";
     public static String PASSWORD = "Password:";
-    public static String INCORRECTCREDENTIALS = "Incorrect login credentials or account does not exist, please try again.";
-    public static String LOGINSUCCESS = "Login Successful";
-    public static String USEREXISTS = "Username is taken, please try again";
-    public static String ACCOUNTCREATED = "Account successfully created!";
-    public static String BUYERMENU = "Please select an option:\n(1) Choose Item\n(2) Search\n(3) Sort\n(4) View cart\n(5) Log out";
-    public static String SELLERMENU = "(1) View Listings\n(2) View Statistics\n(3) Log out";
+    public static String INCORRECT_CREDENTIALS = "Incorrect login credentials or account does not exist, please try again.";
+    public static String LOGIN_SUCCESS = "Login Successful";
+    public static String USER_EXISTS = "Username is taken, please try again";
+    public static String ACCOUNT_CREATED = "Account successfully created!";
+    public static String BUYER_MENU = "Please select an option:\n(1) Choose Item\n(2) Search\n(3) Sort\n(4) View cart\n(5) Log out";
+    public static String SELLER_MENU = "(1) View Listings\n(2) View Statistics\n(3) Log out";
     public static String LISTINGS = "(1) Add\n(2) Edit\n(3) Delete\n(4) Back";
-    public static String INVALIDOPTION = "Invalid Option!";
+    public static String INVALID_OPTION = "Invalid Option!";
     private static String itemsFileName = "ItemInformation.txt";
 
     //public Menu(String email, String password, int userType) throws InvalidUserInput {
@@ -25,6 +25,7 @@ public class Menu {
 
     public static void main(String[] args) throws InvalidUserInput {
         int welcomeOption;
+
         // Customer buyer = null;
         // Customer seller = null;
 
@@ -32,9 +33,12 @@ public class Menu {
         System.out.println(WELCOME);
 
         while (true) {
-            User user = null;
+            //User user = null;
+            Customer buyer = null;
+            Seller seller = null;
+
             do {
-                System.out.println(WELCOMEMENU);
+                System.out.println(WELCOME_MENU);
                 welcomeOption = Integer.parseInt(sc.nextLine());
 
                 if (welcomeOption == 1) {
@@ -45,74 +49,107 @@ public class Menu {
                     System.out.println("Bye!");
                     return;
                 } else {
-                    System.out.println(INVALIDOPTION);
+                    System.out.println(INVALID_OPTION);
                 }
 
-                if (welcomeOption == 1) { //login option
+                if (welcomeOption == 1) {
                     boolean loginBoolean = true;
-                    while (loginBoolean == true) {
+
+                    while (loginBoolean) {
                         System.out.println(LINES);
                         System.out.println(EMAIL);
                         String email = sc.nextLine();
                         System.out.println(PASSWORD);
                         String password = sc.nextLine();
 
-                        if (user.isValidEmail(email) == false) { //IsValidEmail used to check if there is an email match
-                            System.out.println(INCORRECTCREDENTIALS);
-                            loginBoolean = false;
-                        } else if (user.isValidEmail(email) == true) { //isValidEmail used to check if there is NOT an email match
-                            if (user.isCorrectLogin(email, password)) { //isCorrectLogin function to check if the login is correct (May not need)
-                                System.out.println(LOGINSUCCESS);
-                                //Set the current user to the login credentials
-                                user = new User(email, password, 1); //create a user with the login credentials
+                        if (!User.isValidEmail(email)) {
+                            System.out.println(INCORRECT_CREDENTIALS);
+                        } else if (User.isValidEmail(email)) {
+                            int userType = User.isCorrectLogin(email, password);
+
+                            if (userType == -1) {
+                                System.out.println(INCORRECT_CREDENTIALS);
+
+                                loginBoolean = true;
+                            } else if (userType == 0) {
+                                buyer = new Customer(email, password, userType);
+
                                 loginBoolean = false;
-                            } else {
-                                System.out.println(INCORRECTCREDENTIALS);
+                            } else if (userType == 1) {
+                                seller = new Seller(email, password, userType);
+
+                                loginBoolean = false;
                             }
                         }
                     }
-                } else if (welcomeOption == 2) { //Create an account option
-                    boolean loginBoolean = true; //used to loop back if needed
+                } else if (welcomeOption == 2) {
+                    boolean loginBoolean = true;
+
                     while (loginBoolean) {
                         System.out.println(LINES);
                         System.out.println("Create Account");
                         System.out.println("Are you a Buyer or a Seller");
                         String role = sc.nextLine();
-                        //Assign role to the new object if buyer or seller
+
+                        int userType;
+
+                        if (role.equals("Buyer")) {
+                            userType = 0;
+                        } else if (role.equals("Seller")) {
+                            userType = 1;
+                        } else {
+                            System.out.println(INVALID_OPTION);
+
+                            continue;
+                        }
+
                         System.out.println(EMAIL);
                         String email = sc.nextLine();
                         System.out.println(PASSWORD);
                         String password = sc.nextLine();
-                        
-                        if (user.isValidEmail(email) == true) { //If there is an email match
-                            System.out.println(USEREXISTS);
-                        } else if(user.isValidEmail(email) == false) {//if there isn't an email match
-                            System.out.println(ACCOUNTCREATED);
-                            //Add the user to the list of accounts by writing to the file
-                            user = new User(email, password, 2); //create a user object with the credentials
+
+                        if (User.isValidEmail(email)) {
+                            System.out.println(USER_EXISTS);
+                        } else {
+                            System.out.println(ACCOUNT_CREATED);
+
+                            User.saveNewUser(email, password, role);
+
+                            if (userType == 0) {
+                                buyer = new Customer(email, password, userType);
+                            } else if (userType == 1) {
+                                seller = new Seller(email, password, userType);
+                            }
+
                             loginBoolean = false;
                         }
                     }
                 }
-                if (user.isBuyer()) { //if the user is a buyer
+                if (buyer != null) { //if the user is a buyer
                     //Marketplace market = new Marketplace(itemsFileName); // initialize marketplace object (OLD COMMENT - MAY NOT NEED
                     boolean booleanBuyer = true;
-                    Customer buyer = new Customer(user.getEmail(), user.getPassword(), 0);
+
+                    //Customer buyer = new Customer(customer.getEmail(), customer.getPassword(), 0);
+
                     Item selectedItem = null;
+
                     do {
-                        System.out.println(BUYERMENU);
+                        System.out.println(BUYER_MENU);
                         int buyerselection = Integer.parseInt(sc.nextLine());
+
                         if (buyerselection == 1) { //Choose Item
                             // user selection
                             buyer.printListings();;//print the marketplace
                             System.out.println("Please select the item you wish to purchase:");
+
                             int purchase = Integer.parseInt(sc.nextLine());
                             selectedItem = buyer.getDisplayedItem(purchase); // get the item
-                            System.out.println("Please enter how many you would like to buy:"); 
+
+                            System.out.println("Please enter how many you would like to buy:");
                             int quantity = Integer.parseInt(sc.nextLine());
 
                             try { // add item with qantity error checking
-                                buyer.addToCart(selectedItem, quantity); 
+                                buyer.addToCart(selectedItem, quantity);
                                 System.out.printf("Added to Cart: %dx %s!", quantity, selectedItem.getName());
                             } catch (InvalidQuantityException e) {
                                 System.out.println(e.getMessage());
@@ -130,10 +167,10 @@ public class Menu {
                             System.out.println("Please select the item you wish to purchase:");
                             int purchase = Integer.parseInt(sc.nextLine());
                             selectedItem = buyer.getDisplayedItem(purchase); // get the item
-                            System.out.println("Please enter how many you would like to buy:"); 
+                            System.out.println("Please enter how many you would like to buy:");
                             int quantity = Integer.parseInt(sc.nextLine());
                             try { // add item with qantity error checking
-                                buyer.addToCart(selectedItem, quantity); 
+                                buyer.addToCart(selectedItem, quantity);
                                 System.out.printf("Added to Cart: %dx %s!", quantity, selectedItem.getName());
                             } catch (InvalidQuantityException e) {
                                 System.out.println(e.getMessage());
@@ -152,7 +189,7 @@ public class Menu {
                                 } else if (sortType == 2) {
                                     //sortByQuantity
                                 } else {
-                                    System.out.println(INVALIDOPTION);
+                                    System.out.println(INVALID_OPTION);
                                 }
 
                             } while ((sortType < 1) || (sortType > 2));
@@ -166,7 +203,7 @@ public class Menu {
                                 } else if (sortOrder == 2) {
                                     //sortDecending
                                 } else {
-                                    System.out.println(INVALIDOPTION);
+                                    System.out.println(INVALID_OPTION);
                                 }
                             } while ((sortOrder < 1) || (sortOrder > 2));
                             //sortItems(sortType, sortOrder);
@@ -180,7 +217,7 @@ public class Menu {
                                 System.out.println("Checkout Complete!");
                             } else if (cartOpperaion == 2) {
                             } else {
-                                System.out.println(INVALIDOPTION);
+                                System.out.println(INVALID_OPTION);
                             }
                         } else if (buyerselection == 5) {//Logout
                             //logout function
@@ -188,14 +225,14 @@ public class Menu {
                             booleanBuyer = false;
                             //we can either return and end the program or send the user back to the login screen
                         } else {
-                            System.out.println(INVALIDOPTION);
+                            System.out.println(INVALID_OPTION);
                         }
                     } while (booleanBuyer == true);
                 }
-                if (user.isSeller()) { //If the user is a seller
+                if (seller != null) { //If the user is a seller
                     boolean booleanSeller = true;
                     do {
-                        System.out.println(SELLERMENU);
+                        System.out.println(SELLER_MENU);
                         int sellerSelection = Integer.parseInt(sc.nextLine());
                         if (sellerSelection == 1) { //View Listings
                             if (/*userHasStore || user.getStore != null*/true) { //EDIT THIS LINE DEPENDING ON YOUR FUNCTION (MAY NOT NEED)
@@ -213,7 +250,7 @@ public class Menu {
                                     } else if (listingOption == 4) {
                                         booleanListings = false; //break the switch statement and return to the previous screen
                                     } else {
-                                        System.out.println(INVALIDOPTION);
+                                        System.out.println(INVALID_OPTION);
                                     }
                                 } while (booleanListings);
                             } else {
@@ -240,7 +277,7 @@ public class Menu {
                             System.out.println("Logout Successful!");
                             System.out.println(LINES);
                         } else {
-                            System.out.println(INVALIDOPTION);
+                            System.out.println(INVALID_OPTION);
                         }
                     } while (booleanSeller == true);
                 }
