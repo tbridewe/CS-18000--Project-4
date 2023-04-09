@@ -243,12 +243,26 @@ public class Menu {
                         } else if (buyerselection == 4) { //View Cart
                             buyer.printCart();
                             System.out.println("(1) Checkout?");
-                            System.out.println("(2) Back");
+                            System.out.println("(2) View Purchase History");
+                            System.out.println("(3) Back");
                             int cartOperation = Integer.parseInt(sc.nextLine());
                             if (cartOperation == 1) {
                                 buyer.checkout();
                                 System.out.println("Checkout Complete!");
                             } else if (cartOperation == 2) {
+                                //printPurchaseHistory();
+                                System.out.println("Would you like to export purchase history?\n(1) Yes\n(2) No");
+                                int export = Integer.parseInt(sc.nextLine());
+                                if(export == 1) {
+                                    //export purchase history
+                                    System.out.println("Purchase history successfully exported to file!"); //or use filename in place of "file"
+                                } else if (export == 2) {
+                                } else {
+                                    System.out.println(INVALID_OPTION);
+                                }
+                            }
+                            else if (cartOperation == 3) {
+
                             } else {
                                 System.out.println(INVALID_OPTION);
                             }
