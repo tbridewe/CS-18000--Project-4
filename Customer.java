@@ -359,46 +359,85 @@ public class Customer extends User {
     public void exportPurchases() {
         // TODO: 
     }
+  
     /**
      * sortMarketplace(int sortType, int sortOrder)
      * sorts the marketplace listings based on user input
      *
-     * @param sortType: either sort by price or by quantity
+     * @param sortType:  either sort by price or by quantity
      * @param sortOrder: either sort in ascending or descending order
-     *
      */
-    // TODO: how do we want to view this?
-    public static void sortMarketplace(int sortType, int sortOrder) {
-        String[] contents = readFile("/Users/tristan.brideweser/Desktop/SP 2023/CS 18000/Projects/PJ04/PJ04/src/Listings.txt");
-        ArrayList<Integer> pricesList = new ArrayList<>(); // add all prices to list
-        ArrayList<Integer> quantitiesList = new ArrayList<>(); // add all quantities to list
 
-        int price; // price of an item
-        int quantity; // quantity of an item
+    public void sortMarketplace(int sortType, int sortOrder) {
+        String[] listings = readFile("itemListings.txt");
+        ArrayList<String> itemListings = new ArrayList<>();
+        Collections.addAll(itemListings, listings);
 
-        for (int i = 0; i < contents.length; i++) { // loop through the lines of the listings
-            String[] line = contents[i].split(","); // split on ,
-            price = Integer.parseInt(line[4]); // set price of item
-            pricesList.add(price); // add price to the pricesList
-            quantity = Integer.parseInt(line[3]); // set quantity of item
-            quantitiesList.add(quantity); // add quantity to the quantitiesList
-        }
-
-        switch (sortType) { // either price or quantity
+        switch (sortType) {
             case 1: // price
                 switch (sortOrder) {
                     case 1: // ascending
-                        pricesList.sort(Comparator.naturalOrder());
+                        itemListings.sort(new PriceComparatorAscending());
+                        for (int i = 0; i < itemListings.size(); i++) {
+                            System.out.println(itemListings.get(i));
+                        }
                     case 2: // descending
-                        pricesList.sort(Comparator.reverseOrder());
+                        itemListings.sort(new PriceComparatorDescending());
+                        for (int i = 0; i < itemListings.size(); i++) {
+                            System.out.println(itemListings.get(i));
+                        }
                 }
             case 2: // quantity
                 switch (sortOrder) {
                     case 1: // ascending
-                        quantitiesList.sort(Comparator.naturalOrder());
+                        itemListings.sort(new QuantityComparatorAscending());
+                        for (int i = 0; i < itemListings.size(); i++) {
+                            System.out.println(itemListings.get(i));
+                        }
                     case 2: // descending
-                        quantitiesList.sort(Comparator.reverseOrder());
+                        itemListings.sort(new QuantityComparatorDescending());
+                        for (int i = 0; i < itemListings.size(); i++) {
+                            System.out.println(itemListings.get(i));
+                        }
                 }
         }
     }
-}
+
+    // Comparator for sorting by price in ascending order
+    static class PriceComparatorAscending implements Comparator<String> {
+        @Override
+        public int compare(String o1, String o2) {
+            double price1 = Double.parseDouble(o1.split(",")[4]);
+            double price2 = Double.parseDouble(o2.split(",")[4]);
+            return Double.compare(price1, price2);
+        }
+    }
+    // Comparator for sorting by price in descending order
+    static class PriceComparatorDescending implements Comparator<String> {
+        @Override
+        public int compare(String o1, String o2) {
+            double price1 = Double.parseDouble(o1.split(",")[4]);
+            double price2 = Double.parseDouble(o2.split(",")[4]);
+            return Double.compare(price2, price1);
+        }
+    }
+
+    // Comparator for sorting by price in ascending order
+    static class QuantityComparatorAscending implements Comparator<String> {
+        @Override
+        public int compare(String o1, String o2) {
+            int quantity1 = Integer.parseInt(o1.split(",")[3]);
+            int quantity2 = Integer.parseInt(o2.split(",")[3]);
+            return Integer.compare(quantity1, quantity2);
+        }
+    }
+
+    // Comparator for sorting by price in descending order
+    static class QuantityComparatorDescending implements Comparator<String> {
+        @Override
+        public int compare(String o1, String o2) {
+            int quantity1 = Integer.parseInt(o1.split(",")[3]);
+            int quantity2 = Integer.parseInt(o2.split(",")[3]);
+            return Integer.compare(quantity2, quantity1);
+        }
+    }
