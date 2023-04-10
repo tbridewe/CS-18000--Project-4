@@ -11,33 +11,54 @@ public class Seller extends User {
     public Seller (String email, String password, int userType) throws InvalidUserInput {
         super(email, password, userType);
         this.stores = new ArrayList<>();
+        loadListings(this.itemListingsFileName);
+        this.sortedListings = listings;
+
+        readUserData();
+
     }
 
     public ArrayList<String> getStores() {
-        return stores;
+        if (this.stores.size() > 0) {
+            return this.stores;
+        } else { 
+            return null;
+        }
     }
 
     public void setStores(ArrayList<String> stores) {
         this.stores = stores;
     }
 
-    public String[] readFile(String filename) {
-        String[] fileContents;
-        ArrayList<String> contents = new ArrayList<>();
+    public void saveStores() {
+        String fileName = this.FILENAME; // user data file
+        String[] fileLines = readFile(fileName);
+        for (int l = 0; l < fileLines.length; l++) { // find the correct user line
+            String user = this.getEmail(); 
+            String line = fileLines[l];
+            String newStoresString = "";
+            String[] splitUserLine = line.split(","); // get stores as string
+            if (splitUserLine[0].split(":")[1].equals(user)) { // found correct line
+                // String storesString = line.split(",")[3]; // get stores as string
+                for (int i = 0; i < this.stores.size(); i++) {
+                    newStoresString += this.stores.get(i) + ";";
+                }
+                if (splitUserLine.length > 3) { // stores already saved
+                    splitUserLine[3] =  newStoresString;
+                    // remake line
+                line = "";
+                for (int i = 0; i < splitUserLine.length; i++) {
+                    line += splitUserLine[i];
+                }
+                } else {
+                    line += newStoresString;
+                }
 
-        File file = new File(filename);
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                contents.add(line);
+                fileLines[l] = line; // replace updated line
+                break;
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        fileContents = contents.toArray(new String[0]);
-        return fileContents;
+        writeFile(fileName, fileLines);
     }
 
     public ArrayList<String> displayItems() {

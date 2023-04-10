@@ -311,7 +311,7 @@ public class Menu {
                                     int sellerSelection = processInteger(sc);
                                     if (sellerSelection == 1) { //View Listings
                                         seller.displayItems();
-                                        if (/*userHasStore || user.getStore != null*/true) { //EDIT THIS LINE DEPENDING ON YOUR FUNCTION (MAY NOT NEED)
+                                        if (seller.getStores() != null) { 
                                             boolean booleanListings = true;
                                             do {
                                                 //printListings();
