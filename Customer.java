@@ -17,6 +17,7 @@ public class Customer extends User {
 
         loadCart(this.cartFileName); // loads items from the cart file into the cart
         loadListings(this.itemListingsFileName);
+        this.sortedListings = listings;
     }
 
     /**
@@ -77,14 +78,21 @@ public class Customer extends User {
         }
     }
 
+    /**
+     * PrintListings()
+     * just prints the items in the cart with nice formatting. 
+     */
     public void printListings() {
-        this.sortedListings = listings;
         String itemFormat = "[%3d]: %-30s | %-24s | %-4s | $ %-6.2f\n";
         System.out.printf("[num]: %-30s | %-24s | %-4s | %-7s\n\n", "NAME", "STORE", "QNTY", "PRICE");
-        for (int i = 0; i < this.listings.size(); i++) {
-            Item item = this.listings.get(i);
+        for (int i = 0; i < this.sortedListings.size(); i++) {
+            Item item = this.sortedListings.get(i);
             System.out.printf(itemFormat, i+1, item.getName(), item.getStore(), item.getQuantity(), item.getPrice());
         }
+    }
+
+    public void unsortListings() {
+        this.sortedListings = listings;
     }
 
 
@@ -322,8 +330,7 @@ public class Customer extends User {
         return price;
     }
 
-    private ArrayList<Item> readPurchaseLog() {
-        // TODO: 
+    private ArrayList<Item> readPurchaseLog() { 
         String[] fileLines = readFile(this.customerLogFileName);
         String user = this.getEmail(); 
         ArrayList<Item> purchaseLog = new ArrayList<>();
@@ -351,15 +358,20 @@ public class Customer extends User {
         String itemFormat = "[%3d]: %-30s | %-4d | %-24s | $ %-6.2f\n";
         System.out.printf("[num]: %-30s | %-4s | %-24s | %-7s\n\n", "NAME", "QNTY", "STORE", "PRICE");
         for (int i = 0; i < cart.size(); i++) {
-            Item item = cart.get(i);
+            Item item = purchaseLog.get(i);
             System.out.printf(itemFormat, i+1, item.getName(), item.getQuantity(), item.getStore(), item.getPrice());
         }
 
     }
     
 
-    public void exportPurchases() {
-        // TODO: 
+    public void exportPurchases(String fileName) {
+        ArrayList<Item> purchaseLog = readPurchaseLog();
+        String[] lines = new String[purchaseLog.size()];
+        for (int i = 0; i < lines.length; i++) {
+            lines[i] = purchaseLog.toString();
+        }
+        writeFile(fileName, lines);
     }
   
     /**
@@ -388,6 +400,7 @@ public class Customer extends User {
                             } catch (InvalidLineException e) {
                             }
                         }
+                        break;
                     case 2: // descending
                         itemListings.sort(new PriceComparatorDescending());
                         for (int i = 0; i < itemListings.size(); i++) {
@@ -397,6 +410,7 @@ public class Customer extends User {
                             } catch (InvalidLineException e) {
                             }
                         }
+                        break;
                 }
             case 2: // quantity
                 switch (sortOrder) {
@@ -409,6 +423,7 @@ public class Customer extends User {
                             } catch (InvalidLineException e) {
                             }
                         }
+                        break;
                     case 2: // descending
                         itemListings.sort(new QuantityComparatorDescending());
                         for (int i = 0; i < itemListings.size(); i++) {
@@ -418,6 +433,7 @@ public class Customer extends User {
                             } catch (InvalidLineException e) {
                             }
                         }
+                        break;
                 }
         }
         this.sortedListings = sorted; // update sorted for outputs
