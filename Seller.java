@@ -68,10 +68,13 @@ public class Seller extends User {
                 if (splitUserLine.length > 3) { // stores already saved
                     splitUserLine[3] =  newStoresString;
                     // remake line
-                line = "";
-                for (int i = 0; i < splitUserLine.length; i++) {
-                    line += splitUserLine[i];
-                }
+                    line = "";
+                    for (int i = 0; i < splitUserLine.length; i++) {
+                        line += splitUserLine[i];
+                        if (i < splitUserLine.length -1) {
+                            line += ",";
+                        }
+                    }
                 } else {
                     line += newStoresString;
                 }

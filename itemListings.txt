@@ -30,3 +30,15 @@ orange,hannahStore,fruit,100,2.50
 car,StormyOtherStore,it drives,100,1000.00
 orange,hannahStore,fruit,100,2.50
 car,StormyOtherStore,it drives,100,1000.00
+orange,hannahStore,fruit,100,2.50
+car,StormyOtherStore,it drives,100,1000.00
+orange,hannahStore,fruit,100,2.50
+car,StormyOtherStore,it drives,100,1000.00
+orange,hannahStore,fruit,100,2.50
+car,StormyOtherStore,it drives,100,1000.00
+pear,jo's store,fruit,100,2.25
+orange,hannahStore,fruit,100,2.50
+car,StormyOtherStore,it drives,100,1000.00
+pear,jo's store,fruit,100,2.25
+orange,hannahStore,fruit,100,2.50
+car,StormyOtherStore,it drives,100,1000.00

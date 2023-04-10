@@ -82,11 +82,12 @@ public class User {
      */
     public void printListings() {
         String itemFormat = "[%3d]: %-30s | %-24s | %-4s | $ %-6.2f\n";
-        System.out.printf("[num]: %-30s | %-24s | %-4s | %-7s\n\n", "NAME", "STORE", "QNTY", "PRICE");
+        System.out.printf("[num]: %-30s | %-24s | %-4s | %-7s\n", "NAME", "STORE", "QNTY", "PRICE");
         for (int i = 0; i < this.sortedListings.size(); i++) {
             Item item = this.sortedListings.get(i);
             System.out.printf(itemFormat, i+1, item.getName(), item.getStore(), item.getQuantity(), item.getPrice());
         }
+        System.out.println();
     }
 
     /*
