@@ -91,10 +91,22 @@ A listing in the Marketplace
 | String itemFileLine | Creates a new Item object|
 | Item item | Makes a new copy of an Item |
 ### Methods
-| Method      | Description |
-| ----------- | ----------- |
-| method1     |             |
-| method2     |             |
+| Method      | Parameters | Returns | Description |
+| ----------- | ----------- | ----------- | ----------- |
+| toLine     |   none          | String | returns a description of an item in a specified format |
+| equals     |   Item item          | none | checks if items are equal but does not check quantity |
+| findItem | ArrayList<Item> itemList | int | returns index of item in array of items. returns -1 if no item is found |
+| getName | none | String | returns the name of the Item |
+| getStore | none | String | returns the store of the Item |
+| getDescription | none | String | returns the description of the Item |
+| getQuantity | none | int | returns the quantity of the Item |
+| getPrice | none | double | returns the price of the Item |
+| setName | String name | void | sets the name of the Item |
+| setStore | String store | void | sets the store of the Item |
+| setDescription | String description | void | sets the description of the Item |
+| setQuantity | int quantity | void | sets the quantity of the Item |
+| setPrice | double price | void | sets the price of the Item |
+| changeQuantityBy | int number | void | changes a quantity by a certain number |
 ## Menu
 Displays prompts for the user
 ## IncorrectLoginInformationException
