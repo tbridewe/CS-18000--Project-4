@@ -45,18 +45,18 @@ Provides implementation of a Customer in the Marketplace
 ### Methods
 | Method      | Parameters | Returns |  Description |
 | ----------- | ----------- | ----------- | ----------- |
-| printCart     | none | void | just prints the items in the cart with nice formatting. |
-| addToCart     |  Item item, int quantity | void | This adds the item to the cart and adjusts the items remaining in the store accordingly |
-| saveCart | String fileName | void | writes all the items in this.cart to the cart file. Puts them on the line of the corresponding user. |
-| saveListings | String fileName | void | writes all the items in this.cart to the cart file. Puts them on the line of the corresponding user. |
-| loadCart | String fileName | void | reads the cart file and puts the items for this user into this.cart |
-| removeFromCart | int index, int quanitity | void | removes specified listing from the cart |
-| keywordSearch | String keyword | ArrayList \<Item> | returns a String[] containing all lines containing the keyword |
-| checkout | none | double | returns the total price of the cart |
-| readPurchaseLog | none | ArrayList \<Item> | returns an ArrayList of the contents of the customer log file associated with a specific email |
-| viewPurchases | none | void | prints out the contents of the customer log file associated with a specific email |
-| exportPurchases | String fileName | void | writes the contents of the customer log file associated with a specific email to a file |
-| sortMarketplace | int sortType, int sortOrder | void | sorts the marketplace listings based on user input |
+| printCart     | none | void | Prints the items in the cart with nice formatting. |
+| addToCart     |  Item item, int quantity | void | Adds the item to the cart and adjusts the items remaining in the store accordingly. |
+| saveCart | String fileName | void | Writes all the items in this.cart to the cart file. Puts them on the line of the corresponding user. |
+| saveListings | String fileName | void | Writes all the items in this.cart to the cart file. Puts them on the line of the corresponding user. |
+| loadCart | String fileName | void | Reads the cart file and puts the items for this user into this.cart. |
+| removeFromCart | int index, int quanitity | void | Removes specified listing from the cart. |
+| keywordSearch | String keyword | ArrayList \<Item> | Returns a String[] containing all lines containing the keyword. |
+| checkout | none | double | Returns the total price of the cart. |
+| readPurchaseLog | none | ArrayList \<Item> | Returns an ArrayList of the contents of the customer log file associated with a specific email. |
+| viewPurchases | none | void | Prints out the contents of the customer log file associated with a specific email. |
+| exportPurchases | String fileName | void | Writes the contents of the customer log file associated with a specific email to a file. |
+| sortMarketplace | int sortType, int sortOrder | void | Sorts the marketplace listings based on user input. |
 ### Static Classes
 | Class | Interfaces Implemented | Description |
 | ----------- | ----------- | ----------- |
@@ -69,44 +69,44 @@ Provides implementation of a Customer in the Marketplace
 ### Constructor 
 | Parameters | Description |
 | ---------- | ----------- |
-| String email, String password, int userType| Creates a new Seller object which extends User. Seller's stores are also instantiated |
+| String email, String password, int userType| Creates a new Seller object which extends User. Seller's stores are also instantiated. |
 ### Methods
 | Method | Parameters | Returns | Description |
 | -------| ---------- | ------- | ----------- |
 | getStores | none | ArrayList \<String\> | |
 | saveStores | none | void | |
-| displayItems | none | ArrayList \<String\> | reads file with item listings and displays listings that the seller posted |
-| addFromCSV | String filename | void | reads file with item listings and adds them to the exisitng item listings |
-| addNewItem | Item item | void | allows a seller to add one item to item listings at a time |
-| removeItem | Item item | void | allows a seller to remove one item from item listings at a time |
-| editItem | Item item, int changeType, String changeValue | void | seller defines the item to change, what value type to change, and what value to change it to and the item value is changed |
-| viewAllStats | none | void | allows seller to see all the stats from their store |
-| sortStats | int sortType, int sortOrder | void | allows a seller to see stats based  type and order |
+| displayItems | none | ArrayList \<String\> | Reads file with item listings and displays listings that the seller posted. |
+| addFromCSV | String filename | void | Reads file with item listings and adds them to the exisitng item listings. |
+| addNewItem | Item item | void | Allows a seller to add one item to item listings at a time. |
+| removeItem | Item item | void | Allows a seller to remove one item from item listings at a time. |
+| editItem | Item item, int changeType, String changeValue | void | Seller defines the item to change, what value type to change, and what value to change it to, and the item value is changed. |
+| viewAllStats | none | void | Allows seller to see all the stats from their store. |
+| sortStats | int sortType, int sortOrder | void | Allows a seller to see stats based on type and order. |
 ## Item
 A listing in the Marketplace
 ### Constructors 
 | Parameters | Description |
 | ----------- | ----------- |
-| String name, String store, String description, int quantity, double price | Creates a new Item object |
-| String itemFileLine | Creates a new Item object|
-| Item item | Makes a new copy of an Item |
+| String name, String store, String description, int quantity, double price | Creates a new Item object. |
+| String itemFileLine | Creates a new Item object.|
+| Item item | Makes a new copy of an Item. |
 ### Methods
 | Method      | Parameters | Returns | Description |
 | ----------- | ----------- | ----------- | ----------- |
-| toLine     |   none          | String | returns a description of an item in a specified format |
-| equals     |   Item item          | none | checks if items are equal but does not check quantity |
-| findItem | ArrayList<Item> itemList | int | returns index of item in array of items. returns -1 if no item is found |
-| getName | none | String | returns the name of the Item |
-| getStore | none | String | returns the store of the Item |
-| getDescription | none | String | returns the description of the Item |
-| getQuantity | none | int | returns the quantity of the Item |
-| getPrice | none | double | returns the price of the Item |
-| setName | String name | void | sets the name of the Item |
-| setStore | String store | void | sets the store of the Item |
-| setDescription | String description | void | sets the description of the Item |
-| setQuantity | int quantity | void | sets the quantity of the Item |
-| setPrice | double price | void | sets the price of the Item |
-| changeQuantityBy | int number | void | changes a quantity by a certain number |
+| toLine     |   none          | String | Returns a description of an item in a specified format |
+| equals     |   Item item          | none | Checks if items are equal but does not check quantity |
+| findItem | ArrayList<Item> itemList | int | Returns index of item in array of items. Returns -1 if no item is found. |
+| getName | none | String | Returns the name of the Item. |
+| getStore | none | String | Returns the store of the Item. |
+| getDescription | none | String | Returns the description of the Item. |
+| getQuantity | none | int | Returns the quantity of the Item. |
+| getPrice | none | double | Returns the price of the Item. |
+| setName | String name | void | Sets the name of the Item. |
+| setStore | String store | void | Sets the store of the Item. |
+| setDescription | String description | void | Sets the description of the Item. |
+| setQuantity | int quantity | void | Sets the quantity of the Item. |
+| setPrice | double price | void | Sets the price of the Item. |
+| changeQuantityBy | int number | void | Changes a quantity by a certain number. |
 ## Menu
 Displays prompts for the user
 ## IncorrectLoginInformationException
@@ -114,25 +114,25 @@ Thrown when login information is incorrect
 ### Constructor 
 | Parameters | Description |
 | ----------- | ----------- |
-| String message | an error that is thrown when login information is incorrect |
+| String message | An error that is thrown when login information is incorrect |
 ## InvalidLineException
 Thrown when line is invalid
 ### Constructor 
 | Parameters | Description |
 | ----------- | ----------- |
-| String message | an error that is thrown when the line is invalid |
+| String message | An error that is thrown when the line is invalid |
 ## InvalidQuantityException
 Thrown when quantity is invalid
 ### Constructor 
 | Parameters | Description |
 | ----------- | ----------- |
-| String message | an error that is thrown when the quantity is invalid |
+| String message | An error that is thrown when the quantity is invalid |
 ## InvalidUserInputException
 Thrown when user input is invalid
 ### Constructor 
 | Parameters | Description |
 | ----------- | ----------- |
-| String message | an error that is thrown when the input is invalid |
+| String message | An error that is thrown when the input is invalid |
 
 ___
 
