@@ -21,10 +21,10 @@ public class Seller extends User {
             String line = fileLines[l];
             String[] splitUserLine = line.split(","); // get users as string
             if (splitUserLine[0].split(":")[1].equals(user)) { // found correct line
-                String storesString = line.split(",")[3]; // get stores as string
                 if (splitUserLine.length < 4) { // no stores
                     this.stores = null;
                 } else {
+                    String storesString = line.split(",")[3]; // get stores as string
                     for (int i = 0; i < storesString.split(";").length; i++) {
                         this.stores.add(storesString.split(";")[i]);
                     }
