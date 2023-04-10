@@ -6,6 +6,8 @@ import java.util.Comparator;
 
 public class Seller extends User {
     private ArrayList<String> stores;
+    private String itemListingsFileName = "itemListings.txt";
+    private String customerLogFileName = "customerLog.txt";
 
     public Seller (String email, String password, int userType) throws InvalidUserInput {
         super(email, password, userType);
@@ -40,7 +42,7 @@ public class Seller extends User {
     }
 
     public ArrayList<String> displayItems() {
-        String[] itemsList = readFile("listings.txt");
+        String[] itemsList = readFile(this.itemListingsFileName);
         ArrayList<String> sellerItems = new ArrayList<>();
 
         for (int i = 0; i < itemsList.length; i++) {
@@ -55,7 +57,7 @@ public class Seller extends User {
     public void addFromCSV(String filename) {
         String[] csvData = readFile(filename);
         try {
-            PrintWriter writer = new PrintWriter(new FileWriter("itemListings.txt", true));
+            PrintWriter writer = new PrintWriter(new FileWriter(this.itemListingsFileName, true));
 
             for (int i = 0; i < csvData.length; i++) {
                 writer.println(csvData[i]);
@@ -109,7 +111,7 @@ public class Seller extends User {
     }
 
     public void viewAllStats() {
-        String[] stats = readFile("customerLog.txt");
+        String[] stats = readFile(this.customerLogFileName);
         ArrayList<String> statsList = new ArrayList<>();
         ArrayList<String> customerData = new ArrayList<>();
         Collections.addAll(statsList, stats);
@@ -136,7 +138,7 @@ public class Seller extends User {
     }
 
     public void sortStats(int sortType, int sortOrder) {
-        String[] stats = readFile("customerLog.txt");
+        String[] stats = readFile(this.customerLogFileName);
         ArrayList<String> statsList = new ArrayList<>();
         ArrayList<String> customerData = new ArrayList<>();
         Collections.addAll(statsList, stats);
