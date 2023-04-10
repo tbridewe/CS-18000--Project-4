@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.*;
@@ -70,7 +71,7 @@ public class Menu {
                     System.out.println(INVALID_OPTION);
                 }
 
-                if (welcomeOption == 1) { 
+                if (welcomeOption == 1) {
                     boolean loginBoolean = true;
 
                     while (loginBoolean) {
@@ -162,24 +163,37 @@ public class Menu {
 
                                     } else if (buyerselection == 2) { //Serch by Keyword
                                         // TODO
-                                        System.out.println("Search by Keyword: ");
-                                        String keyword = sc.nextLine();
-                                        buyer.keywordSearch(keyword);
-                                        buyer.printListings();
+                                        System.out.println("(1) Search by Keyword");
+                                        System.out.println("(2) Back");
+                                        int searchOption = Integer.parseInt(sc.nextLine());
+                                        if(searchOption == 1) {
+                                            System.out.println("Search:");
+                                            String keyword = sc.nextLine();
+                                            buyer.keywordSearch(keyword);
+                                            buyer.printListings();
 
-                                        //Add to cart function
-                                        buyer.printListings();
-                                        ;//print the marketplace
-                                        System.out.println("Please select the item you wish to purchase:");
-                                        int purchase = processInteger(sc);
-                                        selectedItem = buyer.getDisplayedItem(purchase); // get the item
-                                        System.out.println("Please enter how many you would like to buy:");
-                                        int quantity = processInteger(sc);
-                                        try { // add item with qantity error checking
-                                            buyer.addToCart(selectedItem, quantity);
-                                            System.out.printf("Added to Cart: %dx %s!\n", quantity, selectedItem.getName());
-                                        } catch (InvalidQuantityException e) {
-                                            System.out.println(e.getMessage());
+                                            //Add to cart function
+                                            buyer.printListings();
+                                            ;//print the marketplace
+                                            System.out.println("Please select the item you wish to purchase:");
+                                            System.out.println("Enter '-1' to cancel purchase");
+                                            int purchase = processInteger(sc);
+                                            if (purchase < 0) {
+                                                System.out.println("Purchase Cancelled");
+                                                continue;
+                                            }
+                                            selectedItem = buyer.getDisplayedItem(purchase); // get the item
+                                            System.out.println("Please enter how many you would like to buy:");
+                                            int quantity = processInteger(sc);
+                                            try { // add item with qantity error checking
+                                                buyer.addToCart(selectedItem, quantity);
+                                                System.out.printf("Added to Cart: %dx %s!\n", quantity, selectedItem.getName());
+                                            } catch (InvalidQuantityException e) {
+                                                System.out.println(e.getMessage());
+                                            }
+                                        } else if (searchOption == 2) {
+                                            continue;
+                                            //go back
                                         }
                                     } else if (buyerselection == 3) { //Sorting items
                                         // TODO
@@ -206,7 +220,8 @@ public class Menu {
                                         buyer.printCart();
                                         System.out.println("(1) Checkout?");
                                         System.out.println("(2) View Purchase History");
-                                        System.out.println("(3) Back");
+                                        System.out.println("(3) Edit Cart");
+                                        System.out.println("(4) Back");
                                         int cartOperation = processInteger(sc);
                                         if (cartOperation == 1) {
                                             buyer.checkout();
@@ -227,6 +242,11 @@ public class Menu {
                                             }
                                         }
                                         else if (cartOperation == 3) {
+                                            buyer.printCart();
+                                            System.out.println("Select an item to remove from cart");
+                                            int remove = Integer.parseInt(sc.nextLine());
+                                            //////////////REMOVE FROM CART///////////////////
+                                        } else if(cartOperation == 4) {
 
                                         } else {
                                             System.out.println(INVALID_OPTION);
@@ -299,7 +319,7 @@ public class Menu {
                             }
                             if (userTypeStr.equals("Seller")) { //If the user is a seller // SELLER HERE
                                 seller = new Seller(email, password, 1); // itialize seller
-                                
+
                                 boolean booleanSeller = true;
                                 do {
                                     System.out.println(SELLER_MENU);
