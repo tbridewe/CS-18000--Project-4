@@ -9,6 +9,8 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
+import java.util.ArrayList;
+
 import java.io.*;
 
 import static org.junit.Assert.*;
@@ -66,9 +68,162 @@ public class RunLocalTest {
             System.setIn(testIn);
         }
 
+        // CUSTOMER CLASS
+
+        @Test(timeout = 1000)
+        public void testReadPurchaseLog2() {
+            String expected = "PURCHASES:" +
+                    System.lineSeparator() +
+                    "[num]: NAME                           | QNTY | STORE                    | PRICE  "  +
+                    System.lineSeparator() +
+                    System.lineSeparator() +
+                    "[  1]: Fitbit Versa 3                 | 1    | Sporting Goods Inc.      | $ 229.99" +
+                    System.lineSeparator() +
+                    "[  2]: Fitbit Versa 3                 | 2    | Sporting Goods Inc.      | $ 229.99";
+
+            try {
+                Customer customer = new Customer("hhh@gmail.com", "1234", 0);
+                customer.viewPurchases();
+            } catch (InvalidUserInput e) {
+
+            }
+
+            String output = getOutput();
+
+            // Trims the output and verifies it is correct.
+            output = output.replace("\r\n", "\n");
+            expected = expected.replace("\r\n", "\n");
+
+            assertEquals("Make sure the readPurchaseLog method in Customer properly prints the log!",
+                    expected.trim(), output.trim());
+        }
+
+        @Test(timeout = 1000)
+        public void testReadPurchaseLog() {
+            String expected = "PURCHASES:" + System.lineSeparator() +
+                    "[num]: NAME                           | QNTY | STORE                    | PRICE";
+
+            try {
+                Customer customer = new Customer("sambodkin2@outlook.com", "1234", 1);
+                customer.viewPurchases();
+            } catch (InvalidUserInput e) {
+
+            }
+
+            String output = getOutput();
+
+            // Trims the output and verifies it is correct.
+            output = output.replace("\r\n", "\n");
+            expected = expected.replace("\r\n", "\n");
+
+            assertEquals("Make sure the readPurchaseLog method in Customer properly prints the log!",
+                    expected.trim(), output.trim());
+        }
+
         // SELLER CLASS
 
+        @Test(timeout = 1000)
+        public void testFindSellerItems() {
+            ArrayList<Item> expected = new ArrayList<Item>();
+            ArrayList<Item> output = null;
+
+            String storeName = "hannahStore";
+            String type1 = "fruit";
+            String type2 = "it drives";
+            int quantity = 100;
+            int quantity2 = 79;
+            double price = 2.50;
+
+            String apple = "apple";
+            String banana = "banana";
+            String orange = "orange";
+
+            expected.add(new Item(banana, storeName, "it's a banana fruit", quantity2, 1.99));
+            expected.add(new Item(apple, storeName, "it's a fruit", quantity2, 2.99));
+            expected.add(new Item(orange, storeName, type1, quantity, price));
+            expected.add(new Item(orange, storeName, type1, quantity, price));
+            expected.add(new Item(orange, storeName, type1, quantity, price));
+            expected.add(new Item(orange, storeName, type1, quantity, price));
+            expected.add(new Item(orange, storeName, type1, quantity, price));
+
+            boolean expectedOut = true;
+            boolean outputOut = true;
+
+            try {
+                Seller s = new Seller("aaa@gmail.com", "1234", 1);
+                s.findSellerItems();
+                output = s.sortedListings;
+
+                for (int i = 0; i < output.size(); i++) {
+                    Item item = output.get(i);
+                    Item expectedItem = expected.get(i);
+
+                    if (!item.equals(expectedItem)) {
+                        outputOut = false;
+                        break;
+                    }
+                }
+            } catch(InvalidUserInput e) {
+
+            }
+
+            assertEquals("Make sure the viewAllStats method in Seller properly prints the correct output!",
+                    expectedOut, outputOut);
+        }
+
+        @Test(timeout = 1000)
+        public void testViewAllStats() {
+            Seller s;
+
+            String expected = "";
+
+            try {
+                s = new Seller("aaaa@gmail.com", "1234", 1);
+                s.viewAllStats();
+            } catch (InvalidUserInput e) {
+
+            }
+
+            String output = getOutput();
+
+            // Trims the output and verifies it is correct.
+            output = output.replace("\r\n", "\n");
+            expected = expected.replace("\r\n", "\n");
+
+            assertEquals("Make sure the viewAllStats method in Seller properly prints the correct output!",
+                    expected.trim(), output.trim());
+        }
+
         // ITEM CLASS
+
+        @Test(timeout = 1000)
+        public void testFindItem() {
+            ArrayList<Item> itemList = new ArrayList<Item>();
+
+            Item item = new Item("Jordan'16's", "Store", "Be Like Mike", 2, 150.5);
+            Item item2 = new Item("Jordan'14's", "Store", "Be Like Mike", 2, 125.5);
+            Item item3 = new Item("Jordan'17's", "Store", "Be Like Mike", 2, 225.0);
+
+            itemList.add(item);
+            itemList.add(item2);
+            itemList.add(item3);
+
+            int expected = 0;
+            int output = item.findItem(itemList);
+
+            int expected2 = 1;
+            int output2 = item2.findItem(itemList);
+
+            int expected3 = 2;
+            int output3 = item3.findItem(itemList);
+
+            assertEquals("Make sure the findItem method in Item properly checks if the two items are equal!",
+                    expected, output);
+            assertEquals("Make sure the findItem method in Item properly checks if the two items are equal!",
+                    expected2, output2);
+            assertEquals("Make sure the findItem method in Item properly checks if the two items are equal!",
+                    expected3, output3);
+        }
 
         @Test(timeout = 1000)
         public void testItemEquals() {
