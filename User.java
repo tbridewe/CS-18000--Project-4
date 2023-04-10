@@ -14,6 +14,18 @@ public class User {
     protected String itemListingsFileName = "itemListings.txt";
     protected String customerLogFileName  = "customerLog.txt";
 
+    public User(String email, String password, String userType) throws InvalidUserInput {
+        if (!isValidPassword(password) || !isValidEmail(email)) {
+            throw new InvalidUserInput(INVALID_BOTH);
+        }
+
+        this.buyer = (userType.equals("Buyer"));
+        this.seller = !this.buyer;
+        
+        this.password = password;
+        this.email = email;
+    }
+    
     public User(String email, String password, int userType) throws InvalidUserInput { // creates a new User object with email, password and userType; Buyer = 0, Seller = 1
         if (!isValidPassword(password) || !isValidEmail(email)) {
             throw new InvalidUserInput(INVALID_BOTH);
