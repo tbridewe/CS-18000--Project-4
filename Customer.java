@@ -100,19 +100,7 @@ public class Customer extends User {
         writeFile(fileName, fileLines);
     }
 
-    /**
-     * saveListings()
-     * writes all the items in this.cart to the cart file. Puts them on the line of the corresponding user. 
-     * Potential problem: it is assumed that there is only 1 line per user in cart file.
-     * @param fileName: name of the shopping cart file 
-     */
-    public void saveListings(String fileName) {
-        String[] fileLines = new String[this.listings.size()];
-        for (int l = 0; l < this.listings.size(); l++) {
-            fileLines[l] = this.listings.get(l).toLine();
-        }
-        writeFile(fileName, fileLines);
-    }
+    
 
     /**
      * loadCart()

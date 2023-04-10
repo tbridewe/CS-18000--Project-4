@@ -85,14 +85,22 @@ public class Seller extends User {
 
 
     // old code but It's needed id what it does gknsdsindsgkj
-    public ArrayList<String> displayItems() {
+    /*
+     * doesn't actually display it's just for sorting but whatever it works
+     */
+    private ArrayList<String> displayItems() {
         String[] itemsList = readFile(this.itemListingsFileName);
         ArrayList<String> sellerItems = new ArrayList<>();
+        this.sortedListings.clear();
 
         for (int i = 0; i < itemsList.length; i++) {
             if (stores.contains(itemsList[i].split(",")[1])) {
                 sellerItems.add(itemsList[i]);
-                System.out.println(itemsList[i]);
+                // System.out.println(itemsList[i]);
+                try {
+                    sortedListings.add(new Item(itemsList[i]));
+                } catch (InvalidLineException e) {
+                }
             }
         }
         return sellerItems;
@@ -132,8 +140,13 @@ public class Seller extends User {
     }
 
     public void addNewItem(Item item) {
-        ArrayList<String> sellerItems = displayItems();
-        sellerItems.add(String.valueOf(item));
+        // adds to both because we have both and idk what usese which one
+        this.listings.add(item);
+        this.sortedListings.add(item);
+        
+        // save files
+        saveStores();
+        saveListings(this.itemListingsFileName);
     }
 
     public void removeItem(Item item) {
