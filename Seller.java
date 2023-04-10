@@ -22,7 +22,7 @@ public class Seller extends User {
             String[] splitUserLine = line.split(","); // get users as string
             if (splitUserLine[0].split(":")[1].equals(user)) { // found correct line
                 if (splitUserLine.length < 4) { // no stores
-                    this.stores = null;
+                    this.stores = new ArrayList<>();
                 } else {
                     String storesString = line.split(",")[3]; // get stores as string
                     for (int i = 0; i < storesString.split(";").length; i++) {
