@@ -27,7 +27,7 @@ public class RunLocalTest {
     public static void main(String[] args) {
         Result result = JUnitCore.runClasses(TestCase.class);
         if (result.wasSuccessful()) {
-            System.out.println("Excellent - Test ran successfully");
+            System.out.println("Excellent - All tests ran successfully.");
         } else {
             for (Failure failure : result.getFailures()) {
                 System.out.println(failure.toString());
@@ -64,6 +64,47 @@ public class RunLocalTest {
         private void receiveInput(String str) {
             testIn = new ByteArrayInputStream(str.getBytes());
             System.setIn(testIn);
+        }
+
+        // SELLER CLASS
+
+        // ITEM CLASS
+
+        @Test(timeout = 1000)
+        public void testItemEquals() {
+            String store = "store";
+            String name = "jordans";
+            String description = "be like mike";
+            int quantity = 2;
+            double price = 125.5;
+
+            Item item1 = new Item(name, store, description, quantity, price);
+            Item item2 = new Item(name, store, description, quantity, price);
+
+            boolean expected = true;
+            boolean output = item1.equals(item2);
+
+            assertEquals("Make sure the equals method in Item properly checks if the two items are equal!",
+                    expected, output);
+        }
+
+        @Test(timeout = 1000)
+        public void toLineTest() {
+            String store = "store";
+            String name = "jordans";
+            String description = "be like mike";
+            int quantity = 2;
+            double price = 125.5;
+
+            Item item = new Item(name, store, description, quantity, price);
+
+            String expected = String.format("%s,%s,%s,%d,%.2f",
+                    item.getName(), item.getStore(), item.getDescription(), item.getQuantity(), item.getPrice());
+
+            String output = item.toLine();
+
+            assertEquals("Make sure the toLine method in Item properly returns the formatted string!",
+                    expected.trim(), output.trim());
         }
 
         // USER CLASS
@@ -245,22 +286,6 @@ public class RunLocalTest {
                             System.lineSeparator() +
                             "Please select an option:" +
                             System.lineSeparator() +
-                            "(1) Choose Item" +
-                            System.lineSeparator() +
-                            "(2) Search" +
-                            System.lineSeparator() +
-                            "(3) Sort" +
-                            System.lineSeparator() +
-                            "(4) View Cart" +
-                            System.lineSeparator() +
-                            "(5) Edit Account" +
-                            System.lineSeparator() +
-                            "(6) Log Out" +
-                            System.lineSeparator() +
-                            "Goodbye!" +
-                            System.lineSeparator() +
-                            "Please select an option:" +
-                            System.lineSeparator() +
                             "(1) Login" +
                             System.lineSeparator() +
                             "(2) Create an Account" +
@@ -278,7 +303,6 @@ public class RunLocalTest {
                     userType + System.lineSeparator() +
                     email + System.lineSeparator() +
                     password + System.lineSeparator() +
-                    "6" + System.lineSeparator() +
                     "3" + System.lineSeparator();
 
             if (User.accountExists(email)) {
