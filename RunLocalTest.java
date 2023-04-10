@@ -9,6 +9,8 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
+import java.util.ArrayList;
+
 import java.io.*;
 
 import static org.junit.Assert.*;
@@ -68,7 +70,38 @@ public class RunLocalTest {
 
         // SELLER CLASS
 
+
+
         // ITEM CLASS
+
+        @Test(timeout = 1000)
+        public void testFindItem() {
+            ArrayList<Item> itemList = new ArrayList<Item>();
+
+            Item item = new Item("Store", "Jordan 12's", "Be Like Mike", 2, 125.5);
+            Item item2 = new Item("Store", "Jordan 14's", "Be Like Mike", 2, 175.5);
+            Item item3 = new Item("Store", "Jordan'17's", "Be Like Mike", 2, 150.5);
+
+            itemList.add(item);
+            itemList.add(item2);
+            itemList.add(item3);
+
+            int expected = 0;
+            int output = item.findItem(itemList);
+
+            int expected2 = 1;
+            int output2 = item2.findItem(itemList);
+
+            int expected3 = 2;
+            int output3 = item3.findItem(itemList);
+
+            assertEquals("Make sure the findItem method in Item properly checks if the two items are equal!",
+                    expected, output);
+            assertEquals("Make sure the findItem method in Item properly checks if the two items are equal!",
+                    expected2, output2);
+            assertEquals("Make sure the findItem method in Item properly checks if the two items are equal!",
+                    expected3, output3);
+        }
 
         @Test(timeout = 1000)
         public void testItemEquals() {
