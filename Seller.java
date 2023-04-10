@@ -59,24 +59,25 @@ public class Seller extends User {
             String user = this.getEmail(); 
             String line = fileLines[l];
             String newStoresString = "";
-            String[] splitUserLine = line.split(","); // get stores as string
+            String[] splitUserLine = line.split(", "); // get user line as string
             if (splitUserLine[0].split(":")[1].equals(user)) { // found correct line
                 // String storesString = line.split(",")[3]; // get stores as string
+                newStoresString = ",";
                 for (int i = 0; i < this.stores.size(); i++) {
                     newStoresString += this.stores.get(i) + ";";
                 }
-                if (splitUserLine.length > 3) { // stores already saved
-                    splitUserLine[3] =  newStoresString;
+                if (splitUserLine.length > 3) { // some stores already saved
+                    splitUserLine[3] = newStoresString;
                     // remake line
                     line = "";
                     for (int i = 0; i < splitUserLine.length; i++) {
                         line += splitUserLine[i];
-                        if (i < splitUserLine.length -1) {
-                            line += ",";
+                        if (i < splitUserLine.length -2) {
+                            line += ", ";
                         }
                     }
-                } else {
-                    line += newStoresString;
+                } else { // not stores saved yet
+                    line += ", " + newStoresString.substring(1, newStoresString.length());
                 }
 
                 fileLines[l] = line; // replace updated line
@@ -146,6 +147,9 @@ public class Seller extends User {
         // adds to both because we have both and idk what usese which one
         this.listings.add(item);
         this.sortedListings.add(item);
+        if (!this.stores.contains(item.getStore())) {
+            this.stores.add(item.getStore());
+        }
         
         // save files
         saveStores();

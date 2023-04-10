@@ -20,7 +20,7 @@ GoPro HERO9 Black,Camera World,5K Ultra HD Action Camera with Front Display and 
 Samsonite Luggage Set,Travel Essentials,3-Piece Hardside Spinner Set Black,1,329.99
 banana,hannahStore,it's a banana fruit,79,1.99
 apple,hannahStore,it's a fruit,79,2.99
-orange,hannahStore,fruit,100,2.50
+orange,hannahStore,fruit,99,2.50
 car,StormyOtherStore,it drives,100,1000.00
 orange,hannahStore,fruit,100,2.50
 car,StormyOtherStore,it drives,100,1000.00
@@ -44,3 +44,18 @@ orange,hannahStore,fruit,100,2.50
 car,StormyOtherStore,it drives,100,1000.00
 pear,hannahStore,fruit,100,2.25
 pear,hannahStore,fruit,100,2.25
+bananana,myFruitStore,yummy fruit,24,1.55
+pear,hannahStore,fruit,100,2.25
+pear,hannahStore,fruit,100,2.25
+pear,hannahStore,fruit,100,2.25
+pear,hannahStore,fruit,100,2.25
+pear,hannahStore,fruit,100,2.25
+pear,jo's store,fruit,100,2.25
+pear,hannahStore,fruit,100,2.25
+pear,jo's store,fruit,100,2.25
+pear,jo's store,fruit,100,2.25
+pear,jo's store,fruit,100,2.25
+pear,jo's store,fruit,100,2.25
+pear,jo's store,fruit,100,2.25
+pear,jo's store,fruit,100,2.25
+pear,jos store,fruit,100,2.25
