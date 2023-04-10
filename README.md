@@ -9,12 +9,20 @@ ___
 ___
 ## User
 Provides implementation of a User in the Marketplace, either of a Seller or a Customer.
+# Constructor 
+| Parameters | Description |
+| ---------- | ----------- |
+# Methods
 | Method | Parameters | Returns | Description |
 | -------| ---------- | ------- | ----------- |
 | method1     |             |             |             |
 | method2     |             |             |             |
 ## Customer
 Provides implementation of a Customer in the Marketplace
+# Constructor 
+| Parameters | Description |
+| ---------- | ----------- |
+# Methods
 | Method      | Description |
 | ----------- | ----------- |
 | method1     |             |
@@ -38,6 +46,9 @@ Provides implementation of a Customer in the Marketplace
 | viewAllStats | none | void | allows seller to see all the stats from their store |
 | sortStats | int sortType, int sortOrder | void | allows a seller to see stats based  type and order |
 ## Item
+# Constructor 
+| Parameters | Description |
+| ---------- | ----------- |
 A listing in the Marketplace
 | Method      | Description |
 | ----------- | ----------- |
@@ -50,13 +61,25 @@ Displays prompts for the user
 | method1     |             |
 | method2     |             |
 ## IncorrectLoginInformationException
-Thrown when login information is incorrect?
+Thrown when login information is incorrect
+# Constructor 
+| Parameters | Description |
+| ---------- | ----------- |
 ## InvalidLineException
-Thrown when line is invalid?
+Thrown when line is invalid
+# Constructor 
+| Parameters | Description |
+| ---------- | ----------- |
 ## InvalidQuantityException
 Thrown when quantity is invalid
+# Constructor 
+| Parameters | Description |
+| ---------- | ----------- |
 ## InvalidUserInputException
-Thrown when user input is invalid?
+Thrown when user input is invalid
+# Constructor 
+| Parameters | Description |
+| ---------- | ----------- |
 
 ___
 
