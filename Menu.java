@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.*;
@@ -88,6 +87,7 @@ public class Menu {
                         if (User.isCorrectLogin(email, password) == -1) {
                             if (User.accountExists(email)) {
                                 System.out.println(INCORRECT_CREDENTIALS);
+                                continue;
                             } else {
                                 boolean login2 = true;
 
@@ -153,7 +153,7 @@ public class Menu {
                                             System.out.println("Search:");
                                             String keyword = sc.nextLine();
                                             buyer.keywordSearch(keyword);
-                                            
+
                                             // not using tryAddItem here becuase of -1 back
                                             buyer.printListings();
                                             System.out.println("Please select the item you wish to purchase:");
@@ -229,7 +229,7 @@ public class Menu {
                                             int remove = Integer.parseInt(sc.nextLine());
                                             System.out.println("Please enter how many you would like to remove:");
                                             int quantity = processInteger(sc);
-                                            buyer.removeFromCart(remove, quantity);
+                                            //buyer.removeFromCart(remove, quantity);
 
                                         } else if(cartOperation == 4) {
 
@@ -303,15 +303,15 @@ public class Menu {
                                 } while (booleanBuyer == true);
                             }
                             if (userTypeStr.equals("Seller")) { //If the user is a seller // SELLER HERE
-                                seller = new Seller(email, password, 1); // itialize seller
+                                seller = new Seller(email, password, 1); // initialize seller
 
                                 boolean booleanSeller = true;
                                 do {
                                     System.out.println(SELLER_MENU);
                                     int sellerSelection = processInteger(sc);
                                     if (sellerSelection == 1) { //View Listings
-                                        seller.displayItems();
-                                        if (seller.getStores() != null) { 
+                                        seller.printListings();
+                                        if (seller.getStores() != null) {
                                             boolean booleanListings = true;
                                             do {
                                                 //printListings();
@@ -357,7 +357,6 @@ public class Menu {
                                             } while (booleanListings);
                                         } else {
                                             System.out.println("You have no listings!");
-                                            break;
                                         }
                                     } else if (sellerSelection == 2) {//View Statistics -- This may need to be reviesed later as Tristan works on Seller.java
                                         if (/*user.getStore != null*/true) { //May need revisions - Check may not be needed
@@ -378,7 +377,6 @@ public class Menu {
                                             }
                                         } else {
                                             System.out.println("You have no Stores!");
-                                            break;
                                         }
                                     } else if (sellerSelection == 3) { // edit user information
                                         boolean editing = true;
@@ -514,6 +512,7 @@ public class Menu {
         buyer.printListings();
         System.out.println("Please select the item you wish to purchase:");
         int purchase = processInteger(sc);
+        
         Item selectedItem = buyer.getDisplayedItem(purchase); // get the item
 
         System.out.println("Please enter how many you would like to buy:");

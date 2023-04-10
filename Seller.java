@@ -91,7 +91,7 @@ public class Seller extends User {
     /*
      * doesn't actually display it's just for sorting but whatever it works
      */
-    private ArrayList<String> displayItems() {
+    protected ArrayList<String> displayItems() {
         String[] itemsList = readFile(this.itemListingsFileName);
         ArrayList<String> sellerItems = new ArrayList<>();
         this.sortedListings.clear();
