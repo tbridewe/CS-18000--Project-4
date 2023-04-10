@@ -378,7 +378,7 @@ public class Customer extends User {
      * sortMarketplace(int sortType, int sortOrder)
      * sorts the marketplace listings based on user input
      *
-     * @param sortType:  either sort by price or by quantity
+     * @param sortType:  either sort by 1price or by 2quantity
      * @param sortOrder: either sort in ascending or descending order
      */
 

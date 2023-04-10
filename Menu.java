@@ -70,7 +70,7 @@ public class Menu {
                     System.out.println(INVALID_OPTION);
                 }
 
-                if (welcomeOption == 1) {
+                if (welcomeOption == 1) { 
                     boolean loginBoolean = true;
 
                     while (loginBoolean) {
@@ -79,7 +79,6 @@ public class Menu {
                         email = sc.nextLine();
                         System.out.println(PASSWORD);
                         password = sc.nextLine();
-
                         if (!User.isValidEmail(email)) {
                             System.out.println("Please enter a valid email address!");
                             continue;
@@ -129,11 +128,11 @@ public class Menu {
                                 e.printStackTrace();
                             }
 
-                            if (userTypeStr.equals("Buyer")) { //if the user is a buyer
+                            if (userTypeStr.equals("Buyer")) { //if the user is a buyer // BUYER HERE
                                 //Marketplace market = new Marketplace(itemsFileName); // initialize marketplace object (OLD COMMENT - MAY NOT NEED
                                 boolean booleanBuyer = true;
 
-                                //Customer buyer = new Customer(customer.getEmail(), customer.getPassword(), 0);
+                                buyer = new Customer(email, password, 0); // initialize buyer
 
                                 Item selectedItem = null;
 
@@ -143,6 +142,7 @@ public class Menu {
 
                                     if (buyerselection == 1) { //Choose Item
                                         // user selection
+                                        buyer.unsortListings();
                                         buyer.printListings();
                                         ;//print the marketplace
                                         System.out.println("Please select the item you wish to purchase:");
@@ -190,28 +190,17 @@ public class Menu {
                                             System.out.println("(1) Price");
                                             System.out.println("(2) Quantity");
                                             sortType = processInteger(sc);
-                                            if (sortType == 1) {
-                                                //sortByPrice
-                                            } else if (sortType == 2) {
-                                                //sortByQuantity
-                                            } else {
-                                                System.out.println(INVALID_OPTION);
-                                            }
-
-                                        } while ((sortType < 1) || (sortType > 2));
-                                        do {
                                             System.out.println("Sort by Ascending order or Descending order?");
                                             System.out.println("(1) Ascending");
                                             System.out.println("(2) Descending");
                                             sortOrder = processInteger(sc);
-                                            if (sortOrder == 1) {
-                                                //sortAscending
-                                            } else if (sortOrder == 2) {
-                                                //sortDecending
-                                            } else {
+
+                                            if ((sortType < 1) || (sortType > 2) || (sortOrder < 1) || (sortOrder > 2)) {
                                                 System.out.println(INVALID_OPTION);
+                                            } else {
+                                                buyer.sortMarketplace(sortType, sortOrder);
                                             }
-                                        } while ((sortOrder < 1) || (sortOrder > 2));
+                                        } while ((sortType < 1) || (sortType > 2) || (sortOrder < 1) || (sortOrder > 2));
                                         //sortItems(sortType, sortOrder);
                                     } else if (buyerselection == 4) { //View Cart
                                         buyer.printCart();
@@ -224,10 +213,13 @@ public class Menu {
                                             System.out.println("Checkout Complete!");
                                         } else if (cartOperation == 2) {
                                             //printPurchaseHistory();
+                                            buyer.viewPurchases();
                                             System.out.println("Would you like to export purchase history?\n(1) Yes\n(2) No");
                                             int export = processInteger(sc);
                                             if(export == 1) {
-                                                //export purchase history
+                                                System.out.println("Enter the name of the file to save the purchase history to:");
+                                                String fileName = sc.nextLine();
+                                                buyer.exportPurchases(fileName);
                                                 System.out.println("Purchase history successfully exported to file!"); //or use filename in place of "file"
                                             } else if (export == 2) {
                                             } else {
@@ -305,7 +297,9 @@ public class Menu {
                                     }
                                 } while (booleanBuyer == true);
                             }
-                            if (userTypeStr.equals("Seller")) { //If the user is a seller
+                            if (userTypeStr.equals("Seller")) { //If the user is a seller // SELLER HERE
+                                seller = new Seller(email, password, 1); // itialize seller
+                                
                                 boolean booleanSeller = true;
                                 do {
                                     System.out.println(SELLER_MENU);
@@ -504,5 +498,8 @@ public class Menu {
                 }
             } while (welcomeOption > 3 || welcomeOption < 1);
         }
+    }
+    public static void addItem(Item selectedItem, int quanitity) {
+
     }
 }

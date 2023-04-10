@@ -1,0 +1,2 @@
+Email:hhh@gmail.com, Password:1234, UserType:Buyer
+Email:aaa@gmail.com, Password:1234, UserType:Seller
