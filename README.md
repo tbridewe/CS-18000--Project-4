@@ -23,7 +23,11 @@ Provides implementation of a User in the Marketplace, either of a Seller or a Cu
 | setUserType | public int userType | void | Sets the userType of the current User Object. userType of 0 sets the User as a buyer. userType of 1 sets the User as a seller. |
 | setEmail | public String email | void | Sets the email of the current User object. If the email is not valid, then the method will throw the InvalidUserInput exception. |
 | setPassword | public String password | void | Sets the password of the current User object. If the password is not valid, then the method will throw the InvalidUserInput exception. |
-| accountExists | public static String emailEntered | boolean | Checks if a user's information is currently in the userData.txt file. Reads the file, and if any of the lines have an indexOf the emailEntered that is greater than 1 then the method will return true. Otherwise, return false. In the case of FileNotFoundException and IOException, also return false and print the error message. |
+| accountExists | public static String emailEntered | boolean | Checks if a user's information is currently in the userData.txt file. Reads the file, and if any of the lines have an indexOf the emailEntered that is greater than 1 then the method returns true. Otherwise, returns false. In the case of FileNotFoundException and IOException, also returns false and prints the error message. |
+| readUserData | public static none | ArrayList<String> | Reads the userData.txt file and returns all of the results as an ArrayList<String>. The entries in the ArrayList are indexed in order that they were read. In the case of FileNotFoundException or IOException, returns null and print the error message.
+| saveNewUser | public static String email, String password, String userType | void | Opens a FileWriter in append mode and writes the user's information to the userData.txt file in the following format:
+Email:%s, Password:%s, UserType: %s.
+In the case of an IOException, prints the error message and does not save the new user's information. |
 ### Customer
 Provides implementation of a Customer in the Marketplace
 ### Constructor 
