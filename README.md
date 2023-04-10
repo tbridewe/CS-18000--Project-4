@@ -98,22 +98,22 @@ Displays prompts for the user
 Thrown when login information is incorrect
 ### Constructor 
 | Parameters | Description |
-| ---------- | ----------- |
+| String message | ----------- |
 ## InvalidLineException
 Thrown when line is invalid
 ### Constructor 
 | Parameters | Description |
-| ---------- | ----------- |
+| String message | ----------- |
 ## InvalidQuantityException
 Thrown when quantity is invalid
 ### Constructor 
 | Parameters | Description |
-| ---------- | ----------- |
+| String message | ----------- |
 ## InvalidUserInputException
 Thrown when user input is invalid
 ### Constructor 
 | Parameters | Description |
-| ---------- | ----------- |
+| String message | ----------- |
 
 ___
 
