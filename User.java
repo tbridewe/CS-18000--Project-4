@@ -324,7 +324,4 @@ public class User {
 
        return true;
     }
-
-   
-    // TODO: Log Out method
 }

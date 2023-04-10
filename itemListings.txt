@@ -18,3 +18,5 @@ Sennheiser HD 660 S,Audio World,Open-Back Headphones Matte Black,18,499.99
 Amazon Kindle Paperwhite,Tech Hub,Waterproof eReader with 8GB Storage Black,65,129.99
 GoPro HERO9 Black,Camera World,5K Ultra HD Action Camera with Front Display and Touch Screen,3,449.99
 Samsonite Luggage Set,Travel Essentials,3-Piece Hardside Spinner Set Black,1,329.99
+banana,hannahStore,it's a banana fruit,79,1.99
+apple,hannahStore,it's a fruit,79,2.99

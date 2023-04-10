@@ -12,9 +12,31 @@ public class Seller extends User {
         super(email, password, userType);
         this.stores = new ArrayList<>();
         loadListings(this.itemListingsFileName);
-        this.sortedListings = listings;
+        this.sortedListings = new ArrayList<>();
 
-        readUserData();
+        // load the stores
+        String[] fileLines = readFile(FILENAME);
+        for (int l = 0; l < fileLines.length; l++) { // find the correct user line
+            String user = this.getEmail(); 
+            String line = fileLines[l];
+            String[] splitUserLine = line.split(","); // get users as string
+            if (splitUserLine[0].split(":")[1].equals(user)) { // found correct line
+                String storesString = line.split(",")[3]; // get stores as string
+                if (splitUserLine.length < 4) { // no stores
+                    this.stores = null;
+                } else {
+                    for (int i = 0; i < storesString.split(";").length; i++) {
+                        this.stores.add(storesString.split(";")[i]);
+                    }
+                    
+                }
+                break;
+            }
+        }
+
+        // get only this seller's items
+        findSellerItems(); // updates sorted listings
+
 
     }
 
@@ -61,6 +83,8 @@ public class Seller extends User {
         writeFile(fileName, fileLines);
     }
 
+
+    // old code but It's needed id what it does gknsdsindsgkj
     public ArrayList<String> displayItems() {
         String[] itemsList = readFile(this.itemListingsFileName);
         ArrayList<String> sellerItems = new ArrayList<>();
@@ -72,6 +96,25 @@ public class Seller extends User {
             }
         }
         return sellerItems;
+    }
+
+    /*
+     * findSelleraItems
+     * looks through listings and puts items mathching this seller into sorted itesm which is used for stuff
+     */
+    public void findSellerItems() {
+        if (this.sortedListings.size() > 0) {
+            this.sortedListings.clear();
+        }
+        for (int i = 0; i < this.listings.size(); i++) {
+            Item item = this.listings.get(i);
+            for (int s = 0; s < this.stores.size(); s++) { // check each store
+                if (item.getStore().equals(stores.get(s))) {
+                    this.sortedListings.add(item);
+                    break;
+                }
+            }
+        }
     }
 
     public void addFromCSV(String filename) {
