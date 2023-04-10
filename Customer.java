@@ -91,7 +91,7 @@ public class Customer extends User {
      * getDisplayedItem()
      * @param index: The DISPLAYED index of the item (from print)
      */
-    public Item getDisplayedItem(int index) {
+    public Item getDisplayedItem(int index) throws IndexOutOfBoundsException {
         // index from the printed listing
         return this.sortedListings.get(index - 1);
     }
@@ -122,7 +122,7 @@ public class Customer extends User {
         }
 
         // Remove item from listings
-        int i = item.findItem(this.listings);
+        int i = item.findItem(this.listings); 
         item = this.listings.get(i);            // get item from listings
         item.changeQuanityBy(-1 * quantity); // update item quanitity
         this.listings.set(i, item);             // put updated item back into listings
@@ -345,7 +345,7 @@ public class Customer extends User {
 
     public void viewPurchases() {
         ArrayList<Item> purchaseLog = readPurchaseLog();
-        System.out.println("PURCHASES:")
+        System.out.println("PURCHASES:");
         String itemFormat = "[%3d]: %-30s | %-4d | %-24s | $ %-6.2f\n";
         System.out.printf("[num]: %-30s | %-4s | %-24s | %-7s\n\n", "NAME", "QNTY", "STORE", "PRICE");
         for (int i = 0; i < cart.size(); i++) {
@@ -372,6 +372,7 @@ public class Customer extends User {
         String[] listings = readFile("itemListings.txt");
         ArrayList<String> itemListings = new ArrayList<>();
         Collections.addAll(itemListings, listings);
+        ArrayList<Item> sorted = new ArrayList<>();
 
         switch (sortType) {
             case 1: // price
@@ -379,12 +380,20 @@ public class Customer extends User {
                     case 1: // ascending
                         itemListings.sort(new PriceComparatorAscending());
                         for (int i = 0; i < itemListings.size(); i++) {
-                            System.out.println(itemListings.get(i));
+                            // System.out.println(itemListings.get(i));
+                            try {   // add to sortedItems arraylist
+                                sorted.add(new Item(itemListings.get(i)));
+                            } catch (InvalidLineException e) {
+                            }
                         }
                     case 2: // descending
                         itemListings.sort(new PriceComparatorDescending());
                         for (int i = 0; i < itemListings.size(); i++) {
-                            System.out.println(itemListings.get(i));
+                            // System.out.println(itemListings.get(i));
+                            try {   // add to sortedItems arraylist
+                                sorted.add(new Item(itemListings.get(i)));
+                            } catch (InvalidLineException e) {
+                            }
                         }
                 }
             case 2: // quantity
@@ -392,15 +401,24 @@ public class Customer extends User {
                     case 1: // ascending
                         itemListings.sort(new QuantityComparatorAscending());
                         for (int i = 0; i < itemListings.size(); i++) {
-                            System.out.println(itemListings.get(i));
+                            // System.out.println(itemListings.get(i));
+                            try {   // add to sortedItems arraylist
+                                sorted.add(new Item(itemListings.get(i)));
+                            } catch (InvalidLineException e) {
+                            }
                         }
                     case 2: // descending
                         itemListings.sort(new QuantityComparatorDescending());
                         for (int i = 0; i < itemListings.size(); i++) {
-                            System.out.println(itemListings.get(i));
+                            // System.out.println(itemListings.get(i));
+                            try {   // add to sortedItems arraylist
+                                sorted.add(new Item(itemListings.get(i)));
+                            } catch (InvalidLineException e) {
+                            }
                         }
                 }
         }
+        this.sortedListings = sorted; // update sorted for outputs
     }
 
     // Comparator for sorting by price in ascending order
@@ -441,3 +459,4 @@ public class Customer extends User {
             return Integer.compare(quantity2, quantity1);
         }
     }
+}
