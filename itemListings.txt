@@ -10,7 +10,7 @@ Oakley Holbrook Sunglasses,Fashion Optics,Matte Black Frame with Prizm Sapphire 
 Nintendo Switch Lite,Gamestop,Handheld Console Turquoise,0,199.99
 Bose SoundLink Revolve+,Audio World,Portable Bluetooth Speaker Triple Black,0,299.99
 Vitamix Explorian Blender,Kitchen Essentials,Professional-Grade Blender Red,34,349.99
-Fitbit Versa 3,Sporting Goods Inc.,GPS Smartwatch Black Aluminum Case with Black Sport Band,75,229.99
+Fitbit Versa 3,Sporting Goods Inc.,GPS Smartwatch Black Aluminum Case with Black Sport Band,72,229.99
 Sony WH-1000XM4,Electronics Emporium,Wireless Noise-Canceling Headphones Silver,1,349.99
 Garmin Forerunner 945,Sporting Goods Inc.,GPS Running Watch Black,1,599.99
 Le Creuset Dutch Oven,Kitchen Essentials,5.5-Quart Round Dutch Oven Flame,1,359.99

@@ -91,10 +91,12 @@ public class Customer extends User {
         }
     }
 
+    /*
+     * unsort the listings before displaying them
+     */
     public void unsortListings() {
         this.sortedListings = listings;
     }
-
 
     /**
      * getDisplayedItem()
@@ -104,6 +106,7 @@ public class Customer extends User {
         // index from the printed listing
         return this.sortedListings.get(index - 1);
     }
+
 
     /**
      * addToCart()
@@ -238,30 +241,34 @@ public class Customer extends User {
      * @param item: the specified listing that the user wants to remove from cart
      * @param quantity: the amount of the item to be reomved
      */
-    public void removeFromCart(Item item, int quanitity) {
-        int i = item.findItem(this.cart); // find item
-        if (i < 0) {
-            System.out.println("Cannot remove: Item not found in cart");
-        } else if (quanitity >= cart.get(i).getQuantity()) {
-            if (quanitity > cart.get(i).getQuantity()) {
-                // if quantity is greater than amount in cart just set it to amount in cart
-                quanitity = cart.get(i).getQuantity(); 
+    public void removeFromCart(int index, int quanitity) {
+        int i = index - 1;
+        try {
+            Item item = this.cart.get(i);
+            if (quanitity >= cart.get(i).getQuantity()) {
+                if (quanitity > cart.get(i).getQuantity()) {
+                    // if quantity is greater than amount in cart just set it to amount in cart
+                    quanitity = cart.get(i).getQuantity(); 
+                }
+                this.cart.remove(this.cart.get(i));
+            } else {
+                Item updatedItem = cart.get(i);
+                updatedItem.changeQuanityBy(-1 * quanitity);
+                this.cart.set(i, updatedItem);
             }
-            this.cart.remove(this.cart.get(i));
-        } else {
-            Item updatedItem = cart.get(i);
-            updatedItem.changeQuanityBy(-1 * quanitity);
+            
+            // update listinfs
+            i = item.findItem(this.listings);
+            Item updatedItem = this.listings.get(i); // get item from listings
+            updatedItem.changeQuanityBy(quanitity); // add quantity back to item
             this.cart.set(i, updatedItem);
+            
+            // save cart and listings
+            saveCart(this.cartFileName);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid item number selected!");
+            e.printStackTrace(); // TODO: remove stack trace
         }
-
-        // update listinfs
-        i = item.findItem(this.listings);
-        Item updatedItem = this.listings.get(i); // get item from listings
-        updatedItem.changeQuanityBy(quanitity); // add quantity back to item
-        this.cart.set(i, updatedItem);
-
-        // save cart and listings
-        saveCart(this.cartFileName);
     }
 
     /**
@@ -357,7 +364,7 @@ public class Customer extends User {
         System.out.println("PURCHASES:");
         String itemFormat = "[%3d]: %-30s | %-4d | %-24s | $ %-6.2f\n";
         System.out.printf("[num]: %-30s | %-4s | %-24s | %-7s\n\n", "NAME", "QNTY", "STORE", "PRICE");
-        for (int i = 0; i < cart.size(); i++) {
+        for (int i = 0; i < purchaseLog.size(); i++) {
             Item item = purchaseLog.get(i);
             System.out.printf(itemFormat, i+1, item.getName(), item.getQuantity(), item.getStore(), item.getPrice());
         }
@@ -477,4 +484,7 @@ public class Customer extends User {
             return Integer.compare(quantity2, quantity1);
         }
     }
+
+    
+    
 }

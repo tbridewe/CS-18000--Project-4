@@ -144,25 +144,8 @@ public class Menu {
                                     if (buyerselection == 1) { //Choose Item
                                         // user selection
                                         buyer.unsortListings();
-                                        buyer.printListings();
-                                        ;//print the marketplace
-                                        System.out.println("Please select the item you wish to purchase:");
-
-                                        int purchase = processInteger(sc);
-                                        selectedItem = buyer.getDisplayedItem(purchase); // get the item
-
-                                        System.out.println("Please enter how many you would like to buy:");
-                                        int quantity = processInteger(sc);
-
-                                        try { // add item with qantity error checking
-                                            buyer.addToCart(selectedItem, quantity);
-                                            System.out.printf("Added to Cart: %dx %s!", quantity, selectedItem.getName());
-                                        } catch (InvalidQuantityException e) {
-                                            System.out.println(e.getMessage());
-                                        }
-
+                                        tryAddItem(sc, buyer);
                                     } else if (buyerselection == 2) { //Serch by Keyword
-                                        // TODO
                                         System.out.println("(1) Search by Keyword");
                                         System.out.println("(2) Back");
                                         int searchOption = Integer.parseInt(sc.nextLine());
@@ -170,33 +153,32 @@ public class Menu {
                                             System.out.println("Search:");
                                             String keyword = sc.nextLine();
                                             buyer.keywordSearch(keyword);
+                                            
+                                            // not using tryAddItem here becuase of -1 back
                                             buyer.printListings();
-
-                                            //Add to cart function
-                                            buyer.printListings();
-                                            ;//print the marketplace
                                             System.out.println("Please select the item you wish to purchase:");
-                                            System.out.println("Enter '-1' to cancel purchase");
                                             int purchase = processInteger(sc);
+                                            selectedItem = buyer.getDisplayedItem(purchase); // get the item
+                                            System.out.println("Please enter how many you would like to buy:");
+                                            System.out.println("Enter '-1' to cancel purchase");
+                                            int quantity = processInteger(sc);
                                             if (purchase < 0) {
                                                 System.out.println("Purchase Cancelled");
                                                 continue;
                                             }
-                                            selectedItem = buyer.getDisplayedItem(purchase); // get the item
-                                            System.out.println("Please enter how many you would like to buy:");
-                                            int quantity = processInteger(sc);
                                             try { // add item with qantity error checking
                                                 buyer.addToCart(selectedItem, quantity);
-                                                System.out.printf("Added to Cart: %dx %s!\n", quantity, selectedItem.getName());
+                                                System.out.printf("Added to Cart: %dx %s!", quantity, selectedItem.getName());
                                             } catch (InvalidQuantityException e) {
                                                 System.out.println(e.getMessage());
+                                            } catch (IndexOutOfBoundsException e) {
+                                                System.out.println("Invalid item number selected!");
                                             }
                                         } else if (searchOption == 2) {
                                             continue;
                                             //go back
                                         }
                                     } else if (buyerselection == 3) { //Sorting items
-                                        // TODO
                                         int sortType = 0;
                                         int sortOrder = 0;
                                         do {
@@ -213,6 +195,7 @@ public class Menu {
                                                 System.out.println(INVALID_OPTION);
                                             } else {
                                                 buyer.sortMarketplace(sortType, sortOrder);
+                                                tryAddItem(sc, buyer);
                                             }
                                         } while ((sortType < 1) || (sortType > 2) || (sortOrder < 1) || (sortOrder > 2));
                                         //sortItems(sortType, sortOrder);
@@ -220,14 +203,13 @@ public class Menu {
                                         buyer.printCart();
                                         System.out.println("(1) Checkout?");
                                         System.out.println("(2) View Purchase History");
-                                        System.out.println("(3) Edit Cart");
+                                        System.out.println("(3) Remove Item");
                                         System.out.println("(4) Back");
                                         int cartOperation = processInteger(sc);
-                                        if (cartOperation == 1) {
+                                        if (cartOperation == 1) { // checkout
                                             buyer.checkout();
                                             System.out.println("Checkout Complete!");
-                                        } else if (cartOperation == 2) {
-                                            //printPurchaseHistory();
+                                        } else if (cartOperation == 2) { // purchase history
                                             buyer.viewPurchases();
                                             System.out.println("Would you like to export purchase history?\n(1) Yes\n(2) No");
                                             int export = processInteger(sc);
@@ -241,11 +223,14 @@ public class Menu {
                                                 System.out.println(INVALID_OPTION);
                                             }
                                         }
-                                        else if (cartOperation == 3) {
+                                        else if (cartOperation == 3) { // remove
                                             buyer.printCart();
                                             System.out.println("Select an item to remove from cart");
                                             int remove = Integer.parseInt(sc.nextLine());
-                                            //////////////REMOVE FROM CART///////////////////
+                                            System.out.println("Please enter how many you would like to remove:");
+                                            int quantity = processInteger(sc);
+                                            buyer.removeFromCart(remove, quantity);
+
                                         } else if(cartOperation == 4) {
 
                                         } else {
@@ -519,7 +504,28 @@ public class Menu {
             } while (welcomeOption > 3 || welcomeOption < 1);
         }
     }
-    public static void addItem(Item selectedItem, int quanitity) {
 
+    // METHODS!!! (buyer stuff to make it less messy)
+
+    /* tryAddItem
+     * Prompts for adding an item to cart with error checking
+     */
+    public static void tryAddItem(Scanner sc, Customer buyer) {
+        buyer.printListings();
+        System.out.println("Please select the item you wish to purchase:");
+        int purchase = processInteger(sc);
+        Item selectedItem = buyer.getDisplayedItem(purchase); // get the item
+
+        System.out.println("Please enter how many you would like to buy:");
+        int quantity = processInteger(sc);
+
+        try { // add item with qantity error checking
+            buyer.addToCart(selectedItem, quantity);
+            System.out.printf("Added to Cart: %dx %s!\n", quantity, selectedItem.getName());
+        } catch (InvalidQuantityException e) {
+            System.out.println(e.getMessage());
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid item number selected!");
+        }
     }
 }
