@@ -6,7 +6,7 @@ public class User {
     private String email; // email entered when a user creates their login information
     private boolean buyer;
     private boolean seller;
-    private final static String FILENAME = "userData.txt"; // name of file where userData is stored
+    protected final static String FILENAME = "userData.txt"; // name of file where userData is stored
     private final static String INVALID_EMAIL = "Please enter a valid email address!";
     private final static String INVALID_PASSWORD = "Please enter a valid password!";
     private final static String INVALID_BOTH = "Please enter a valid email address and password!";
@@ -324,5 +324,7 @@ public class User {
 
        return true;
     }
+
+   
     // TODO: Log Out method
 }
