@@ -84,9 +84,12 @@ Provides implementation of a Customer in the Marketplace
 | sortStats | int sortType, int sortOrder | void | allows a seller to see stats based  type and order |
 ## Item
 A listing in the Marketplace
-### Constructor 
+### Constructors 
 | Parameters | Description |
-| ---------- | ----------- |
+| ----------- | ----------- |
+| String name, String store, String description, int quantity, double price | Creates a new Item object |
+| String itemFileLine | Creates a new Item object|
+| Item item | Makes a new copy of an Item |
 ### Methods
 | Method      | Description |
 | ----------- | ----------- |
