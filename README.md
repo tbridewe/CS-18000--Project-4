@@ -16,8 +16,10 @@ Provides implementation of a User in the Marketplace, either of a Seller or a Cu
 ### Methods
 | Method | Parameters | Returns | Description |
 | -------| ---------- | ------- | ----------- |
-| method1     |             |             |             |
-| method2     |             |             |             |
+| getEmail | none | String | Returns the email of the current User object |
+| getPassword | none | String | Returns the password of the current User object |
+| isBuyer | none | boolean | Returns a boolean whether the user is a buyer or not. |
+| isSeller | none | boolean | Returns a boolean whether the user is a seller or not. |
 ### Customer
 Provides implementation of a Customer in the Marketplace
 ### Constructor 
