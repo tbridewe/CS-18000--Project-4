@@ -68,6 +68,30 @@ public class RunLocalTest {
             System.setIn(testIn);
         }
 
+        // CUSTOMER CLASS
+
+        @Test(timeout = 1000)
+        public void testReadPurchaseLog() {
+            String expected = "PURCHASES:" + System.lineSeparator() +
+                    "[num]: NAME                           | QNTY | STORE                    | PRICE";
+
+            try {
+                Customer customer = new Customer("sambodkin2@outlook.com", "1234", 1);
+                customer.viewPurchases();
+            } catch (InvalidUserInput e) {
+
+            }
+
+            String output = getOutput();
+
+            // Trims the output and verifies it is correct.
+            output = output.replace("\r\n", "\n");
+            expected = expected.replace("\r\n", "\n");
+
+            assertEquals("Make sure the readPurchaseLog method in Customer properly prints the log!",
+                    expected.trim(), output.trim());
+        }
+
         // SELLER CLASS
 
         @Test(timeout = 1000)
