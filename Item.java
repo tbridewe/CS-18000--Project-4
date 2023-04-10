@@ -29,6 +29,16 @@ public class Item {
             throw new InvalidLineException("This line in invalid! Can't create item.");
         }
     }
+
+    public Item(Item item) {
+        // just to make a new copy of an item
+        this.name = item.name;
+        this.store = item.store;
+        this.description = item.description;
+        this.quantity = item.quantity;
+        this.price = item.price;
+    }
+    
     // FILE FORMAT: name,store,description,quantity,price
     public String toLine() {
         String line = String.format("%s,%s,%s,%d,%.2f", 

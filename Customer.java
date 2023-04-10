@@ -68,6 +68,7 @@ public class Customer extends User {
      * just prints the items in the cart with nice formatting. 
      */
     public void printCart() {
+        System.out.println("SHOPPING CART");
         String itemFormat = "[%3d]: %-30s | %-4d | %-24s | $ %-6.2f\n";
         System.out.printf("[num]: %-30s | %-4s | %-24s | %-7s\n\n", "NAME", "QNTY", "STORE", "PRICE");
         for (int i = 0; i < cart.size(); i++) {
@@ -114,18 +115,19 @@ public class Customer extends User {
         if (this.cart != null && item.findItem(this.cart) > 0) {
             // add quantity to existing item in cart
             int i = item.findItem(this.cart);
-            item.setQuantity(this.cart.get(i).getQuantity() + quantity); // update quantity in item
-            this.cart.set(i, item);  // put updated item back in cart
-        } else {
-            item.setQuantity(quantity); // set quantity to quantity added
-            this.cart.add(item);
+            this.cart.get(i).changeQuanityBy(quantity); // update cart quantity
+            // item.setQuantity(this.cart.get(i).getQuantity() + quantity); // update quantity in item
+            // this.cart.set(i, item);  // put updated item back in cart
+        } else { // add new item to cart
+            Item add = new Item(item);
+            add.setQuantity(quantity);
+            this.cart.add(add);
         }
 
         // Remove item from listings
         int i = item.findItem(this.listings); 
         item = this.listings.get(i);            // get item from listings
         item.changeQuanityBy(-1 * quantity); // update item quanitity
-        this.listings.set(i, item);             // put updated item back into listings
         
         // Write cart and listings file
         saveCart(this.cartFileName);
