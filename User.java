@@ -10,6 +10,9 @@ public class User {
     private final static String INVALID_EMAIL = "Please enter a valid email address!";
     private final static String INVALID_PASSWORD = "Please enter a valid password!";
     private final static String INVALID_BOTH = "Please enter a valid email address and password!";
+    protected String cartFileName = "shoppingCarts.txt";
+    protected String itemListingsFileName = "itemListings.txt";
+    protected String customerLogFileName  = "customerLog.txt";
 
     public User(String email, String password, int userType) throws InvalidUserInput { // creates a new User object with email, password and userType; Buyer = 0, Seller = 1
         if (!isValidPassword(password) || !isValidEmail(email)) {
@@ -23,6 +26,108 @@ public class User {
         this.email = email;
     }
 
+    ////////////////////////////////////////////////////////////////
+    // Things moved from customer because seller can use them too
+    ////////////////////////////////////////////////////////////////
+
+    protected ArrayList<Item> listings;
+    protected ArrayList<Item> sortedListings;
+
+    /**
+     * readFile(String filename)
+     * @param filename: name of the file that needs to be read
+     * @return String[] with all the lines of the file
+     */
+    protected static String[] readFile(String filename) {
+        String[] fileContents;
+        ArrayList<String> contents = new ArrayList<>();
+
+        File file = new File(filename);
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                contents.add(line);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        fileContents = contents.toArray(new String[0]);
+        return fileContents;
+    }
+
+    /**
+     * writeFile(String filename)
+     * @param filename: name of the file that needs to be read
+     * @param lines: array of lines to be written
+     * @return String[] with all the lines of the file
+     */
+    protected static void writeFile(String filename, String[] lines) {
+        File file = new File(filename);
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+            for (int i = 0; i < lines.length; i++) {
+                bw.write(lines[i] + "\n");
+            }
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * PrintListings()
+     * just prints the items in the cart with nice formatting. 
+     */
+    public void printListings() {
+        String itemFormat = "[%3d]: %-30s | %-24s | %-4s | $ %-6.2f\n";
+        System.out.printf("[num]: %-30s | %-24s | %-4s | %-7s\n\n", "NAME", "STORE", "QNTY", "PRICE");
+        for (int i = 0; i < this.sortedListings.size(); i++) {
+            Item item = this.sortedListings.get(i);
+            System.out.printf(itemFormat, i+1, item.getName(), item.getStore(), item.getQuantity(), item.getPrice());
+        }
+    }
+
+    /*
+     * unsort the listings before displaying them. Revert Display to the full item list
+     */
+    public void unsortListings() {
+        this.sortedListings = listings;
+    }
+
+    /**
+     * getDisplayedItem()
+     * @param index: The DISPLAYED index of the item (from print)
+     */
+    public Item getDisplayedItem(int index) throws IndexOutOfBoundsException {
+        // index from the printed listing
+        return this.sortedListings.get(index - 1);
+    }
+
+     /**
+     * loadListings()
+     * reads the item listings file file and puts loads items
+     * @param fileName: name of the items cart file 
+     */
+    protected void loadListings(String fileName) {
+        String[] fileLines = readFile(fileName);
+        ArrayList<Item> items = new ArrayList<>();
+        for (int l = 0; l < fileLines.length; l++) {
+            String line = fileLines[l];
+            try {  
+                items.add(new Item(line));
+            } catch (InvalidLineException e) { // invalid line format exception
+                e.printStackTrace();
+            }
+        }
+        this.listings = items;
+    }
+
+    ///////////////////////////////////////////////////
+    // Getters and setters and user stuff
+    ///////////////////////////////////////////////////
+    
     public String getEmail() { // gets the current user email
         return email;
     }

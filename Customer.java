@@ -5,12 +5,8 @@ import java.util.Arrays;
 
 public class Customer extends User {
     private ArrayList<Item> cart = new ArrayList<>(); // stores the user's items. Everytime the cart is updtates the cart file will also be updated
-    private ArrayList<Item> listings;
-    private ArrayList<Item> sortedListings;
-    private String cartFileName = "shoppingCarts.txt";
-    private String itemListingsFileName = "itemListings.txt";
-    private String customerLogFileName  = "customerLog.txt";
-
+    
+    
     public Customer(String email, String password, int userType) throws InvalidUserInput {
         super(email, password, userType);
         // TODO: why is usertype an input here? The type is known to be customer
@@ -19,50 +15,6 @@ public class Customer extends User {
         loadListings(this.itemListingsFileName);
         this.sortedListings = listings;
     }
-
-    /**
-     * readFile(String filename)
-     * @param filename: name of the file that needs to be read
-     * @return String[] with all the lines of the file
-     */
-    public static String[] readFile(String filename) {
-        String[] fileContents;
-        ArrayList<String> contents = new ArrayList<>();
-
-        File file = new File(filename);
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                contents.add(line);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        fileContents = contents.toArray(new String[0]);
-        return fileContents;
-    }
-
-    /**
-     * writeFile(String filename)
-     * @param filename: name of the file that needs to be read
-     * @param lines: array of lines to be written
-     * @return String[] with all the lines of the file
-     */
-    public static void writeFile(String filename, String[] lines) {
-        File file = new File(filename);
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
-            for (int i = 0; i < lines.length; i++) {
-                bw.write(lines[i] + "\n");
-            }
-            bw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /**
      * PrintCart()
@@ -76,35 +28,6 @@ public class Customer extends User {
             Item item = cart.get(i);
             System.out.printf(itemFormat, i+1, item.getName(), item.getQuantity(), item.getStore(), item.getPrice());
         }
-    }
-
-    /**
-     * PrintListings()
-     * just prints the items in the cart with nice formatting. 
-     */
-    public void printListings() {
-        String itemFormat = "[%3d]: %-30s | %-24s | %-4s | $ %-6.2f\n";
-        System.out.printf("[num]: %-30s | %-24s | %-4s | %-7s\n\n", "NAME", "STORE", "QNTY", "PRICE");
-        for (int i = 0; i < this.sortedListings.size(); i++) {
-            Item item = this.sortedListings.get(i);
-            System.out.printf(itemFormat, i+1, item.getName(), item.getStore(), item.getQuantity(), item.getPrice());
-        }
-    }
-
-    /*
-     * unsort the listings before displaying them
-     */
-    public void unsortListings() {
-        this.sortedListings = listings;
-    }
-
-    /**
-     * getDisplayedItem()
-     * @param index: The DISPLAYED index of the item (from print)
-     */
-    public Item getDisplayedItem(int index) throws IndexOutOfBoundsException {
-        // index from the printed listing
-        return this.sortedListings.get(index - 1);
     }
 
 
@@ -216,25 +139,7 @@ public class Customer extends User {
         }
     }
 
-    /**
-     * loadListings()
-     * reads the item listings file file and puts loads items
-     * @param fileName: name of the shopping cart file 
-     */
-    public void loadListings(String fileName) {
-        String[] fileLines = readFile(fileName);
-        ArrayList<Item> items = new ArrayList<>();
-        for (int l = 0; l < fileLines.length; l++) {
-            String line = fileLines[l];
-            try {  
-                items.add(new Item(line));
-            } catch (InvalidLineException e) { // invalid line format exception
-                e.printStackTrace();
-            }
-        }
-        this.listings = items;
-    }
-
+   
     /**
      * removeFromCart(Item listing)
      * removes specified listing from the cart

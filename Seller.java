@@ -6,8 +6,7 @@ import java.util.Comparator;
 
 public class Seller extends User {
     private ArrayList<String> stores;
-    private String itemListingsFileName = "itemListings.txt";
-    private String customerLogFileName = "customerLog.txt";
+    
 
     public Seller (String email, String password, int userType) throws InvalidUserInput {
         super(email, password, userType);
