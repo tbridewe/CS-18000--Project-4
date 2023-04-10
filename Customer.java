@@ -2,7 +2,14 @@ import java.io.*;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+/**
+ * Customer.java
+ * 
+ * creates a customer. A customer can buy items and put them in a cart and check out and buy items.  
+ *
+ * @version 2023-4-10
+ * @author Hannah, Tristen
+ */
 public class Customer extends User {
     private ArrayList<Item> cart = new ArrayList<>(); // stores the user's items. Everytime the cart is updtates the cart file will also be updated
     

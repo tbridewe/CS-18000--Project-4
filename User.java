@@ -1,5 +1,15 @@
 import java.io.*;
 import java.util.ArrayList;
+/**
+ * User.java
+ * 
+ * User class. It contains basic account methods, 
+ * along with item management methods used by both buyers and sellers. 
+ * This class is extended by Customer and Seller. 
+ *
+ * @version 2023-4-10
+ * @author 
+ */
 
 public class User {
     private String password; // password entered when a user creates their login information

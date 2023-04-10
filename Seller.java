@@ -3,7 +3,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-
+/**
+ * Seller.java
+ * 
+ * Creates a seller, who can create item listings 
+ *
+ * @version 2023-4-10
+ * @author Hannah, Tristan, Amber 
+ */
 public class Seller extends User {
     private ArrayList<String> stores;
     
@@ -70,7 +77,7 @@ public class Seller extends User {
                 if (splitUserLine.length > 3) { // some stores already saved
                     splitUserLine[3] = newStoresString;
                     // remake line
-                    line = " ";
+                    line = "";
                     for (int i = 0; i < splitUserLine.length; i++) {
                         line += splitUserLine[i];
                         if (i < splitUserLine.length -2) {

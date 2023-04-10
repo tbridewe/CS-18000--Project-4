@@ -1,5 +1,14 @@
 import java.util.ArrayList;
-
+/**
+ * Item.java
+ * 
+ * Creates an item object that contains all the properties of an item that can be bought or sold
+ * The constructor accepts a string which is read out of the items file. 
+ * 
+ *
+ * @version 2023-4-10
+ * @author Hannah Kadlec
+ */
 public class Item {
     private String name;
     private String store;
@@ -38,7 +47,7 @@ public class Item {
         this.quantity = item.quantity;
         this.price = item.price;
     }
-    
+
     // FILE FORMAT: name,store,description,quantity,price
     public String toLine() {
         String line = String.format("%s,%s,%s,%d,%.2f", 

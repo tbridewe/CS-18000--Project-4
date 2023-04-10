@@ -1,7 +1,14 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.*;
-
+/**
+ * Menu.java
+ * 
+ * main menu for the marketplace. 
+ *
+ * @version 2023-4-10
+ * @author Liam
+ */
 public class Menu {
     public final static String WELCOME = "Welcome to the Marketplace!";
     public final static String WELCOME_MENU = "Please select an option:\n(1) Login\n(2) Create an Account\n(3) Quit";
