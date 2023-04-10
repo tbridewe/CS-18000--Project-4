@@ -1,11 +1,13 @@
 # CS-18000--Project-4--README
 
 ## Running the Project
-To run Project 4, navigate to the 
+To run Project 4, navigate to the Menu class and run Menu.java. Before you can access the menus, you must create an account. The account will ask you to specify whether you are a buyer or a seller. After creating an account, it will take you back to the login menu. Input your credentials and begin!
 ___
 ## Submissions
 - Brighspace
+Amber submitted the report on Brightspace
 - Vocareum
+Tristan submitted the code on Vocareum
 ___
 ## User
 Provides implementation of a User in the Marketplace, either of a Seller or a Customer.
