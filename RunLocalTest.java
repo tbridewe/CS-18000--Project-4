@@ -70,7 +70,77 @@ public class RunLocalTest {
 
         // SELLER CLASS
 
+        @Test(timeout = 1000)
+        public void testFindSellerItems() {
+            ArrayList<Item> expected = new ArrayList<Item>();
+            ArrayList<Item> output = null;
 
+            String storeName = "hannahStore";
+            String type1 = "fruit";
+            String type2 = "it drives";
+            int quantity = 100;
+            int quantity2 = 79;
+            double price = 2.50;
+
+            String apple = "apple";
+            String banana = "banana";
+            String orange = "orange";
+
+            expected.add(new Item(banana, storeName, "it's a banana fruit", quantity2, 1.99));
+            expected.add(new Item(apple, storeName, "it's a fruit", quantity2, 2.99));
+            expected.add(new Item(orange, storeName, type1, quantity, price));
+            expected.add(new Item(orange, storeName, type1, quantity, price));
+            expected.add(new Item(orange, storeName, type1, quantity, price));
+            expected.add(new Item(orange, storeName, type1, quantity, price));
+            expected.add(new Item(orange, storeName, type1, quantity, price));
+
+            boolean expectedOut = true;
+            boolean outputOut = true;
+
+            try {
+                Seller s = new Seller("aaa@gmail.com", "1234", 1);
+                s.findSellerItems();
+                output = s.sortedListings;
+
+                for (int i = 0; i < output.size(); i++) {
+                    Item item = output.get(i);
+                    Item expectedItem = expected.get(i);
+
+                    if (!item.equals(expectedItem)) {
+                        outputOut = false;
+                        break;
+                    }
+                }
+            } catch(InvalidUserInput e) {
+
+            }
+
+            assertEquals("Make sure the viewAllStats method in Seller properly prints the correct output!",
+                    expectedOut, outputOut);
+        }
+
+        @Test(timeout = 1000)
+        public void testViewAllStats() {
+            Seller s;
+
+            String expected = "";
+
+            try {
+                s = new Seller("aaaa@gmail.com", "1234", 1);
+                s.viewAllStats();
+            } catch (InvalidUserInput e) {
+
+            }
+
+            String output = getOutput();
+
+            // Trims the output and verifies it is correct.
+            output = output.replace("\r\n", "\n");
+            expected = expected.replace("\r\n", "\n");
+
+            assertEquals("Make sure the viewAllStats method in Seller properly prints the correct output!",
+                    expected.trim(), output.trim());
+        }
 
         // ITEM CLASS
 
@@ -78,9 +148,9 @@ public class RunLocalTest {
         public void testFindItem() {
             ArrayList<Item> itemList = new ArrayList<Item>();
 
-            Item item = new Item("Store", "Jordan 12's", "Be Like Mike", 2, 125.5);
-            Item item2 = new Item("Store", "Jordan 14's", "Be Like Mike", 2, 175.5);
-            Item item3 = new Item("Store", "Jordan'17's", "Be Like Mike", 2, 150.5);
+            Item item = new Item("Jordan'16's", "Store", "Be Like Mike", 2, 150.5);
+            Item item2 = new Item("Jordan'14's", "Store", "Be Like Mike", 2, 125.5);
+            Item item3 = new Item("Jordan'17's", "Store", "Be Like Mike", 2, 225.0);
 
             itemList.add(item);
             itemList.add(item2);
