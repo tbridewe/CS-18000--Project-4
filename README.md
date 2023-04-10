@@ -9,8 +9,8 @@ ___
 ___
 ## User
 Provides implementation of a User in the Marketplace, either of a Seller or a Customer.
-| Method      | Parameters  | Returns     | Description |
-| ----------- | ----------- | ----------- | ----------- |
+| Method | Parameters | Returns | Description |
+| -------| ---------- | ------- | ----------- |
 | method1     |             |             |             |
 | method2     |             |             |             |
 ## Customer
@@ -21,10 +21,22 @@ Provides implementation of a Customer in the Marketplace
 | method2     |             |
 ## Seller
 Provides implementation of a Customer in the Marketplace
-| Method      | Description |
-| ----------- | ----------- |
-| method1     |             |
-| method2     |             |
+# Constructor 
+| Parameters | Description |
+| ---------- | ----------- |
+| String email, String password, int userType| Creates a new Seller object which extends User. Seller's stores are also instantiated |
+# Methods
+| Method | Parameters | Returns | Description |
+| -------| ---------- | ------- | ----------- |
+| getStores | none | ArrayList \<String\> | |
+| saveStores | none | void | |
+| displayItems | none | ArrayList \<String\> | reads file with item listings and displays listings that the seller posted |
+| addFromCSV | String filename | void | reads file with item listings and adds them to the exisitng item listings |
+| addNewItem | Item item | void | allows a seller to add one item to item listings at a time |
+| removeItem | Item item | void | allows a seller to remove one item from item listings at a time |
+| editItem | Item item, int changeType, String changeValue | void | seller defines the item to change, what value type to change, and what value to change it to and the item value is changed |
+| viewAllStats | none | void | allows seller to see all the stats from their store |
+| sortStats | int sortType, int sortOrder | void | allows a seller to see stats based  type and order |
 ## Item
 A listing in the Marketplace
 | Method      | Description |
