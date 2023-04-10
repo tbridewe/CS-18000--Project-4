@@ -82,63 +82,29 @@ public class Seller extends User {
             }
         }
     }
-    // TODO: the values for changeType and changeValues will be integers, not Strings
-    public void editItem(Item item, String changeType, String changeValue ) {
+
+    public void editItem(Item item, int changeType, String changeValue ) {
         ArrayList<String> sellerItems = displayItems();
 
         if (sellerItems.contains(String.valueOf(item))) {
             for (int i = 0; i < sellerItems.size(); i++) { // loop through the seller items
                 if (sellerItems.get(i).equals(String.valueOf(item))) { // find the item
                     switch (changeType) { // choose what changeType
-                        case "Name":
+                        case 1: // name
                             item.setName(changeValue);
-                        case "Store":
+                        case 2: // store
                             item.setStore(changeValue);
-                        case "Description":
+                        case 3: // description
                             item.setDescription(changeValue);
-                        case "Quantity":
+                        case 4: // quantity
                             item.setQuantity(Integer.parseInt(changeValue));
-                        case "Price":
+                        case 5: // price
                             item.setPrice(Integer.parseInt(changeValue));
                     }
                 }
             }
         } else {
             System.out.println("Item does not exist!");
-        }
-    }
-
-    // TODO: implement sort
-    public void viewSpecificStat(int statType) {
-        String[] stats = readFile("customerLog.txt");
-        ArrayList<String> statsList = new ArrayList<>();
-        ArrayList<String> customerData = new ArrayList<>();
-        Collections.addAll(statsList, stats);
-
-        // filters item listings to see if the listing is from one of the seller's stores
-        for (int i = 0; i < statsList.size(); i++) {
-            String[] customerHistory = statsList.get(i).split(";");
-            ArrayList<String> sellerSales = new ArrayList<>();
-            for (int j = 1; j < customerHistory.length; j++) {
-                if (stores.contains(customerHistory[j])) {
-                    sellerSales.add(customerHistory[j]);
-                }
-            }
-            if (sellerSales.size() > 0) {
-                String format = customerHistory[0] + sellerSales;
-                customerData.add(format);
-            }
-        }
-
-        switch (statType) {
-            case 1: //price
-                for (int i = 0; i < customerData.size(); i++) {
-                    String[] individualData = customerData.get(i).split(",");
-                }
-            case 2: //quantity
-                for (int i = 0; i < customerData.size(); i++) {
-
-                }
         }
     }
 
