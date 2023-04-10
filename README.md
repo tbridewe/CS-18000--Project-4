@@ -14,7 +14,7 @@ Provides implementation of a User in the Marketplace, either of a Seller or a Cu
 | ---------- | ----------- |
 | String email, String password, int userType | Creates a new User object. |
 ### Methods
-| Method | Parameters | Returns | Description |
+| Method | Modifiers and Parameters | Returns | Description |
 | -------| ---------- | ------- | ----------- |
 | getEmail | public none | String | Returns the email of the current User object. |
 | getPassword | public none | String | Returns the password of the current User object. |
@@ -30,12 +30,12 @@ Provides implementation of a User in the Marketplace, either of a Seller or a Cu
 | isValidPassword | public static String password | boolean | Verifies if the password passed is valid or not. A valid password is not null and has a length > 0. If the password is valid, returns true. Otherwise, returns false. |
 | isValidEmail | public static String email | boolean | Verifies if the email passed is valid or not. A valid email has an @ that is not at the first index of the string, a 3 letter dot ending (such as .com, .hub, etc.) and the space between the extension and @ are 3 characters apart (Ex. email@bro.com). If the email is valid, returns true. Otherwise, returns false. |
 | editUser| public String newEmail, String newPassword, boolean deleted | void | Allows the user to edit their information. For newEmail and newPassword != null, verifies that email and/or password are valid. Calls readUserData() to receive userData in an ArrayList, and iterates through each of the lines in the userData.txt file. If the email and password of the User object are the same as the email and password on file, then edits the string to contain the new email and/or password. If the deleted boolean is true, then the string is removed entirely. Rewrites all of the new information to the userData.txt file afters with a PrintWriter. |
-| getDisplayedItem | public int index | Item | Returns the listing at the index - 1 passed to the method in the sortedListings ArrayList. Throws an IndexOutOfBoundsException if the value at index - 1 in sortedListings is out of bounds.
-| loadListings | protected String fileName| void | Calls the readFile() method with the passed fileName. Iterates through the read file and sets the listings to an Item ArrayList.
-| printListings | public none | void | Prints the formatted listings in their current sorted or unsorted order.
-| writeFile | protected static String filename, String[] lines | Writes to the provided file with the provided array of strings.
-| readFile | protected static String filename | String[] | Reads from the file and returns an array of file lines.
-| unsortListings | public none | void | Sets the sortedListings field to the initial listings field.
+| getDisplayedItem | public int index | Item | Returns the listing at the index - 1 passed to the method in the sortedListings ArrayList. Throws an IndexOutOfBoundsException if the value at index - 1 in sortedListings is out of bounds. |
+| loadListings | protected String fileName| void | Calls the readFile() method with the passed fileName. Iterates through the read file and sets the listings to an Item ArrayList. |
+| printListings | public none | void | Prints the formatted listings in their current sorted or unsorted order. |
+| writeFile | protected static String filename, String[] lines | void | Writes to the provided file with the provided array of strings. |
+| readFile | protected static String filename | String[] | Reads from the file and returns an array of file lines. |
+| unsortListings | public none | void | Sets the sortedListings field to the initial listings field. |
 ### Customer
 Provides implementation of a Customer in the Marketplace
 ### Constructor 
