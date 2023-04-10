@@ -113,22 +113,22 @@ Displays prompts for the user
 Thrown when login information is incorrect
 ### Constructor 
 | Parameters | Description |
-| String message | ----------- |
+| String message | an error that is thrown when login information is incorrect |
 ## InvalidLineException
 Thrown when line is invalid
 ### Constructor 
 | Parameters | Description |
-| String message | ----------- |
+| String message | an error that is thrown when the line is invalid |
 ## InvalidQuantityException
 Thrown when quantity is invalid
 ### Constructor 
 | Parameters | Description |
-| String message | ----------- |
+| String message | an error that is thrown when the quantity is invalid |
 ## InvalidUserInputException
 Thrown when user input is invalid
 ### Constructor 
 | Parameters | Description |
-| String message | ----------- |
+| String message | an error that is thrown when the input is invalid |
 
 ___
 
