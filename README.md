@@ -9,31 +9,31 @@ ___
 ___
 ## User
 Provides implementation of a User in the Marketplace, either of a Seller or a Customer.
-# Constructor 
+### Constructor 
 | Parameters | Description |
 | ---------- | ----------- |
-# Methods
+### Methods
 | Method | Parameters | Returns | Description |
 | -------| ---------- | ------- | ----------- |
 | method1     |             |             |             |
 | method2     |             |             |             |
-## Customer
+### Customer
 Provides implementation of a Customer in the Marketplace
-# Constructor 
+### Constructor 
 | Parameters | Description |
 | ---------- | ----------- |
-# Methods
+### Methods
 | Method      | Description |
 | ----------- | ----------- |
 | method1     |             |
 | method2     |             |
 ## Seller
 Provides implementation of a Customer in the Marketplace
-# Constructor 
+### Constructor 
 | Parameters | Description |
 | ---------- | ----------- |
 | String email, String password, int userType| Creates a new Seller object which extends User. Seller's stores are also instantiated |
-# Methods
+### Methods
 | Method | Parameters | Returns | Description |
 | -------| ---------- | ------- | ----------- |
 | getStores | none | ArrayList \<String\> | |
@@ -46,38 +46,35 @@ Provides implementation of a Customer in the Marketplace
 | viewAllStats | none | void | allows seller to see all the stats from their store |
 | sortStats | int sortType, int sortOrder | void | allows a seller to see stats based  type and order |
 ## Item
-# Constructor 
+A listing in the Marketplace
+### Constructor 
 | Parameters | Description |
 | ---------- | ----------- |
-A listing in the Marketplace
+### Methods
 | Method      | Description |
 | ----------- | ----------- |
 | method1     |             |
 | method2     |             |
 ## Menu
 Displays prompts for the user
-| Method      | Description |
-| ----------- | ----------- |
-| method1     |             |
-| method2     |             |
 ## IncorrectLoginInformationException
 Thrown when login information is incorrect
-# Constructor 
+### Constructor 
 | Parameters | Description |
 | ---------- | ----------- |
 ## InvalidLineException
 Thrown when line is invalid
-# Constructor 
+### Constructor 
 | Parameters | Description |
 | ---------- | ----------- |
 ## InvalidQuantityException
 Thrown when quantity is invalid
-# Constructor 
+### Constructor 
 | Parameters | Description |
 | ---------- | ----------- |
 ## InvalidUserInputException
 Thrown when user input is invalid
-# Constructor 
+### Constructor 
 | Parameters | Description |
 | ---------- | ----------- |
 
