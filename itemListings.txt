@@ -59,3 +59,9 @@ pear,jo's store,fruit,100,2.25
 pear,jo's store,fruit,100,2.25
 pear,jo's store,fruit,100,2.25
 pear,jos store,fruit,100,2.25
+banananana,hannahStore,yummy fruit,21,2.11
+pear,jos store,fruit,100,2.25
+pear,jos store2,fruit,100,2.25
+pear,jos store2,fruit,100,2.25
+pear,jos store2,fruit,100,2.25
+pear,jos store2,fruit,100,2.25

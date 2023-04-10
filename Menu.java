@@ -314,7 +314,6 @@ public class Menu {
                                         if (seller.getStores() != null) {
                                             boolean booleanListings = true;
                                             do {
-                                                //printListings();
                                                 System.out.println(LISTINGS);
                                                 int listingOption = processInteger(sc);
                                                 if (listingOption == 1) {
@@ -345,10 +344,31 @@ public class Menu {
                                                         System.out.println("Incorrect choice!");
                                                     }
 
-                                                } else if (listingOption == 2) {
-                                                    //seller.editItem();
-                                                } else if (listingOption == 3) {
-                                                    //seller.removeItem();
+                                                } else if (listingOption == 2) { // edit
+                                                    seller.printListings();
+                                                    System.out.println("Chosse an item to edit:");
+                                                    int selection = processInteger(sc);
+                                                    try {
+                                                        Item item = seller.getDisplayedItem(selection);
+                                                        System.out.printf("What would you like to change?\n"
+                                                            + "(1) Name\n(2) Store\n(3) Description\n(4) Quantity\n(5) Price");
+                                                        int changeType = processInteger(sc);
+                                                        System.out.println("What would you like to change it to?");
+                                                        String change = sc.nextLine();
+                                                        seller.editItem(item, changeType, change);
+                                                    } catch (IndexOutOfBoundsException e) {
+                                                        System.out.println("Invalid item number selected!");
+                                                    }
+                                                } else if (listingOption == 3) { // remove
+                                                    seller.printListings();
+                                                    System.out.println("Chosse an item to remove:");
+                                                    int selection = processInteger(sc);
+                                                    try {
+                                                        Item item = seller.getDisplayedItem(selection);
+                                                        seller.removeItem(item);
+                                                    } catch (IndexOutOfBoundsException e) {
+                                                        System.out.println("Invalid item number selected!");
+                                                    }
                                                 } else if (listingOption == 4) {
                                                     booleanListings = false; //break the switch statement and return to the previous screen
                                                 } else {
@@ -359,7 +379,7 @@ public class Menu {
                                             System.out.println("You have no listings!");
                                         }
                                     } else if (sellerSelection == 2) {//View Statistics -- This may need to be reviesed later as Tristan works on Seller.java
-                                        if (/*user.getStore != null*/true) { //May need revisions - Check may not be needed
+                                        if (seller.getStores().size() > 1) { //May need revisions - Check may not be needed
                                             System.out.println("(1) All Stats\n(2) Specific Stats\n(3) Back");
                                             int statSelection = processInteger(sc);
                                             if (statSelection == 1) {
@@ -376,7 +396,7 @@ public class Menu {
 
                                             }
                                         } else {
-                                            System.out.println("You have no Stores!");
+                                            System.out.println("You have no Stores! Add some items to create a store.");
                                         }
                                     } else if (sellerSelection == 3) { // edit user information
                                         boolean editing = true;
@@ -527,4 +547,6 @@ public class Menu {
             System.out.println("Invalid item number selected!");
         }
     }
+
+    
 }

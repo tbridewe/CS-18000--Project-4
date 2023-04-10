@@ -1,3 +1,3 @@
 Email:hk@gmail.com, Password:1234, UserType:Buyer
 Email:aaa@gmail.com, Password:1234, UserType:Seller, hannahStore;Store2;
-Email:jo@gmail.com, Password:1234, UserType:Seller
+Email:jo@gmail.com, Password:1234, UserType:Seller, jos store;jos store2;

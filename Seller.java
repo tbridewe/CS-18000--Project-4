@@ -19,14 +19,15 @@ public class Seller extends User {
         for (int l = 0; l < fileLines.length; l++) { // find the correct user line
             String user = this.getEmail(); 
             String line = fileLines[l];
-            String[] splitUserLine = line.split(","); // get users as string
+            String[] splitUserLine = line.split(", "); // get users as string
             if (splitUserLine[0].split(":")[1].equals(user)) { // found correct line
                 if (splitUserLine.length < 4) { // no stores
                     this.stores = new ArrayList<>();
                 } else {
                     String storesString = line.split(",")[3]; // get stores as string
                     for (int i = 0; i < storesString.split(";").length; i++) {
-                        this.stores.add(storesString.split(";")[i]);
+                        String storeName = storesString.split(";")[i].trim();;
+                        this.stores.add(storeName);
                     }
                     
                 }
@@ -58,18 +59,18 @@ public class Seller extends User {
         for (int l = 0; l < fileLines.length; l++) { // find the correct user line
             String user = this.getEmail(); 
             String line = fileLines[l];
-            String newStoresString = "";
+            String newStoresString = " ";
             String[] splitUserLine = line.split(", "); // get user line as string
             if (splitUserLine[0].split(":")[1].equals(user)) { // found correct line
                 // String storesString = line.split(",")[3]; // get stores as string
-                newStoresString = ",";
+                newStoresString = ", ";
                 for (int i = 0; i < this.stores.size(); i++) {
                     newStoresString += this.stores.get(i) + ";";
                 }
                 if (splitUserLine.length > 3) { // some stores already saved
                     splitUserLine[3] = newStoresString;
                     // remake line
-                    line = "";
+                    line = " ";
                     for (int i = 0; i < splitUserLine.length; i++) {
                         line += splitUserLine[i];
                         if (i < splitUserLine.length -2) {
