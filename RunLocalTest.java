@@ -69,11 +69,68 @@ public class RunLocalTest {
         // USER CLASS
 
         @Test(timeout = 1000)
+        public void testEditUser() {
+            String check = "testEditUser@email.com";
+            String password = "abc123";
+            String password2 = "abc12";
+            String userType = "Buyer";
+
+            boolean expected = true;
+            boolean output = false;
+
+            if (!User.accountExists(check)) {
+                User.saveNewUser(check, password, userType);
+            }
+
+            try {
+                User user = new User(check, password, userType);
+                user.editUser(null, password2, false);
+
+                if (User.isCorrectLogin(check, password2) > -1)
+                    output = true;
+            } catch (InvalidUserInput e) {
+
+            }
+
+            assertEquals("Make sure the editUser method in User properly edits the user!",
+                    expected, output);
+        }
+
+        @Test(timeout = 1000)
+        public void testSaveUser() {
+            boolean expected = true;
+            boolean output = false;
+
+            String check = "email4@email.com";
+
+            if (User.accountExists(check)) { // if the user exists, deletes it for the test method
+                try {
+                    User user = new User(check, "password", 1);
+
+                    user.editUser(null, null, true);
+                } catch(InvalidUserInput e) {
+
+                }
+            }
+
+            User.saveNewUser(check, "password", "Seller");
+            output = User.accountExists(check);
+
+            assertEquals("Make sure the saveNewUser method in User properly saves a new user!",
+                    expected, output);
+        }
+
+        @Test(timeout = 1000)
         public void testUserExists() {
             String check = "email3@email.com";
 
             boolean expected = true;
             boolean output = User.accountExists(check);
+
+            if (!output) {
+                User.saveNewUser(check, "password", "Buyer");
+                output = true;
+            }
 
             boolean expected2 = false;
             boolean output2 = User.accountExists(check + "mail");
@@ -97,7 +154,7 @@ public class RunLocalTest {
         @Test(timeout = 1000)
         public void testValidEmailOutput2() {
             boolean expected = true;
-            boolean output = User.isValidEmail("Sambodkin@live.com");
+            boolean output = User.isValidEmail("Sambodkin4@outlook.com");
 
             assertEquals("Make sure the isValidEmail method in User matches the expected value",
                     expected, output);
@@ -212,12 +269,26 @@ public class RunLocalTest {
                             System.lineSeparator() +
                             "Bye!";
 
+            String email = "sambodkin3@live.com";
+            String password = "abc123";
+            String userType = "Buyer";
+            int userTypeInt = 0;
+
             String input = "2" + System.lineSeparator() +
-                    "Buyer" + System.lineSeparator() +
-                    "sambodkin3@live.com" + System.lineSeparator() +
-                    "abc123" + System.lineSeparator() +
+                    userType + System.lineSeparator() +
+                    email + System.lineSeparator() +
+                    password + System.lineSeparator() +
                     "6" + System.lineSeparator() +
                     "3" + System.lineSeparator();
+
+            if (User.accountExists(email)) {
+                try {
+                    User user = new User(email, password, userTypeInt);
+                    user.editUser(null, null, true);
+                } catch (InvalidUserInput e) {
+
+                }
+            }
 
             // Runs the program with the input values
             receiveInput(input);
