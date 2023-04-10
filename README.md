@@ -56,7 +56,6 @@ Provides implementation of a Customer in the Marketplace
 | viewPurchases | none | void | prints out the contents of the customer log file associated with a specific email |
 | exportPurchases | String fileName | void | writes the contents of the customer log file associated with a specific email to a file |
 | sortMarketplace | int sortType, int sortOrder | void | sorts the marketplace listings based on user input |
-| ----------- | ----------- | ----------- | ----------- |
 ## Seller
 Provides implementation of a Customer in the Marketplace
 ### Constructor 
