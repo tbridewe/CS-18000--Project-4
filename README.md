@@ -50,9 +50,9 @@ Provides implementation of a Customer in the Marketplace
 | saveListings | String fileName | void | writes all the items in this.cart to the cart file. Puts them on the line of the corresponding user. |
 | loadCart | String fileName | void | reads the cart file and puts the items for this user into this.cart |
 | removeFromCart | int index, int quanitity | void | removes specified listing from the cart |
-| keywordSearch | String keyword | ArrayList \<Item>\ | returns a String[] containing all lines containing the keyword |
+| keywordSearch | String keyword | ArrayList \<Item> | returns a String[] containing all lines containing the keyword |
 | checkout | none | double | returns the total price of the cart |
-| readPurchaseLog | none | ArrayList \<Item>\ | returns an ArrayList of the contents of the customer log file associated with a specific email |
+| readPurchaseLog | none | ArrayList \<Item> | returns an ArrayList of the contents of the customer log file associated with a specific email |
 | viewPurchases | none | void | prints out the contents of the customer log file associated with a specific email |
 | exportPurchases | String fileName | void | writes the contents of the customer log file associated with a specific email to a file |
 | sortMarketplace | int sortType, int sortOrder | void | sorts the marketplace listings based on user input |
