@@ -71,6 +71,34 @@ public class RunLocalTest {
         // CUSTOMER CLASS
 
         @Test(timeout = 1000)
+        public void testReadPurchaseLog2() {
+            String expected = "PURCHASES:" +
+                    System.lineSeparator() +
+                    "[num]: NAME                           | QNTY | STORE                    | PRICE  "  +
+                    System.lineSeparator() +
+                    System.lineSeparator() +
+                    "[  1]: Fitbit Versa 3                 | 1    | Sporting Goods Inc.      | $ 229.99" +
+                    System.lineSeparator() +
+                    "[  2]: Fitbit Versa 3                 | 2    | Sporting Goods Inc.      | $ 229.99";
+
+            try {
+                Customer customer = new Customer("hhh@gmail.com", "1234", 0);
+                customer.viewPurchases();
+            } catch (InvalidUserInput e) {
+
+            }
+
+            String output = getOutput();
+
+            // Trims the output and verifies it is correct.
+            output = output.replace("\r\n", "\n");
+            expected = expected.replace("\r\n", "\n");
+
+            assertEquals("Make sure the readPurchaseLog method in Customer properly prints the log!",
+                    expected.trim(), output.trim());
+        }
+
+        @Test(timeout = 1000)
         public void testReadPurchaseLog() {
             String expected = "PURCHASES:" + System.lineSeparator() +
                     "[num]: NAME                           | QNTY | STORE                    | PRICE";
