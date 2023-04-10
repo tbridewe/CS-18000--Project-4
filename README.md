@@ -12,6 +12,7 @@ Provides implementation of a User in the Marketplace, either of a Seller or a Cu
 ### Constructor 
 | Parameters | Description |
 | ---------- | ----------- |
+| String email, String password, int userType | Creates a new User object. |
 ### Methods
 | Method | Parameters | Returns | Description |
 | -------| ---------- | ------- | ----------- |
