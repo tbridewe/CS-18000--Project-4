@@ -16,10 +16,14 @@ Provides implementation of a User in the Marketplace, either of a Seller or a Cu
 ### Methods
 | Method | Parameters | Returns | Description |
 | -------| ---------- | ------- | ----------- |
-| getEmail | none | String | Returns the email of the current User object |
-| getPassword | none | String | Returns the password of the current User object |
-| isBuyer | none | boolean | Returns a boolean whether the user is a buyer or not. |
-| isSeller | none | boolean | Returns a boolean whether the user is a seller or not. |
+| getEmail | public none | String | Returns the email of the current User object. |
+| getPassword | public none | String | Returns the password of the current User object. |
+| isBuyer | public none | boolean | Returns a boolean whether the user is a buyer or not. |
+| isSeller | public none | boolean | Returns a boolean whether the user is a seller or not. |
+| setUserType | public int userType | void | Sets the userType of the current User Object. userType of 0 sets the User as a buyer. userType of 1 sets the User as a seller. |
+| setEmail | public String email | void | Sets the email of the current User object. If the email is not valid, then the method will throw the InvalidUserInput exception. |
+| setPassword | public String password | void | Sets the password of the current User object. If the password is not valid, then the method will throw the InvalidUserInput exception. |
+| accountExists | public static String emailEntered | boolean | Checks if a user's information is currently in the userData.txt file. Reads the file, and if any of the lines have an indexOf the emailEntered that is greater than 1 then the method will return true. Otherwise, return false. In the case of FileNotFoundException and IOException, also return false and print the error message. |
 ### Customer
 Provides implementation of a Customer in the Marketplace
 ### Constructor 
